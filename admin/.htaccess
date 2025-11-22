@@ -1,0 +1,51 @@
+# Admin Directory Security Configuration
+# Additional security for admin panel access
+
+# Enable Rewrite Engine
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Block direct access to PHP files if accessed incorrectly
+    RewriteCond %{REQUEST_METHOD} ^(TRACE|DELETE|TRACK) [NC]
+    RewriteRule ^(.*)$ - [F,L]
+</IfModule>
+
+# Security Headers (additional to root .htaccess)
+<IfModule mod_headers.c>
+    # Additional security for admin area
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "DENY"
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Prevent caching of admin pages
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+</IfModule>
+
+# Disable directory browsing
+Options -Indexes
+
+# Block access to sensitive files
+<FilesMatch "\.(log|sql|md|bak|backup|old)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Optional: IP Whitelisting (uncomment and add your IP)
+# <RequireAll>
+#     Require ip YOUR.IP.ADDRESS.HERE
+#     Require ip ANOTHER.IP.ADDRESS.HERE
+# </RequireAll>
+
+# Alternative IP restriction (older Apache versions)
+# <Limit GET POST>
+#     Order Deny,Allow
+#     Deny from all
+#     Allow from YOUR.IP.ADDRESS.HERE
+# </Limit>
+
+# Note: IP whitelisting is optional but recommended for additional security
+# Replace YOUR.IP.ADDRESS.HERE with your actual IP address
+# You can find your IP at: https://www.whatismyip.com/
+
