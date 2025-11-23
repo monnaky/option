@@ -14,35 +14,42 @@
 // ============================================================================
 
 // Application environment (development or production)
-define('APP_ENV', 'development'); // Change to 'production' for production hosting
+// Supports environment variables for Docker/Coolify deployment
+define('APP_ENV', $_ENV['APP_ENV'] ?? 'development'); // Change to 'production' for production hosting
 
 // Application URL (your domain)
-define('APP_URL', 'http://localhost/vtm'); // Replace with your actual domain
+// For Coolify: Set APP_URL environment variable to your domain
+define('APP_URL', $_ENV['APP_URL'] ?? 'http://localhost/vtm'); // Replace with your actual domain
 
 // Application timezone
-define('APP_TIMEZONE', 'UTC');
+define('APP_TIMEZONE', $_ENV['APP_TIMEZONE'] ?? 'UTC');
 
 // ============================================================================
 // DATABASE CONFIGURATION
 // ============================================================================
 
-// Database host (usually 'localhost' for shared hosting)
-define('DB_HOST', 'localhost');
+// Database host
+// For Coolify: Set DB_HOST to your database service name (e.g., 'mariadb' or 'mysql')
+// For local development: Use 'localhost'
+define('DB_HOST', $_ENV['DB_HOST'] ?? 'localhost');
 
-// Database port (usually 3306 for MySQL)
-define('DB_PORT', '3306');
+// Database port (usually 3306 for MySQL/MariaDB)
+define('DB_PORT', $_ENV['DB_PORT'] ?? '3306');
 
-// Database name (create this in cPanel)
-define('DB_NAME', 'vtm'); // Replace with your database name
+// Database name
+// For Coolify: Set DB_NAME environment variable
+define('DB_NAME', $_ENV['DB_NAME'] ?? 'vtm'); // Replace with your database name
 
-// Database username (from cPanel)
-define('DB_USER', 'root'); // Replace with your database username
+// Database username
+// For Coolify: Set DB_USER environment variable
+define('DB_USER', $_ENV['DB_USER'] ?? 'root'); // Replace with your database username
 
-// Database password (from cPanel)
-define('DB_PASS', ''); // Replace with your database password
+// Database password
+// For Coolify: Set DB_PASS environment variable (REQUIRED for production)
+define('DB_PASS', $_ENV['DB_PASS'] ?? ''); // Replace with your database password
 
 // Database charset
-define('DB_CHARSET', 'utf8mb4');
+define('DB_CHARSET', $_ENV['DB_CHARSET'] ?? 'utf8mb4');
 
 // ============================================================================
 // SECURITY CONFIGURATION
@@ -51,8 +58,9 @@ define('DB_CHARSET', 'utf8mb4');
 // Encryption key for API tokens (64-character hex string)
 // Generated using: bin2hex(random_bytes(32))
 // IMPORTANT: Keep this key secure and never commit it to version control
+// For Coolify: Set ENCRYPTION_KEY environment variable
 // To generate a new key, run: php -r "echo bin2hex(random_bytes(32));"
-define('ENCRYPTION_KEY', '7f3a9b2c8d4e1f6a5b9c2d7e3f8a1b4c6d9e2f5a8b1c4d7e0f3a6b9c2d5e8f1a4');
+define('ENCRYPTION_KEY', $_ENV['ENCRYPTION_KEY'] ?? '7f3a9b2c8d4e1f6a5b9c2d7e3f8a1b4c6d9e2f5a8b1c4d7e0f3a6b9c2d5e8f1a4');
 
 // Session configuration
 define('SESSION_LIFETIME', 86400); // 24 hours in seconds
@@ -62,11 +70,13 @@ define('SESSION_LIFETIME', 86400); // 24 hours in seconds
 // ============================================================================
 
 // Deriv App ID (default is 105326)
-define('DERIV_APP_ID', '105326');
+// For Coolify: Can be set via DERIV_APP_ID environment variable
+define('DERIV_APP_ID', $_ENV['DERIV_APP_ID'] ?? '105326');
 
 // Deriv WebSocket host
 // Correct hostname: ws.derivws.com (Deriv WebSocket) or wss.binaryws.com (Binary.com WebSocket)
-define('DERIV_WS_HOST', 'ws.derivws.com');
+// For Coolify: Can be set via DERIV_WS_HOST environment variable
+define('DERIV_WS_HOST', $_ENV['DERIV_WS_HOST'] ?? 'ws.derivws.com');
 
 // ============================================================================
 // ERROR HANDLING
@@ -84,8 +94,10 @@ if (APP_ENV === 'production') {
 }
 
 // Log errors
+// For Coolify: Set LOG_PATH environment variable for custom log location
 ini_set('log_errors', '1');
-ini_set('error_log', __DIR__ . '/error_log');
+$logPath = $_ENV['LOG_PATH'] ?? __DIR__ . '/error_log';
+ini_set('error_log', $logPath);
 
 // ============================================================================
 // PATH CONFIGURATION

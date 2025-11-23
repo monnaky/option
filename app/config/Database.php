@@ -19,6 +19,7 @@ class Database
     private ?PDO $connection = null;
     
     private string $host;
+    private string $port;
     private string $database;
     private string $username;
     private string $password;
@@ -31,6 +32,7 @@ class Database
     {
         // Load environment variables
         $this->host = $_ENV['DB_HOST'] ?? 'localhost';
+        $this->port = $_ENV['DB_PORT'] ?? '3306';
         $this->database = $_ENV['DB_NAME'] ?? 'vtmoption';
         $this->username = $_ENV['DB_USER'] ?? 'root';
         $this->password = $_ENV['DB_PASS'] ?? '';
@@ -65,9 +67,11 @@ class Database
     private function connect(): void
     {
         try {
+            // Build DSN with port support for Docker/Coolify environments
             $dsn = sprintf(
-                "mysql:host=%s;dbname=%s;charset=%s",
+                "mysql:host=%s;port=%s;dbname=%s;charset=%s",
                 $this->host,
+                $this->port,
                 $this->database,
                 $this->charset
             );
