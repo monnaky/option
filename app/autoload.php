@@ -64,6 +64,7 @@ spl_autoload_register(function ($class) {
 require_once APP_PATH . '/helpers.php';
 
 // Load core classes directly (for backward compatibility)
+// IMPORTANT: Load WebSocketClient BEFORE DerivAPI since DerivAPI depends on it
 require_once CONFIG_PATH . '/Database.php';
 require_once MIDDLEWARE_PATH . '/Authentication.php';
 require_once MIDDLEWARE_PATH . '/AuthMiddleware.php';
@@ -72,6 +73,7 @@ require_once MIDDLEWARE_PATH . '/CSRFProtection.php';
 require_once MIDDLEWARE_PATH . '/SecurityMiddleware.php';
 require_once MIDDLEWARE_PATH . '/RateLimiter.php';
 require_once SERVICES_PATH . '/EncryptionService.php';
+require_once SERVICES_PATH . '/WebSocketClient.php'; // Load before DerivAPI
 require_once SERVICES_PATH . '/DerivAPI.php';
 require_once SERVICES_PATH . '/TradingBotService.php';
 require_once SERVICES_PATH . '/SignalService.php';

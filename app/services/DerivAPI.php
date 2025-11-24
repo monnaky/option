@@ -50,9 +50,13 @@ class DerivAPI
         $this->appId = $appId ?? ($_ENV['DERIV_APP_ID'] ?? '1089');
         
         // Get WebSocket host from environment or use default
-        $this->wsHost = $_ENV['DERIV_WS_HOST'] ?? 'ws.derivws.com';
+        $wsHostRaw = $_ENV['DERIV_WS_HOST'] ?? 'ws.derivws.com';
         
-        // Build WebSocket URL
+        // Clean host - remove protocol if present, remove trailing slashes
+        $this->wsHost = preg_replace('#^https?://#', '', trim($wsHostRaw, '/'));
+        
+        // Build WebSocket URL - ensure no duplicate protocols or paths
+        // Format: wss://host/path?query
         $this->wsUrl = "wss://{$this->wsHost}/websockets/v3?app_id={$this->appId}";
         
         error_log("[DerivAPI] Constructor - Building WebSocket URL");

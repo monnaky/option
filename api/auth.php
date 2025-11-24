@@ -133,7 +133,7 @@ function handleRegister()
             'stake' => 1.00,
             'target' => 100.00,
             'stop_limit' => 50.00,
-            'is_bot_active' => false,
+            'is_bot_active' => 0, // Use integer 0/1 for MySQL BOOLEAN
             'daily_profit' => 0.00,
             'daily_loss' => 0.00,
             'reset_date' => $tomorrow,

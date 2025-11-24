@@ -92,7 +92,7 @@ class DatabaseHelper
                 'stake' => 1.00,
                 'target' => 100.00,
                 'stop_limit' => 50.00,
-                'is_bot_active' => false,
+                'is_bot_active' => 0, // Use integer 0/1 for MySQL BOOLEAN
                 'daily_profit' => 0.00,
                 'daily_loss' => 0.00,
                 'reset_date' => $tomorrow,
@@ -115,6 +115,11 @@ class DatabaseHelper
         
         if (empty($data)) {
             return false;
+        }
+        
+        // Convert boolean values to integers for MySQL BOOLEAN type
+        if (isset($data['is_bot_active'])) {
+            $data['is_bot_active'] = $data['is_bot_active'] ? 1 : 0;
         }
         
         return $this->db->update('settings', $data, ['user_id' => $userId]) > 0;
