@@ -143,11 +143,50 @@ function handleExecuteSignal(int $userId)
 
 /**
  * Handle receive signal (public endpoint for signal providers)
- * No authentication required - uses API key or IP whitelist
+ * Requires API key authentication via X-API-Key header
  */
 function handleReceiveSignal()
 {
     try {
+        // ========================================================================
+        // API KEY AUTHENTICATION
+        // ========================================================================
+        
+        // Get expected API key from environment
+        $expectedApiKey = getenv('SIGNAL_API_KEY');
+        
+        // Check if API key is configured in environment
+        if (empty($expectedApiKey)) {
+            error_log('SIGNAL_API_KEY environment variable is not set');
+            Response::error('API key authentication is not properly configured', 500);
+        }
+        
+        // Get API key from request header
+        $providedApiKey = $_SERVER['HTTP_X_API_KEY'] ?? 
+                         $_SERVER['X-API-Key'] ?? 
+                         $_GET['api_key'] ?? 
+                         $_POST['api_key'] ?? 
+                         null;
+        
+        // Check if API key was provided
+        if (empty($providedApiKey)) {
+            error_log('Signal reception attempt without API key');
+            Response::error('API key is required. Please provide X-API-Key header.', 401);
+        }
+        
+        // Validate API key using secure comparison (prevents timing attacks)
+        if (!hash_equals($expectedApiKey, $providedApiKey)) {
+            error_log('Signal reception attempt with invalid API key');
+            Response::error('Invalid API key', 401);
+        }
+        
+        // API key validated successfully
+        error_log('Signal reception request authenticated successfully');
+        
+        // ========================================================================
+        // SIGNAL DATA PROCESSING
+        // ========================================================================
+        
         // Get request data
         $data = json_decode(file_get_contents('php://input'), true);
         
