@@ -46,25 +46,54 @@ class DerivAPI
         $this->apiToken = $apiToken;
         $this->userId = $userId;
         
-        // Get app ID from environment or use provided
-        $this->appId = $appId ?? ($_ENV['DERIV_APP_ID'] ?? '1089');
+        // Get app ID - try multiple sources for reliability
+        // Priority: 1) Provided parameter, 2) getenv() (most reliable in Docker), 3) $_ENV, 4) Constant, 5) Default
+        if ($appId !== null && !empty($appId)) {
+            $this->appId = $appId;
+        } else {
+            $this->appId = getenv('DERIV_APP_ID') ?: 
+                          ($_ENV['DERIV_APP_ID'] ?? 
+                          (defined('DERIV_APP_ID') ? DERIV_APP_ID : '105326'));
+        }
         
-        // Get WebSocket host from environment or use default
-        $wsHostRaw = $_ENV['DERIV_WS_HOST'] ?? 'ws.derivws.com';
+        // Validate app ID is not empty
+        if (empty($this->appId)) {
+            throw new Exception("DERIV_APP_ID is required but not configured. Please set DERIV_APP_ID environment variable.");
+        }
+        
+        // Get WebSocket host - try multiple sources for reliability
+        // Priority: 1) getenv() (most reliable in Docker), 2) $_ENV, 3) Constant, 4) Default
+        $wsHostRaw = getenv('DERIV_WS_HOST') ?: 
+                    ($_ENV['DERIV_WS_HOST'] ?? 
+                    (defined('DERIV_WS_HOST') ? DERIV_WS_HOST : 'ws.derivws.com'));
         
         // Clean host - remove protocol if present, remove trailing slashes
         $this->wsHost = preg_replace('#^https?://#', '', trim($wsHostRaw, '/'));
         
-        // Build WebSocket URL - ensure no duplicate protocols or paths
-        // Format: wss://host/path?query
+        // Validate host is not empty
+        if (empty($this->wsHost)) {
+            throw new Exception("DERIV_WS_HOST is required but not configured. Please set DERIV_WS_HOST environment variable.");
+        }
+        
+        // Build WebSocket URL with app_id parameter (REQUIRED for authentication)
+        // Format: wss://host/path?app_id=XXXXX
+        // CRITICAL: app_id must be in the URL query string for Deriv API authentication
         $this->wsUrl = "wss://{$this->wsHost}/websockets/v3?app_id={$this->appId}";
         
+        // Validate URL is properly constructed
+        if (empty($this->wsUrl) || strpos($this->wsUrl, 'app_id=') === false) {
+            throw new Exception("Failed to construct WebSocket URL with app_id. URL: {$this->wsUrl}, App ID: {$this->appId}");
+        }
+        
         error_log("[DerivAPI] Constructor - Building WebSocket URL");
+        error_log("[DerivAPI] Environment check - getenv('DERIV_APP_ID'): " . var_export(getenv('DERIV_APP_ID'), true));
+        error_log("[DerivAPI] Environment check - \$_ENV['DERIV_APP_ID']: " . var_export($_ENV['DERIV_APP_ID'] ?? 'NOT SET', true));
+        error_log("[DerivAPI] Environment check - DERIV_APP_ID constant: " . (defined('DERIV_APP_ID') ? DERIV_APP_ID : 'NOT DEFINED'));
+        error_log("[DerivAPI] Final appId: " . var_export($this->appId, true));
         error_log("[DerivAPI] wsHost: " . var_export($this->wsHost, true));
-        error_log("[DerivAPI] appId: " . var_export($this->appId, true));
         error_log("[DerivAPI] Final wsUrl: " . var_export($this->wsUrl, true));
+        error_log("[DerivAPI] wsUrl contains app_id: " . (strpos($this->wsUrl, 'app_id=') !== false ? 'YES' : 'NO - ERROR!'));
         error_log("[DerivAPI] wsUrl length: " . strlen($this->wsUrl));
-        error_log("[DerivAPI] wsUrl empty check: " . (empty($this->wsUrl) ? 'YES - ERROR!' : 'NO - OK'));
         error_log("DerivAPI initialized: {$this->wsUrl}, App ID: {$this->appId}");
     }
     
