@@ -329,7 +329,7 @@ class DatabaseHelper
             'raw_text' => $signalData['raw_text'],
             'source' => $signalData['source'] ?? 'api',
             'source_ip' => $signalData['source_ip'] ?? null,
-            'processed' => false,
+            'processed' => 0, // Use integer 0 instead of boolean false for MySQL TINYINT(1)
             'timestamp' => date('Y-m-d H:i:s'),
         ];
         
@@ -357,7 +357,7 @@ class DatabaseHelper
     public function markSignalAsProcessed(int $signalId, int $totalUsers, int $successfulExecutions, int $failedExecutions, ?int $executionTime = null): bool
     {
         $data = [
-            'processed' => true,
+            'processed' => 1, // Use integer 1 instead of boolean true for MySQL TINYINT(1)
             'processed_at' => date('Y-m-d H:i:s'),
             'total_users' => $totalUsers,
             'successful_executions' => $successfulExecutions,
