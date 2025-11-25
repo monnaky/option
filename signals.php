@@ -1,5 +1,5 @@
 <?php
-// signals.php - Temporary connection test
+
 if (empty($_POST["text"])) die("failed... text not specified...");
 
 $text = $_POST["text"];
@@ -10,5 +10,5 @@ fwrite($file, $text);
 
 fclose($file);
 
-echo "success: " . $text;
+
 ?>
