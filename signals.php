@@ -10,9 +10,4 @@ fwrite($file, $text);
 
 fclose($file);
 
-
-<<<<<<< HEAD
 ?>
-=======
-?>
->>>>>>> b079ae2bce3f692310bb9df3e6a7b23f4b34965c
