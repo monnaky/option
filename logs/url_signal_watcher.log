@@ -1,0 +1,4 @@
+[2025-11-27 12:20:52] [INFO] URL watcher online. Source=https://vtmoption.com/getSignal.txt, clear=https://vtmoption.com/signals.php?action=clear, interval=2s
+[2025-11-27 12:20:53] [DEBUG] Poll ok: code=200 len=0 last_mod=2025-11-27T12:15:36+00:00 etag="692840e8-0" hash=EMPTY
+[2025-11-27 12:20:56] [DEBUG] Poll ok: code=200 len=0 last_mod=2025-11-27T12:15:36+00:00 etag="692840e8-0" hash=EMPTY
+[2025-11-27 12:20:59] [DEBUG] Poll ok: code=200 len=0 last_mod=2025-11-27T12:15:36+00:00 etag="692840e8-0" hash=EMPTY
