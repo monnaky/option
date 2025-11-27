@@ -16,7 +16,6 @@ ignore_user_abort(true);
 $scriptDir = __DIR__;
 $appRoot = dirname($scriptDir);
 
-$SIGNAL_FILE = $appRoot . '/getSignal.txt';
 $PROCESSOR = $scriptDir . '/file_signal_processor.php';
 $LOG_DIR = $appRoot . '/logs';
 $LOG_FILE = $LOG_DIR . '/file_signal_watcher_debug.log';
@@ -83,6 +82,9 @@ if (!is_readable($bootstrapPath)) {
 require_once $configPath;
 require_once $bootstrapPath;
 
+vtm_signal_ensure_paths();
+$SIGNAL_FILE = vtm_signal_primary_path();
+
 $shutdown = false;
 if (function_exists('pcntl_signal')) {
     pcntl_signal(SIGTERM, function () use (&$shutdown) {
@@ -99,11 +101,6 @@ if (function_exists('pcntl_signal')) {
 if (!file_exists($PROCESSOR)) {
     logMessage('ERROR', "Processor script not found: $PROCESSOR");
     exit(1);
-}
-
-if (!file_exists($SIGNAL_FILE)) {
-    logMessage('WARN', "Signal file missing - creating empty file at $SIGNAL_FILE");
-    @touch($SIGNAL_FILE);
 }
 
 logMessage('INFO', "DEBUG watcher online. File: $SIGNAL_FILE");

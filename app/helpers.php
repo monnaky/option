@@ -82,6 +82,99 @@ function url($path = '') {
 }
 
 /**
+ * Signal storage helpers
+ */
+if (!function_exists('vtm_signal_root_path')) {
+    function vtm_signal_root_path(): string {
+        static $rootPath = null;
+        if ($rootPath === null) {
+            $rootPath = dirname(__DIR__);
+        }
+        return $rootPath;
+    }
+}
+
+if (!function_exists('vtm_signal_primary_path')) {
+    function vtm_signal_primary_path(): string {
+        $envPath = getenv('SIGNAL_FILE_PRIMARY');
+        if (!empty($envPath)) {
+            return $envPath;
+        }
+        $tmpDir = sys_get_temp_dir();
+        return rtrim($tmpDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'vtm_getSignal.txt';
+    }
+}
+
+if (!function_exists('vtm_signal_public_path')) {
+    function vtm_signal_public_path(): string {
+        $envPath = getenv('SIGNAL_FILE_PUBLIC');
+        if (!empty($envPath)) {
+            return $envPath;
+        }
+        return vtm_signal_root_path() . DIRECTORY_SEPARATOR . 'getSignal.txt';
+    }
+}
+
+if (!function_exists('vtm_signal_ensure_paths')) {
+    function vtm_signal_ensure_paths(): void {
+        foreach ([vtm_signal_primary_path(), vtm_signal_public_path()] as $path) {
+            $dir = dirname($path);
+            if (!is_dir($dir)) {
+                @mkdir($dir, 0755, true);
+            }
+            if (!file_exists($path)) {
+                @touch($path);
+            }
+            @chmod($path, 0666);
+        }
+    }
+}
+
+if (!function_exists('vtm_signal_sync_public')) {
+    function vtm_signal_sync_public(string $content): bool {
+        $publicPath = vtm_signal_public_path();
+        $result = @file_put_contents($publicPath, $content, LOCK_EX);
+        if ($result === false) {
+            return false;
+        }
+        @chmod($publicPath, 0666);
+        return true;
+    }
+}
+
+if (!function_exists('vtm_signal_write')) {
+    function vtm_signal_write(string $content): bool {
+        vtm_signal_ensure_paths();
+        $primaryPath = vtm_signal_primary_path();
+        $result = @file_put_contents($primaryPath, $content, LOCK_EX);
+        if ($result === false) {
+            return false;
+        }
+        @chmod($primaryPath, 0666);
+        vtm_signal_sync_public($content);
+        return true;
+    }
+}
+
+if (!function_exists('vtm_signal_read')) {
+    function vtm_signal_read(): ?string {
+        vtm_signal_ensure_paths();
+        $primaryPath = vtm_signal_primary_path();
+        $content = @file_get_contents($primaryPath);
+        if ($content === false) {
+            return null;
+        }
+        return $content;
+    }
+}
+
+if (!function_exists('vtm_signal_clear')) {
+    function vtm_signal_clear(): bool {
+        return vtm_signal_write('');
+    }
+}
+
+/**
  * Get API URL
  * 
  * @param string $endpoint API endpoint

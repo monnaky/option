@@ -28,8 +28,10 @@ require_once __DIR__ . '/../app/bootstrap.php';
 
 use App\Services\SignalService;
 
-// Path to the signal file written by the MT5 bridge
-$signalFile = __DIR__ . '/../getSignal.txt';
+vtm_signal_ensure_paths();
+
+// Path to the signal file written by the MT5 bridge (now in /tmp by default)
+$signalFile = vtm_signal_primary_path();
 
 // If file does not exist, nothing to do
 if (!file_exists($signalFile)) {

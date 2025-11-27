@@ -1,39 +1,47 @@
 <?php
 
+require_once __DIR__ . '/app/helpers.php';
+
 $action = $_GET['action'] ?? $_POST['action'] ?? '';
+vtm_signal_ensure_paths();
 
 if ($action === 'clear') {
-    $path = __DIR__ . '/getSignal.txt';
-    if (!file_exists($path)) {
-        @touch($path);
-    }
-
-    $result = @file_put_contents($path, '');
-
+    $cleared = vtm_signal_clear();
     header('Content-Type: application/json');
-    if ($result === false) {
+    if (!$cleared) {
         http_response_code(500);
         echo json_encode([
             'success' => false,
-            'message' => 'Failed to clear getSignal.txt',
+            'message' => 'Failed to clear signal buffer',
         ]);
     } else {
         echo json_encode([
             'success' => true,
-            'message' => 'Signal file cleared',
+            'message' => 'Signal buffer cleared',
         ]);
     }
     exit;
 }
 
-if (empty($_POST["text"])) die("failed... text not specified...");
+if (empty($_POST["text"])) {
+    http_response_code(400);
+    die("failed... text not specified...");
+}
 
-$text = $_POST["text"];
+$text = trim($_POST["text"]);
 
-$file = fopen("getSignal.txt", "w") or die("failed... unable to open file");
+if ($text === '') {
+    http_response_code(400);
+    die("failed... empty signal payload");
+}
 
-fwrite($file, $text);
+if (!vtm_signal_write($text)) {
+    http_response_code(500);
+    die("failed... unable to persist signal");
+}
 
-fclose($file);
+@chmod(vtm_signal_public_path(), 0666);
+
+echo "success";
 
 ?>

@@ -41,7 +41,6 @@ $scriptDir = __DIR__;
 $appRoot = dirname($scriptDir);
 
 // Paths and logging setup
-$SIGNAL_FILE = $appRoot . '/getSignal.txt';
 $PROCESSOR = $scriptDir . '/file_signal_processor.php';
 $LOG_DIR = $appRoot . '/logs';
 $LOG_FILE = $LOG_DIR . '/file_signal_watcher.log';
@@ -109,6 +108,9 @@ if (!is_readable($bootstrapPath)) {
 
 require_once $configPath;
 require_once $bootstrapPath;
+
+vtm_signal_ensure_paths();
+$SIGNAL_FILE = vtm_signal_primary_path();
 
 // Signal handler for graceful shutdown
 $shutdown = false;
