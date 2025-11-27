@@ -11,10 +11,21 @@ namespace App\Middleware;
 class SecurityMiddleware
 {
     /**
+     * Detect CLI context to avoid sending HTTP-specific headers.
+     */
+    private static function isCliRequest(): bool
+    {
+        return PHP_SAPI === 'cli' || defined('STDIN');
+    }
+
+    /**
      * Apply security headers
      */
     public static function applySecurityHeaders(): void
     {
+        if (self::isCliRequest()) {
+            return;
+        }
         // Prevent MIME type sniffing
         header('X-Content-Type-Options: nosniff');
         
@@ -49,6 +60,10 @@ class SecurityMiddleware
      */
     public static function handleCORS(): void
     {
+        if (self::isCliRequest()) {
+            return;
+        }
+
         $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
         
         // Get allowed origins
@@ -74,7 +89,8 @@ class SecurityMiddleware
         }
         
         // Handle preflight requests
-        if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+        $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+        if ($method === 'OPTIONS') {
             header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
             header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With, X-CSRF-Token');
             header('Access-Control-Max-Age: 86400'); // 24 hours
@@ -105,6 +121,10 @@ class SecurityMiddleware
      */
     public static function requireHTTPS(): void
     {
+        if (self::isCliRequest()) {
+            return;
+        }
+
         // Skip HTTPS redirect in development
         if (($_ENV['APP_ENV'] ?? 'development') === 'development') {
             return;
@@ -129,6 +149,10 @@ class SecurityMiddleware
      */
     public static function applyAll(): void
     {
+        if (self::isCliRequest()) {
+            return;
+        }
+
         self::requireHTTPS();
         self::applySecurityHeaders();
         self::handleCORS();

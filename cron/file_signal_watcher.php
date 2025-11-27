@@ -40,24 +40,22 @@ ignore_user_abort(true);
 $scriptDir = __DIR__;
 $appRoot = dirname($scriptDir);
 
-require_once $appRoot . '/config.php';
-require_once $appRoot . '/app/bootstrap.php';
-
-// Configuration
+// Paths and logging setup
 $SIGNAL_FILE = $appRoot . '/getSignal.txt';
 $PROCESSOR = $scriptDir . '/file_signal_processor.php';
 $LOG_DIR = $appRoot . '/logs';
 $LOG_FILE = $LOG_DIR . '/file_signal_watcher.log';
+$ERROR_LOG_FILE = $LOG_DIR . '/file_signal_watcher_error.log';
 $POLL_INTERVAL = 1; // Check every 1 second (adjustable)
 $MAX_ERRORS = 10; // Max consecutive errors before backoff
 $ERROR_BACKOFF = 5; // Seconds to wait after max errors
 
-// Ensure log directory exists
+// Ensure log directory exists as early as possible
 if (!is_dir($LOG_DIR)) {
     @mkdir($LOG_DIR, 0755, true);
 }
 
-// Logging function
+// Logging helper (available even before bootstrap is loaded)
 function logMessage($level, $message) {
     global $LOG_FILE;
     $timestamp = date('Y-m-d H:i:s');
@@ -68,6 +66,49 @@ function logMessage($level, $message) {
         fwrite(STDERR, $logEntry);
     }
 }
+
+// Route PHP errors/exceptions into watcher log for easier debugging
+ini_set('log_errors', '1');
+ini_set('display_errors', '1');
+ini_set('error_log', $ERROR_LOG_FILE);
+
+set_error_handler(function ($severity, $message, $file, $line) {
+    $level = in_array($severity, [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR], true)
+        ? 'ERROR'
+        : 'WARN';
+    logMessage($level, "PHP error: $message in $file on line $line");
+    return false; // Allow PHP's normal error handling to continue
+});
+
+set_exception_handler(function ($exception) {
+    logMessage('ERROR', 'Uncaught exception: ' . $exception->getMessage() . ' in ' .
+        $exception->getFile() . ' on line ' . $exception->getLine());
+});
+
+register_shutdown_function(function () {
+    $error = error_get_last();
+    if ($error !== null) {
+        logMessage('ERROR', 'Fatal shutdown error: ' . $error['message'] .
+            ' in ' . $error['file'] . ' on line ' . $error['line']);
+    }
+});
+
+// Load application bootstrap
+$configPath = $appRoot . '/config.php';
+$bootstrapPath = $appRoot . '/app/bootstrap.php';
+
+if (!is_readable($configPath)) {
+    logMessage('ERROR', "Config file missing or unreadable: $configPath");
+    exit(1);
+}
+
+if (!is_readable($bootstrapPath)) {
+    logMessage('ERROR', "Bootstrap file missing or unreadable: $bootstrapPath");
+    exit(1);
+}
+
+require_once $configPath;
+require_once $bootstrapPath;
 
 // Signal handler for graceful shutdown
 $shutdown = false;

@@ -40181,3 +40181,4 @@ Step 4: Falling back to authorize()
   - Final balance: 108.88
 === DerivAPI::getBalance SUCCESS (authorize fallback) ===
 [19-Nov-2025 04:07:32 UTC] Trading started for user 1. Balance: 108.88
+[27-Nov-2025 09:01:07 UTC] PHP Warning:  Undefined array key "REQUEST_METHOD" in C:\xampp\htdocs\option\app\middleware\SecurityMiddleware.php on line 77
