@@ -157,11 +157,15 @@ while (!$shutdown) {
             'timestamp' => $parsed['timestamp'],
         ]);
 
-        if (!empty($result['success'])) {
+        $isDuplicate = isset($result['error']) && stripos($result['error'], 'duplicate') !== false;
+
+        if (!empty($result['success']) || $isDuplicate) {
             logMessage(
                 'INFO',
                 sprintf(
-                    'Signal processed: type=%s asset=%s signal_id=%s users=%s',
+                    $isDuplicate
+                        ? 'Signal duplicate acknowledged: type=%s asset=%s signal_id=%s users=%s'
+                        : 'Signal processed: type=%s asset=%s signal_id=%s users=%s',
                     $parsed['type'],
                     $parsed['asset'],
                     $result['signal_id'] ?? 'n/a',
