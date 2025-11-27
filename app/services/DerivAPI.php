@@ -486,31 +486,31 @@ class DerivAPI
             $debugLog[] = "  - isConnected(): " . ($this->isConnected() ? 'true' : 'false');
             $debugLog[] = "  - isAuthorized: " . ($this->isAuthorized ? 'true' : 'false');
             
-            // Try to get balance via account endpoint
-            $debugLog[] = "Step 3: Trying account endpoint";
+            // Try to get balance via official balance endpoint
+            $debugLog[] = "Step 3: Calling balance endpoint";
             try {
-                $requestParams = ['account' => 1];
+                $requestParams = ['balance' => 1];
                 $debugLog[] = "  - Request params: " . json_encode($requestParams);
-                $debugLog[] = "  - Sending account request";
+                $debugLog[] = "  - Sending balance request";
                 
-                $response = $this->sendRequest('account', $requestParams);
+                $response = $this->sendRequest('balance', $requestParams);
                 
                 $debugLog[] = "  - Response received";
                 $debugLog[] = "  - Response keys: " . implode(', ', array_keys($response));
                 $debugLog[] = "  - Full response: " . json_encode($response);
                 
-                if (isset($response['account']['balance'])) {
-                    $balance = (float)$response['account']['balance'];
+                if (isset($response['balance']['balance'])) {
+                    $balance = (float)$response['balance']['balance'];
                     $debugLog[] = "  - Balance extracted: " . $balance;
-                    $debugLog[] = "=== DerivAPI::getBalance SUCCESS (account endpoint) ===";
+                    $debugLog[] = "=== DerivAPI::getBalance SUCCESS (balance endpoint) ===";
                     @error_log("[DerivAPI::getBalance] " . implode("\n", $debugLog));
                     return $balance;
                 } else {
-                    $debugLog[] = "  - No balance in account response";
+                    $debugLog[] = "  - No balance in response";
                     $debugLog[] = "  - Response structure: " . json_encode($response);
                 }
             } catch (Exception $e) {
-                $debugLog[] = "  - Account endpoint FAILED: " . $e->getMessage();
+                $debugLog[] = "  - Balance endpoint FAILED: " . $e->getMessage();
                 $debugLog[] = "  - Error type: " . get_class($e);
                 $debugLog[] = "  - Error trace: " . substr($e->getTraceAsString(), 0, 500);
             }
@@ -567,7 +567,36 @@ class DerivAPI
     }
     
     /**
-     * Place a trade (buy contract)
+     * Request a trade proposal (required before buy)
+     */
+    public function createProposal(
+        string $symbol,
+        string $contractType,
+        float $amount,
+        int $duration = 5,
+        string $durationUnit = 't'
+    ): array {
+        $payload = [
+            'proposal' => 1,
+            'amount' => $amount,
+            'basis' => 'stake',
+            'contract_type' => $contractType,
+            'currency' => $this->authData['currency'] ?? 'USD',
+            'duration' => $duration,
+            'duration_unit' => $durationUnit,
+            'symbol' => $symbol,
+        ];
+        
+        $response = $this->sendRequest('proposal', $payload);
+        if (!isset($response['proposal'])) {
+            throw new Exception('Proposal request failed');
+        }
+        
+        return $response['proposal'];
+    }
+    
+    /**
+     * Place a trade (buy contract) using proposal_id
      */
     public function buyContract(
         string $symbol,
@@ -577,13 +606,18 @@ class DerivAPI
         string $durationUnit = 't'
     ): array {
         try {
+            $proposal = $this->createProposal($symbol, $contractType, $amount, $duration, $durationUnit);
+            $proposalId = $proposal['proposal_id'] ?? null;
+            
+            if (!$proposalId) {
+                throw new Exception('Proposal ID missing from response');
+            }
+            
+            error_log("[DerivAPI] Proposal created for {$symbol} {$contractType} amount {$amount}: {$proposalId}");
+            
             $response = $this->sendRequest('buy', [
-                'buy' => 1,
+                'buy' => $proposalId,
                 'price' => $amount,
-                'contract_type' => $contractType,
-                'symbol' => $symbol,
-                'duration' => $duration,
-                'duration_unit' => $durationUnit,
             ]);
             
             if (!isset($response['buy'])) {
@@ -596,7 +630,7 @@ class DerivAPI
                 'contract_id' => (int)($buyData['contract_id'] ?? 0),
                 'buy_price' => (float)($buyData['buy_price'] ?? 0),
                 'sell_price' => (float)($buyData['sell_price'] ?? 0),
-                'currency' => $buyData['currency'] ?? 'USD',
+                'currency' => $buyData['currency'] ?? ($proposal['currency'] ?? 'USD'),
                 'date_start' => $buyData['date_start'] ?? 0,
                 'date_expiry' => $buyData['date_expiry'] ?? 0,
                 'tick_count' => (int)($buyData['tick_count'] ?? 0),
@@ -604,11 +638,8 @@ class DerivAPI
                 'current_spot_time' => $buyData['current_spot_time'] ?? 0,
                 'entry_tick' => $buyData['entry_tick'] ?? 0,
                 'entry_tick_time' => $buyData['entry_tick_time'] ?? 0,
-                'profit' => 0,
-                'status' => 'open',
-                'is_expired' => 0,
-                'is_settleable' => 0,
-                'is_sold' => 0,
+                'proposal_id' => $proposalId,
+                'raw_proposal' => $proposal,
             ];
             
         } catch (Exception $e) {

@@ -334,6 +334,7 @@ class TradingBotService
         $derivApi = new DerivAPI($apiToken, null, (string)$userId);
         
         try {
+            error_log("[TradingBot] executeTrade user={$userId} session={$session['id']} direction={$directionLabel} asset={$asset} stake={$settings['stake']}");
             // Get available assets
             $assets = $derivApi->getAvailableAssets();
             
@@ -351,7 +352,7 @@ class TradingBotService
             // Duration: 5 ticks for faster results
             $duration = 5;
             
-            // Place trade
+            // Place trade (proposal + buy handled by DerivAPI)
             $contract = $derivApi->buyContract(
                 $asset,
                 $direction,
@@ -390,7 +391,7 @@ class TradingBotService
             // Schedule contract monitoring (via cron or immediate check)
             $this->scheduleContractMonitoring($userId, $contract['contract_id'], $tradeRecordId);
             
-            error_log("Trade placed for user {$userId}: {$directionLabel} on {$asset} for $" . $settings['stake'] . " (Contract: {$contract['contract_id']})");
+            error_log("[TradingBot] Trade placed user={$userId} contract={$contract['contract_id']} asset={$asset} dir={$directionLabel} stake={$settings['stake']}");
             
         } finally {
             // Close API connection
@@ -433,6 +434,7 @@ class TradingBotService
         $derivApi = new DerivAPI($apiToken, null, (string)$userId);
         
         try {
+            error_log("[TradingBot] executeSignalTrade user={$userId} direction={$direction} asset=" . ($asset ?? 'auto') . " stake={$settings['stake']}");
             // Get asset if not specified
             if (!$asset) {
                 $assets = $derivApi->getAvailableAssets();
@@ -486,6 +488,8 @@ class TradingBotService
             
             // Schedule contract monitoring
             $this->scheduleContractMonitoring($userId, $contract['contract_id'], $tradeRecordId);
+            
+            error_log("[TradingBot] Signal trade placed user={$userId} contract={$contract['contract_id']} asset={$asset} dir={$direction}");
             
             return [
                 'trade_id' => $tradeId,

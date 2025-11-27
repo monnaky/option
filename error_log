@@ -40182,3 +40182,10 @@ Step 4: Falling back to authorize()
 === DerivAPI::getBalance SUCCESS (authorize fallback) ===
 [19-Nov-2025 04:07:32 UTC] Trading started for user 1. Balance: 108.88
 [27-Nov-2025 09:01:07 UTC] PHP Warning:  Undefined array key "REQUEST_METHOD" in C:\xampp\htdocs\option\app\middleware\SecurityMiddleware.php on line 77
+[27-Nov-2025 14:45:28 UTC] PHP Fatal error:  Uncaught Exception: Database connection failed: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it in C:\xampp\htdocs\option\app\config\Database.php:88
+Stack trace:
+#0 C:\xampp\htdocs\option\app\config\Database.php(59): App\Config\Database->connect()
+#1 C:\xampp\htdocs\option\app\config\Database.php(106): App\Config\Database->getConnection()
+#2 Command line code(1): App\Config\Database->query('SELECT state, C...')
+#3 {main}
+  thrown in C:\xampp\htdocs\option\app\config\Database.php on line 88
