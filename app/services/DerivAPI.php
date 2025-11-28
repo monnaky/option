@@ -567,36 +567,125 @@ class DerivAPI
     }
     
     /**
+     * Get contracts for a symbol (required before proposal)
+     * Returns available contract details including barrier information
+     */
+    public function getContractsFor(string $symbol): array
+    {
+        $logPrefix = "[DerivAPI::getContractsFor]";
+        error_log("{$logPrefix} START - symbol={$symbol}");
+        
+        try {
+            $payload = [
+                'contracts_for' => $symbol,
+            ];
+            
+            error_log("{$logPrefix} Sending contracts_for request for symbol: {$symbol}");
+            $response = $this->sendRequest('contracts_for', $payload);
+            
+            if (!isset($response['contracts_for'])) {
+                $error = 'Contracts_for request failed - response missing contracts_for key';
+                error_log("{$logPrefix} ERROR: {$error}");
+                error_log("{$logPrefix} Response keys: " . implode(', ', array_keys($response)));
+                throw new Exception($error);
+            }
+            
+            $contracts = $response['contracts_for'];
+            
+            if (empty($contracts)) {
+                $error = "No contracts available for symbol: {$symbol}";
+                error_log("{$logPrefix} ERROR: {$error}");
+                throw new Exception($error);
+            }
+            
+            error_log("{$logPrefix} SUCCESS - Found " . count($contracts) . " contract(s) for {$symbol}");
+            
+            return $contracts;
+            
+        } catch (Exception $e) {
+            $error = "Failed to get contracts for {$symbol}: " . $e->getMessage();
+            error_log("{$logPrefix} ERROR: {$error}");
+            error_log("{$logPrefix} Exception trace: " . $e->getTraceAsString());
+            throw new Exception($error, 0, $e);
+        }
+    }
+    
+    /**
      * Request a trade proposal (required before buy)
+     * Now includes barrier parameter from contracts_for
      */
     public function createProposal(
         string $symbol,
         string $contractType,
         float $amount,
         int $duration = 5,
-        string $durationUnit = 't'
+        string $durationUnit = 't',
+        ?float $barrier = null
     ): array {
-        $payload = [
-            'proposal' => 1,
-            'amount' => $amount,
-            'basis' => 'stake',
-            'contract_type' => $contractType,
-            'currency' => $this->authData['currency'] ?? 'USD',
-            'duration' => $duration,
-            'duration_unit' => $durationUnit,
-            'symbol' => $symbol,
-        ];
+        $logPrefix = "[DerivAPI::createProposal]";
+        error_log("{$logPrefix} START - symbol={$symbol} type={$contractType} amount={$amount} duration={$duration} barrier=" . ($barrier ?? 'null'));
         
-        $response = $this->sendRequest('proposal', $payload);
-        if (!isset($response['proposal'])) {
-            throw new Exception('Proposal request failed');
+        try {
+            $payload = [
+                'proposal' => 1,
+                'amount' => $amount,
+                'basis' => 'stake',
+                'contract_type' => $contractType,
+                'currency' => $this->authData['currency'] ?? 'USD',
+                'duration' => $duration,
+                'duration_unit' => $durationUnit,
+                'symbol' => $symbol,
+            ];
+            
+            // Add barrier if provided (required for some contract types)
+            if ($barrier !== null) {
+                $payload['barrier'] = $barrier;
+                error_log("{$logPrefix} Added barrier parameter: {$barrier}");
+            }
+            
+            error_log("{$logPrefix} Sending proposal request");
+            $response = $this->sendRequest('proposal', $payload);
+            
+            if (!isset($response['proposal'])) {
+                $error = 'Proposal request failed - response missing proposal key';
+                error_log("{$logPrefix} ERROR: {$error}");
+                error_log("{$logPrefix} Response keys: " . implode(', ', array_keys($response)));
+                if (isset($response['error'])) {
+                    $errorMsg = $response['error']['message'] ?? 'Unknown error';
+                    $errorCode = $response['error']['code'] ?? 'UNKNOWN';
+                    error_log("{$logPrefix} Deriv API error: {$errorMsg} ({$errorCode})");
+                    throw new Exception("Proposal failed: {$errorMsg} ({$errorCode})");
+                }
+                throw new Exception($error);
+            }
+            
+            $proposal = $response['proposal'];
+            
+            if (empty($proposal['proposal_id'])) {
+                $error = 'Proposal response missing proposal_id';
+                error_log("{$logPrefix} ERROR: {$error}");
+                error_log("{$logPrefix} Proposal data: " . json_encode($proposal));
+                throw new Exception($error);
+            }
+            
+            error_log("{$logPrefix} SUCCESS - Proposal ID: {$proposal['proposal_id']}");
+            
+            return $proposal;
+            
+        } catch (Exception $e) {
+            $error = "Failed to create proposal: " . $e->getMessage();
+            error_log("{$logPrefix} ERROR: {$error}");
+            error_log("{$logPrefix} Exception trace: " . $e->getTraceAsString());
+            throw new Exception($error, 0, $e);
         }
-        
-        return $response['proposal'];
     }
     
     /**
-     * Place a trade (buy contract) using proposal_id
+     * Place a trade (buy contract) using the complete Deriv trading flow:
+     * 1. authorize (already done in constructor/ensureConnection)
+     * 2. contracts_for (get contract details including barrier)
+     * 3. proposal (with barrier parameter)
+     * 4. buy (with proposal_id)
      */
     public function buyContract(
         string $symbol,
@@ -605,26 +694,110 @@ class DerivAPI
         int $duration = 5,
         string $durationUnit = 't'
     ): array {
+        $logPrefix = "[DerivAPI::buyContract]";
+        error_log("{$logPrefix} START - symbol={$symbol} type={$contractType} amount={$amount} duration={$duration}");
+        
         try {
-            $proposal = $this->createProposal($symbol, $contractType, $amount, $duration, $durationUnit);
+            // Step 1: Ensure authorization (should already be done, but verify)
+            error_log("{$logPrefix} Step 1: Ensuring authorization");
+            if (!$this->isAuthorized) {
+                error_log("{$logPrefix} Not authorized, calling authorize()");
+                $this->authorize();
+            }
+            error_log("{$logPrefix} Step 1: OK - Authorized");
+            
+            // Step 2: Get contracts_for to retrieve contract details and barrier
+            error_log("{$logPrefix} Step 2: Getting contracts_for for symbol: {$symbol}");
+            $contracts = $this->getContractsFor($symbol);
+            
+            if (empty($contracts)) {
+                $error = "No contracts available for symbol: {$symbol}";
+                error_log("{$logPrefix} ERROR: {$error}");
+                throw new Exception($error);
+            }
+            
+            // Find the contract that matches our requirements
+            $selectedContract = null;
+            foreach ($contracts as $contract) {
+                // Match contract type (CALL/PUT)
+                $contractContractType = $contract['contract_type'] ?? '';
+                if (strtoupper($contractContractType) === strtoupper($contractType)) {
+                    $selectedContract = $contract;
+                    break;
+                }
+            }
+            
+            // If no exact match, use first contract
+            if (!$selectedContract && !empty($contracts)) {
+                $selectedContract = $contracts[0];
+                error_log("{$logPrefix} WARN: No exact contract type match, using first available contract");
+            }
+            
+            if (!$selectedContract) {
+                $error = "Could not find suitable contract for {$symbol} type {$contractType}";
+                error_log("{$logPrefix} ERROR: {$error}");
+                throw new Exception($error);
+            }
+            
+            // Extract barrier from contract details
+            $barrier = null;
+            if (isset($selectedContract['barrier'])) {
+                $barrier = (float)$selectedContract['barrier'];
+                error_log("{$logPrefix} Step 2: OK - Found barrier: {$barrier}");
+            } else {
+                error_log("{$logPrefix} Step 2: OK - No barrier required for this contract type");
+            }
+            
+            // Log contract details
+            error_log("{$logPrefix} Selected contract - Type: " . ($selectedContract['contract_type'] ?? 'N/A') . 
+                     ", Barrier: " . ($barrier ?? 'N/A') . 
+                     ", Available contracts: " . count($contracts));
+            
+            // Step 3: Create proposal with barrier
+            error_log("{$logPrefix} Step 3: Creating proposal with barrier");
+            $proposal = $this->createProposal($symbol, $contractType, $amount, $duration, $durationUnit, $barrier);
             $proposalId = $proposal['proposal_id'] ?? null;
             
             if (!$proposalId) {
-                throw new Exception('Proposal ID missing from response');
+                $error = 'Proposal ID missing from response';
+                error_log("{$logPrefix} ERROR: {$error}");
+                error_log("{$logPrefix} Proposal data: " . json_encode($proposal));
+                throw new Exception($error);
             }
             
-            error_log("[DerivAPI] Proposal created for {$symbol} {$contractType} amount {$amount}: {$proposalId}");
+            error_log("{$logPrefix} Step 3: OK - Proposal ID: {$proposalId}");
             
+            // Step 4: Buy contract using proposal_id
+            error_log("{$logPrefix} Step 4: Buying contract with proposal_id: {$proposalId}");
             $response = $this->sendRequest('buy', [
                 'buy' => $proposalId,
                 'price' => $amount,
             ]);
             
             if (!isset($response['buy'])) {
-                throw new Exception('Failed to place trade');
+                $error = 'Buy request failed - response missing buy key';
+                error_log("{$logPrefix} ERROR: {$error}");
+                error_log("{$logPrefix} Response keys: " . implode(', ', array_keys($response)));
+                if (isset($response['error'])) {
+                    $errorMsg = $response['error']['message'] ?? 'Unknown error';
+                    $errorCode = $response['error']['code'] ?? 'UNKNOWN';
+                    error_log("{$logPrefix} Deriv API error: {$errorMsg} ({$errorCode})");
+                    throw new Exception("Buy failed: {$errorMsg} ({$errorCode})");
+                }
+                throw new Exception($error);
             }
             
             $buyData = $response['buy'];
+            
+            if (empty($buyData['contract_id'])) {
+                $error = 'Buy response missing contract_id';
+                error_log("{$logPrefix} ERROR: {$error}");
+                error_log("{$logPrefix} Buy data: " . json_encode($buyData));
+                throw new Exception($error);
+            }
+            
+            error_log("{$logPrefix} Step 4: OK - Contract ID: {$buyData['contract_id']}");
+            error_log("{$logPrefix} SUCCESS - Trade placed: contract_id={$buyData['contract_id']} buy_price={$buyData['buy_price']}");
             
             return [
                 'contract_id' => (int)($buyData['contract_id'] ?? 0),
@@ -639,12 +812,16 @@ class DerivAPI
                 'entry_tick' => $buyData['entry_tick'] ?? 0,
                 'entry_tick_time' => $buyData['entry_tick_time'] ?? 0,
                 'proposal_id' => $proposalId,
+                'barrier' => $barrier,
                 'raw_proposal' => $proposal,
+                'raw_contracts_for' => $contracts,
             ];
             
         } catch (Exception $e) {
-            error_log('Buy contract error: ' . $e->getMessage());
-            throw $e;
+            $error = "Buy contract error: " . $e->getMessage();
+            error_log("{$logPrefix} FATAL ERROR: {$error}");
+            error_log("{$logPrefix} Exception trace: " . $e->getTraceAsString());
+            throw new Exception($error, 0, $e);
         }
     }
     
