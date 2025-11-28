@@ -168,30 +168,36 @@ if (file_exists(__DIR__ . '/app/autoload.php')) {
 /**
  * Get configuration value
  */
-function config(string $key, $default = null)
-{
-    $value = $_ENV[$key] ?? $default;
-    
-    // Convert string booleans to actual booleans
-    if ($value === 'true') return true;
-    if ($value === 'false') return false;
-    
-    return $value;
+if (!function_exists('config')) {
+    function config(string $key, $default = null)
+    {
+        $value = $_ENV[$key] ?? $default;
+        
+        // Convert string booleans to actual booleans
+        if ($value === 'true') return true;
+        if ($value === 'false') return false;
+        
+        return $value;
+    }
 }
 
 /**
  * Check if application is in production
  */
-function isProduction(): bool
-{
-    return APP_ENV === 'production';
+if (!function_exists('isProduction')) {
+    function isProduction(): bool
+    {
+        return defined('APP_ENV') && APP_ENV === 'production';
+    }
 }
 
 /**
  * Check if application is in development
  */
-function isDevelopment(): bool
-{
-    return APP_ENV === 'development';
+if (!function_exists('isDevelopment')) {
+    function isDevelopment(): bool
+    {
+        return defined('APP_ENV') && APP_ENV === 'development';
+    }
 }
 

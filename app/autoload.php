@@ -26,8 +26,9 @@ if (!defined('UTILS_PATH')) {
     define('UTILS_PATH', APP_ROOT . '/app/utils');
 }
 
-// Load configuration first
-if (file_exists(APP_ROOT . '/config.php')) {
+// Load configuration first (only if not already loaded)
+// NOTE: config.php includes autoload.php, so we check if constants are already defined
+if (!defined('APP_ENV') && file_exists(APP_ROOT . '/config.php')) {
     require_once APP_ROOT . '/config.php';
 }
 

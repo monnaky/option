@@ -7,12 +7,16 @@
  */
 
 // Load configuration (for shared hosting)
-if (file_exists(__DIR__ . '/../config.php')) {
+// Only load if not already loaded (prevents redeclaration errors)
+if (!defined('APP_ENV') && file_exists(__DIR__ . '/../config.php')) {
     require_once __DIR__ . '/../config.php';
 }
 
-// Load autoloader
-require_once __DIR__ . '/autoload.php';
+// Load autoloader (config.php already includes autoload.php, so this is safe)
+// But we check if constants are defined to avoid re-including config.php
+if (!defined('APP_PATH') && file_exists(__DIR__ . '/autoload.php')) {
+    require_once __DIR__ . '/autoload.php';
+}
 
 // Start secure session
 require_once __DIR__ . '/middleware/Authentication.php';
