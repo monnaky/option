@@ -254,12 +254,19 @@ class SignalService
             
             // Process users in batches
             $batches = array_chunk($activeUsers, self::BATCH_SIZE);
+            error_log("Processing {$totalUsers} users in " . count($batches) . " batch(es)");
             
-            foreach ($batches as $batch) {
-                foreach ($batch as $user) {
+            foreach ($batches as $batchIndex => $batch) {
+                error_log("Processing batch " . ($batchIndex + 1) . " of " . count($batches) . " (" . count($batch) . " users)");
+                
+                foreach ($batch as $userIndex => $user) {
+                    $userId = (int)$user['id'];
+                    $userEmail = $user['email'] ?? 'unknown';
+                    error_log("Processing user {$userId} ({$userEmail}) - " . ($userIndex + 1) . " of " . count($batch) . " in batch");
+                    
                     try {
                         $result = $this->executeSignalForUser(
-                            (int)$user['id'],
+                            $userId,
                             $signalType,
                             $asset
                         );
@@ -268,16 +275,27 @@ class SignalService
                         
                         if ($result['success']) {
                             $successfulExecutions++;
+                            error_log("User {$userId} trade execution SUCCESS - trade_id: " . ($result['trade_id'] ?? 'N/A'));
                         } else {
                             $failedExecutions++;
+                            $errorMsg = $result['error'] ?? 'Unknown error';
+                            error_log("User {$userId} trade execution FAILED - Error: {$errorMsg}");
+                            if (isset($result['exception_type'])) {
+                                error_log("User {$userId} Exception type: {$result['exception_type']}");
+                            }
                         }
                         
                     } catch (Exception $e) {
-                        error_log("Signal execution error for user {$user['id']}: " . $e->getMessage());
+                        $error = "Unexpected exception for user {$userId}: " . $e->getMessage();
+                        error_log("Signal execution EXCEPTION for user {$userId}: {$error}");
+                        error_log("Exception type: " . get_class($e));
+                        error_log("Exception trace: " . $e->getTraceAsString());
+                        
                         $executionResults[] = [
-                            'user_id' => (int)$user['id'],
+                            'user_id' => $userId,
                             'success' => false,
-                            'error' => $e->getMessage(),
+                            'error' => $error,
+                            'exception_type' => get_class($e),
                         ];
                         $failedExecutions++;
                     }
@@ -347,33 +365,72 @@ class SignalService
      */
     private function executeSignalForUser(int $userId, string $signalType, ?string $asset = null): array
     {
+        $logPrefix = "[SignalService::executeSignalForUser] user={$userId}";
+        error_log("{$logPrefix} START - signalType={$signalType} asset=" . ($asset ?? 'null'));
+        
         try {
             // Check if user has active trading session
+            error_log("{$logPrefix} Checking if trading is active");
             if (!$this->tradingBot->isTradingActive($userId)) {
+                $error = 'No active trading session';
+                error_log("{$logPrefix} ERROR: {$error}");
                 return [
                     'user_id' => $userId,
                     'success' => false,
-                    'error' => 'No active trading session',
+                    'error' => $error,
+                ];
+            }
+            error_log("{$logPrefix} Trading is active");
+            
+            // Execute trade via TradingBotService
+            error_log("{$logPrefix} Calling TradingBotService::executeSignalTrade");
+            try {
+                $result = $this->tradingBot->executeSignalTrade($userId, $signalType, $asset);
+                
+                if (empty($result) || empty($result['trade_id'])) {
+                    $error = 'Invalid trade result - missing trade_id';
+                    error_log("{$logPrefix} ERROR: {$error}");
+                    error_log("{$logPrefix} Result: " . json_encode($result));
+                    return [
+                        'user_id' => $userId,
+                        'success' => false,
+                        'error' => $error,
+                    ];
+                }
+                
+                error_log("{$logPrefix} SUCCESS - Trade executed: trade_id={$result['trade_id']} contract_id={$result['contract_id']}");
+                
+                return [
+                    'user_id' => $userId,
+                    'success' => true,
+                    'trade_id' => $result['trade_id'],
+                    'contract_id' => $result['contract_id'],
+                ];
+                
+            } catch (Exception $e) {
+                $error = "TradingBotService execution failed: " . $e->getMessage();
+                error_log("{$logPrefix} ERROR: {$error}");
+                error_log("{$logPrefix} Exception type: " . get_class($e));
+                error_log("{$logPrefix} Exception trace: " . $e->getTraceAsString());
+                
+                return [
+                    'user_id' => $userId,
+                    'success' => false,
+                    'error' => $error,
+                    'exception_type' => get_class($e),
                 ];
             }
             
-            // Execute trade via TradingBotService
-            $result = $this->tradingBot->executeSignalTrade($userId, $signalType, $asset);
-            
-            return [
-                'user_id' => $userId,
-                'success' => true,
-                'trade_id' => $result['trade_id'],
-                'contract_id' => $result['contract_id'],
-            ];
-            
         } catch (Exception $e) {
-            error_log("Signal execution error for user {$userId}: " . $e->getMessage());
+            $error = "Unexpected error in executeSignalForUser: " . $e->getMessage();
+            error_log("{$logPrefix} FATAL ERROR: {$error}");
+            error_log("{$logPrefix} Fatal exception trace: " . $e->getTraceAsString());
             
             return [
                 'user_id' => $userId,
                 'success' => false,
-                'error' => $e->getMessage(),
+                'error' => $error,
+                'exception_type' => get_class($e),
             ];
         }
     }

@@ -85,28 +85,83 @@ class EncryptionService
      */
     public static function decrypt(string $encryptedData): string
     {
+        $logPrefix = "[EncryptionService::decrypt]";
+        error_log("{$logPrefix} START - Encrypted data length: " . strlen($encryptedData));
+        
         try {
-            $key = self::getEncryptionKey();
+            // Step 1: Get encryption key
+            error_log("{$logPrefix} Step 1: Getting encryption key");
+            try {
+                $key = self::getEncryptionKey();
+                error_log("{$logPrefix} Step 1: OK - Key length: " . strlen($key));
+            } catch (Exception $e) {
+                $error = "Failed to get encryption key: " . $e->getMessage();
+                error_log("{$logPrefix} ERROR: {$error}");
+                throw new Exception($error, 0, $e);
+            }
             
-            // Split the encrypted data
+            // Step 2: Validate format
+            error_log("{$logPrefix} Step 2: Validating encrypted data format");
+            if (empty($encryptedData)) {
+                $error = 'Encrypted data is empty';
+                error_log("{$logPrefix} ERROR: {$error}");
+                throw new Exception($error);
+            }
+            
+            // Step 3: Split the encrypted data
+            error_log("{$logPrefix} Step 3: Splitting encrypted data");
             $parts = explode(':', $encryptedData);
             
             if (count($parts) !== 3) {
-                throw new Exception('Invalid encrypted data format');
+                $error = 'Invalid encrypted data format - expected 3 parts separated by :, got ' . count($parts);
+                error_log("{$logPrefix} ERROR: {$error}");
+                error_log("{$logPrefix} Data preview: " . substr($encryptedData, 0, 100) . '...');
+                throw new Exception($error);
             }
             
             [$ivHex, $tagHex, $encryptedHex] = $parts;
+            error_log("{$logPrefix} Step 3: OK - IV length: " . strlen($ivHex) . ", Tag length: " . strlen($tagHex) . ", Encrypted length: " . strlen($encryptedHex));
             
-            // Convert from hex
+            // Step 4: Convert from hex
+            error_log("{$logPrefix} Step 4: Converting hex to binary");
             $iv = hex2bin($ivHex);
             $tag = hex2bin($tagHex);
             $encrypted = hex2bin($encryptedHex);
             
-            if ($iv === false || $tag === false || $encrypted === false) {
-                throw new Exception('Invalid hex encoding in encrypted data');
+            if ($iv === false) {
+                $error = 'Invalid hex encoding in IV (length: ' . strlen($ivHex) . ')';
+                error_log("{$logPrefix} ERROR: {$error}");
+                throw new Exception($error);
             }
             
-            // Decrypt with authentication tag
+            if ($tag === false) {
+                $error = 'Invalid hex encoding in tag (length: ' . strlen($tagHex) . ')';
+                error_log("{$logPrefix} ERROR: {$error}");
+                throw new Exception($error);
+            }
+            
+            if ($encrypted === false) {
+                $error = 'Invalid hex encoding in encrypted data (length: ' . strlen($encryptedHex) . ')';
+                error_log("{$logPrefix} ERROR: {$error}");
+                throw new Exception($error);
+            }
+            
+            if (strlen($iv) !== self::IV_LENGTH) {
+                $error = "Invalid IV length: expected " . self::IV_LENGTH . ", got " . strlen($iv);
+                error_log("{$logPrefix} ERROR: {$error}");
+                throw new Exception($error);
+            }
+            
+            if (strlen($tag) !== self::TAG_LENGTH) {
+                $error = "Invalid tag length: expected " . self::TAG_LENGTH . ", got " . strlen($tag);
+                error_log("{$logPrefix} ERROR: {$error}");
+                throw new Exception($error);
+            }
+            
+            error_log("{$logPrefix} Step 4: OK - IV: " . strlen($iv) . " bytes, Tag: " . strlen($tag) . " bytes, Encrypted: " . strlen($encrypted) . " bytes");
+            
+            // Step 5: Decrypt with authentication tag
+            error_log("{$logPrefix} Step 5: Decrypting with OpenSSL");
             $decrypted = openssl_decrypt(
                 $encrypted,
                 self::ALGORITHM,
@@ -117,14 +172,36 @@ class EncryptionService
             );
             
             if ($decrypted === false) {
-                throw new Exception('Decryption failed - invalid key or corrupted data');
+                $error = 'Decryption failed - invalid key or corrupted data';
+                error_log("{$logPrefix} ERROR: {$error}");
+                error_log("{$logPrefix} OpenSSL error: " . openssl_error_string());
+                
+                // Check if key might be wrong
+                $keySource = $_ENV['ENCRYPTION_KEY'] ?? 'NOT SET';
+                $keyLength = strlen($keySource);
+                error_log("{$logPrefix} Encryption key source length: {$keyLength}");
+                error_log("{$logPrefix} Encryption key preview: " . substr($keySource, 0, 20) . '...');
+                
+                throw new Exception($error);
             }
+            
+            if (empty($decrypted)) {
+                $error = 'Decryption succeeded but result is empty';
+                error_log("{$logPrefix} ERROR: {$error}");
+                throw new Exception($error);
+            }
+            
+            error_log("{$logPrefix} Step 5: OK - Decrypted length: " . strlen($decrypted));
+            error_log("{$logPrefix} SUCCESS - Decryption completed");
             
             return $decrypted;
             
         } catch (Exception $e) {
-            error_log('Decryption error: ' . $e->getMessage());
-            throw new Exception('Failed to decrypt data');
+            $error = "Decryption failed: " . $e->getMessage();
+            error_log("{$logPrefix} FATAL ERROR: {$error}");
+            error_log("{$logPrefix} Exception type: " . get_class($e));
+            error_log("{$logPrefix} Exception trace: " . $e->getTraceAsString());
+            throw new Exception($error, 0, $e);
         }
     }
     

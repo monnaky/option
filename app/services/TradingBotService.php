@@ -404,100 +404,243 @@ class TradingBotService
      */
     public function executeSignalTrade(int $userId, string $direction, ?string $asset = null): array
     {
-        // Get active session
-        $activeSession = $this->helper->getActiveTradingSession($userId);
-        
-        if (!$activeSession || $activeSession['state'] !== self::STATE_ACTIVE) {
-            throw new Exception('No active trading session for user');
-        }
-        
-        // Get settings
-        $settings = $this->helper->getUserSettings($userId);
-        if (!$settings) {
-            throw new Exception('User settings not found');
-        }
-        
-        // Get user API token
-        $user = $this->db->queryOne(
-            "SELECT encrypted_api_token FROM users WHERE id = :id",
-            ['id' => $userId]
-        );
-        
-        if (!$user || empty($user['encrypted_api_token'])) {
-            throw new Exception('API token not found');
-        }
-        
-        // Decrypt token
-        $apiToken = EncryptionService::decrypt($user['encrypted_api_token']);
-        
-        // Create Deriv API instance
-        $derivApi = new DerivAPI($apiToken, null, (string)$userId);
+        $logPrefix = "[TradingBot::executeSignalTrade] user={$userId}";
+        error_log("{$logPrefix} START - direction={$direction} asset=" . ($asset ?? 'auto'));
         
         try {
-            error_log("[TradingBot] executeSignalTrade user={$userId} direction={$direction} asset=" . ($asset ?? 'auto') . " stake={$settings['stake']}");
-            // Get asset if not specified
-            if (!$asset) {
-                $assets = $derivApi->getAvailableAssets();
-                if (empty($assets)) {
-                    throw new Exception('No available assets for trading');
-                }
-                $asset = $assets[array_rand($assets)];
+            // Step 1: Get active session
+            error_log("{$logPrefix} Step 1: Checking active trading session");
+            $activeSession = $this->helper->getActiveTradingSession($userId);
+            
+            if (!$activeSession) {
+                $error = "No trading session found for user {$userId}";
+                error_log("{$logPrefix} ERROR: {$error}");
+                throw new Exception($error);
             }
             
-            // Convert direction to contract type
-            $contractType = strtoupper($direction) === 'RISE' ? 'CALL' : 'PUT';
+            if ($activeSession['state'] !== self::STATE_ACTIVE) {
+                $error = "Trading session not active (state: {$activeSession['state']})";
+                error_log("{$logPrefix} ERROR: {$error}");
+                throw new Exception($error);
+            }
             
-            // Duration: 5 ticks
-            $duration = 5;
+            error_log("{$logPrefix} Step 1: OK - Session ID: {$activeSession['id']}, State: {$activeSession['state']}");
             
-            // Place trade
-            $contract = $derivApi->buyContract(
-                $asset,
-                $contractType,
-                (float)$settings['stake'],
-                $duration,
-                't'
+            // Step 2: Get settings
+            error_log("{$logPrefix} Step 2: Loading user settings");
+            $settings = $this->helper->getUserSettings($userId);
+            
+            if (!$settings) {
+                $error = "User settings not found for user {$userId}";
+                error_log("{$logPrefix} ERROR: {$error}");
+                throw new Exception($error);
+            }
+            
+            if (empty($settings['stake']) || (float)$settings['stake'] <= 0) {
+                $error = "Invalid stake amount: " . ($settings['stake'] ?? 'null');
+                error_log("{$logPrefix} ERROR: {$error}");
+                throw new Exception($error);
+            }
+            
+            error_log("{$logPrefix} Step 2: OK - Stake: {$settings['stake']}");
+            
+            // Step 3: Get user API token
+            error_log("{$logPrefix} Step 3: Retrieving encrypted API token");
+            $user = $this->db->queryOne(
+                "SELECT encrypted_api_token FROM users WHERE id = :id",
+                ['id' => $userId]
             );
             
-            // Generate unique trade ID
-            $tradeId = 'TRADE_' . time() . '_' . $contract['contract_id'];
+            if (!$user) {
+                $error = "User not found in database: {$userId}";
+                error_log("{$logPrefix} ERROR: {$error}");
+                throw new Exception($error);
+            }
             
-            // Create trade record
-            $tradeRecordId = $this->helper->createTrade([
-                'user_id' => $userId,
-                'session_id' => $activeSession['id'],
-                'trade_id' => $tradeId,
-                'contract_id' => (string)$contract['contract_id'],
-                'asset' => $asset,
-                'direction' => $direction,
-                'stake' => (float)$settings['stake'],
-                'payout' => $contract['buy_price'],
-                'profit' => 0,
-                'status' => 'pending',
-            ]);
+            if (empty($user['encrypted_api_token'])) {
+                $error = "Encrypted API token is empty for user {$userId}";
+                error_log("{$logPrefix} ERROR: {$error}");
+                throw new Exception($error);
+            }
             
-            // Update session statistics
-            $this->db->execute(
-                "UPDATE trading_sessions 
-                 SET total_trades = total_trades + 1,
-                     daily_trade_count = daily_trade_count + 1,
-                     last_activity_time = NOW()
-                 WHERE id = :id",
-                ['id' => $activeSession['id']]
-            );
+            $encryptedTokenLength = strlen($user['encrypted_api_token']);
+            error_log("{$logPrefix} Step 3: OK - Encrypted token length: {$encryptedTokenLength}");
             
-            // Schedule contract monitoring
-            $this->scheduleContractMonitoring($userId, $contract['contract_id'], $tradeRecordId);
+            // Step 4: Validate encrypted token format
+            error_log("{$logPrefix} Step 4: Validating encrypted token format");
+            if (!EncryptionService::isValidFormat($user['encrypted_api_token'])) {
+                $error = "Invalid encrypted token format for user {$userId}";
+                error_log("{$logPrefix} ERROR: {$error}");
+                error_log("{$logPrefix} Token preview: " . substr($user['encrypted_api_token'], 0, 50) . '...');
+                throw new Exception($error);
+            }
+            error_log("{$logPrefix} Step 4: OK - Token format valid");
             
-            error_log("[TradingBot] Signal trade placed user={$userId} contract={$contract['contract_id']} asset={$asset} dir={$direction}");
+            // Step 5: Decrypt token
+            error_log("{$logPrefix} Step 5: Decrypting API token");
+            try {
+                $apiToken = EncryptionService::decrypt($user['encrypted_api_token']);
+            } catch (Exception $e) {
+                $error = "Token decryption failed for user {$userId}: " . $e->getMessage();
+                error_log("{$logPrefix} ERROR: {$error}");
+                error_log("{$logPrefix} Decryption exception: " . $e->getTraceAsString());
+                throw new Exception($error, 0, $e);
+            }
             
-            return [
-                'trade_id' => $tradeId,
-                'contract_id' => $contract['contract_id'],
-            ];
+            if (empty($apiToken)) {
+                $error = "Decrypted token is empty for user {$userId}";
+                error_log("{$logPrefix} ERROR: {$error}");
+                throw new Exception($error);
+            }
             
-        } finally {
-            $derivApi->close();
+            $decryptedTokenLength = strlen($apiToken);
+            error_log("{$logPrefix} Step 5: OK - Decrypted token length: {$decryptedTokenLength}");
+            error_log("{$logPrefix} Token preview: " . substr($apiToken, 0, 20) . '...' . substr($apiToken, -10));
+            
+            // Step 6: Create Deriv API instance
+            error_log("{$logPrefix} Step 6: Creating DerivAPI instance");
+            try {
+                $derivApi = new DerivAPI($apiToken, null, (string)$userId);
+                error_log("{$logPrefix} Step 6: OK - DerivAPI instance created");
+            } catch (Exception $e) {
+                $error = "Failed to create DerivAPI instance: " . $e->getMessage();
+                error_log("{$logPrefix} ERROR: {$error}");
+                error_log("{$logPrefix} DerivAPI exception: " . $e->getTraceAsString());
+                throw new Exception($error, 0, $e);
+            }
+            
+            try {
+                // Step 7: Get asset if not specified
+                if (!$asset) {
+                    error_log("{$logPrefix} Step 7: Fetching available assets");
+                    try {
+                        $assets = $derivApi->getAvailableAssets();
+                        if (empty($assets)) {
+                            $error = 'No available assets for trading';
+                            error_log("{$logPrefix} ERROR: {$error}");
+                            throw new Exception($error);
+                        }
+                        $asset = $assets[array_rand($assets)];
+                        error_log("{$logPrefix} Step 7: OK - Selected asset: {$asset} (from " . count($assets) . " available)");
+                    } catch (Exception $e) {
+                        $error = "Failed to get available assets: " . $e->getMessage();
+                        error_log("{$logPrefix} ERROR: {$error}");
+                        throw new Exception($error, 0, $e);
+                    }
+                } else {
+                    error_log("{$logPrefix} Step 7: SKIP - Asset specified: {$asset}");
+                }
+                
+                // Step 8: Convert direction to contract type
+                $contractType = strtoupper($direction) === 'RISE' ? 'CALL' : 'PUT';
+                error_log("{$logPrefix} Step 8: Contract type: {$contractType} (from direction: {$direction})");
+                
+                // Step 9: Place trade
+                $duration = 5;
+                error_log("{$logPrefix} Step 9: Placing trade - asset={$asset} type={$contractType} stake={$settings['stake']} duration={$duration}");
+                
+                try {
+                    $contract = $derivApi->buyContract(
+                        $asset,
+                        $contractType,
+                        (float)$settings['stake'],
+                        $duration,
+                        't'
+                    );
+                    
+                    if (empty($contract) || empty($contract['contract_id'])) {
+                        $error = "Invalid contract response - missing contract_id";
+                        error_log("{$logPrefix} ERROR: {$error}");
+                        error_log("{$logPrefix} Contract response: " . json_encode($contract));
+                        throw new Exception($error);
+                    }
+                    
+                    error_log("{$logPrefix} Step 9: OK - Contract placed: ID={$contract['contract_id']} buy_price={$contract['buy_price']}");
+                } catch (Exception $e) {
+                    $error = "Failed to place trade: " . $e->getMessage();
+                    error_log("{$logPrefix} ERROR: {$error}");
+                    error_log("{$logPrefix} buyContract exception: " . $e->getTraceAsString());
+                    throw new Exception($error, 0, $e);
+                }
+                
+                // Step 10: Create trade record
+                error_log("{$logPrefix} Step 10: Creating trade record in database");
+                $tradeId = 'TRADE_' . time() . '_' . $contract['contract_id'];
+                
+                try {
+                    $tradeRecordId = $this->helper->createTrade([
+                        'user_id' => $userId,
+                        'session_id' => $activeSession['id'],
+                        'trade_id' => $tradeId,
+                        'contract_id' => (string)$contract['contract_id'],
+                        'asset' => $asset,
+                        'direction' => $direction,
+                        'stake' => (float)$settings['stake'],
+                        'payout' => $contract['buy_price'],
+                        'profit' => 0,
+                        'status' => 'pending',
+                    ]);
+                    error_log("{$logPrefix} Step 10: OK - Trade record ID: {$tradeRecordId}");
+                } catch (Exception $e) {
+                    $error = "Failed to create trade record: " . $e->getMessage();
+                    error_log("{$logPrefix} ERROR: {$error}");
+                    error_log("{$logPrefix} createTrade exception: " . $e->getTraceAsString());
+                    throw new Exception($error, 0, $e);
+                }
+                
+                // Step 11: Update session statistics
+                error_log("{$logPrefix} Step 11: Updating session statistics");
+                try {
+                    $this->db->execute(
+                        "UPDATE trading_sessions 
+                         SET total_trades = total_trades + 1,
+                             daily_trade_count = daily_trade_count + 1,
+                             last_activity_time = NOW()
+                         WHERE id = :id",
+                        ['id' => $activeSession['id']]
+                    );
+                    error_log("{$logPrefix} Step 11: OK - Session statistics updated");
+                } catch (Exception $e) {
+                    error_log("{$logPrefix} WARN: Failed to update session stats: " . $e->getMessage());
+                    // Don't fail the trade if stats update fails
+                }
+                
+                // Step 12: Schedule contract monitoring
+                error_log("{$logPrefix} Step 12: Scheduling contract monitoring");
+                try {
+                    $this->scheduleContractMonitoring($userId, $contract['contract_id'], $tradeRecordId);
+                    error_log("{$logPrefix} Step 12: OK - Contract monitoring scheduled");
+                } catch (Exception $e) {
+                    error_log("{$logPrefix} WARN: Failed to schedule monitoring: " . $e->getMessage());
+                    // Don't fail the trade if monitoring scheduling fails
+                }
+                
+                error_log("{$logPrefix} SUCCESS - Trade executed: contract={$contract['contract_id']} asset={$asset} dir={$direction}");
+                
+                return [
+                    'trade_id' => $tradeId,
+                    'contract_id' => $contract['contract_id'],
+                ];
+                
+            } catch (Exception $e) {
+                error_log("{$logPrefix} EXCEPTION in trade execution: " . $e->getMessage());
+                error_log("{$logPrefix} Exception trace: " . $e->getTraceAsString());
+                throw $e;
+            } finally {
+                try {
+                    if (isset($derivApi)) {
+                        $derivApi->close();
+                        error_log("{$logPrefix} DerivAPI connection closed");
+                    }
+                } catch (Exception $e) {
+                    error_log("{$logPrefix} WARN: Error closing DerivAPI: " . $e->getMessage());
+                }
+            }
+            
+        } catch (Exception $e) {
+            error_log("{$logPrefix} FATAL ERROR: " . $e->getMessage());
+            error_log("{$logPrefix} Fatal exception trace: " . $e->getTraceAsString());
+            throw $e;
         }
     }
     
