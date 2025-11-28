@@ -396,7 +396,21 @@ class SignalService
                 $executionTime
             );
             
-            error_log("Signal executed: {$signalType}" . ($asset ? " on {$asset}" : "") . " - Total: {$totalUsers}, Valid: {$validUserCount}, Skipped: {$skippedCount}, Successful: {$successfulExecutions}, Failed: {$failedExecutions}");
+            $summary = "Signal executed: {$signalType}" . ($asset ? " on {$asset}" : "") . " - Total: {$totalUsers}, Valid: {$validUserCount}, Skipped: {$skippedCount}, Successful: {$successfulExecutions}, Failed: {$failedExecutions}";
+            error_log($summary);
+            
+            $this->writeTradeLog("=== SIGNAL EXECUTION SUMMARY ===", [
+                'signal_type' => $signalType,
+                'asset' => $asset,
+                'total_users' => $totalUsers,
+                'valid_users' => $validUserCount,
+                'skipped_users' => $skippedCount,
+                'successful_executions' => $successfulExecutions,
+                'failed_executions' => $failedExecutions,
+                'execution_time_ms' => $executionTime,
+                'results' => $executionResults,
+                'skipped_users_details' => $skippedUsers,
+            ]);
             
             return [
                 'total_users' => $totalUsers,
@@ -475,6 +489,25 @@ class SignalService
     }
     
     /**
+     * Write to dedicated trade execution log file
+     */
+    private function writeTradeLog(string $message, array $context = []): void
+    {
+        $logDir = dirname(__DIR__, 2) . '/logs';
+        if (!is_dir($logDir)) {
+            @mkdir($logDir, 0755, true);
+        }
+        
+        $logFile = $logDir . '/trade_execution.log';
+        $timestamp = date('Y-m-d H:i:s');
+        $contextStr = !empty($context) ? ' ' . json_encode($context, JSON_UNESCAPED_SLASHES) : '';
+        $logEntry = "[{$timestamp}] {$message}{$contextStr}" . PHP_EOL;
+        
+        @file_put_contents($logFile, $logEntry, FILE_APPEND | LOCK_EX);
+        error_log($message . $contextStr);
+    }
+    
+    /**
      * Execute signal for a specific user
      * 
      * @param int $userId User ID
@@ -485,13 +518,24 @@ class SignalService
     private function executeSignalForUser(int $userId, string $signalType, ?string $asset = null): array
     {
         $logPrefix = "[SignalService::executeSignalForUser] user={$userId}";
+        $this->writeTradeLog("{$logPrefix} START", [
+            'signalType' => $signalType,
+            'asset' => $asset ?? 'null',
+            'timestamp' => date('Y-m-d H:i:s'),
+        ]);
         error_log("{$logPrefix} START - signalType={$signalType} asset=" . ($asset ?? 'null'));
         
         try {
             // Check if user has active trading session
+            $this->writeTradeLog("{$logPrefix} Checking if trading is active");
             error_log("{$logPrefix} Checking if trading is active");
-            if (!$this->tradingBot->isTradingActive($userId)) {
+            
+            $isActive = $this->tradingBot->isTradingActive($userId);
+            $this->writeTradeLog("{$logPrefix} Trading active check result", ['is_active' => $isActive]);
+            
+            if (!$isActive) {
                 $error = 'No active trading session';
+                $this->writeTradeLog("{$logPrefix} ERROR", ['error' => $error, 'user_id' => $userId]);
                 error_log("{$logPrefix} ERROR: {$error}");
                 return [
                     'user_id' => $userId,
@@ -499,15 +543,44 @@ class SignalService
                     'error' => $error,
                 ];
             }
+            
+            $this->writeTradeLog("{$logPrefix} Trading is active - proceeding with trade execution");
             error_log("{$logPrefix} Trading is active");
             
             // Execute trade via TradingBotService
+            $this->writeTradeLog("{$logPrefix} Calling TradingBotService::executeSignalTrade");
             error_log("{$logPrefix} Calling TradingBotService::executeSignalTrade");
+            
             try {
+                $startTime = microtime(true);
                 $result = $this->tradingBot->executeSignalTrade($userId, $signalType, $asset);
+                $executionTime = round((microtime(true) - $startTime) * 1000, 2);
                 
-                if (empty($result) || empty($result['trade_id'])) {
+                $this->writeTradeLog("{$logPrefix} TradingBotService returned", [
+                    'result_keys' => array_keys($result ?? []),
+                    'has_trade_id' => isset($result['trade_id']),
+                    'has_contract_id' => isset($result['contract_id']),
+                    'execution_time_ms' => $executionTime,
+                ]);
+                
+                if (empty($result)) {
+                    $error = 'TradingBotService returned empty result';
+                    $this->writeTradeLog("{$logPrefix} ERROR", ['error' => $error, 'result' => $result]);
+                    error_log("{$logPrefix} ERROR: {$error}");
+                    return [
+                        'user_id' => $userId,
+                        'success' => false,
+                        'error' => $error,
+                    ];
+                }
+                
+                if (empty($result['trade_id'])) {
                     $error = 'Invalid trade result - missing trade_id';
+                    $this->writeTradeLog("{$logPrefix} ERROR", [
+                        'error' => $error,
+                        'result' => $result,
+                        'result_keys' => array_keys($result),
+                    ]);
                     error_log("{$logPrefix} ERROR: {$error}");
                     error_log("{$logPrefix} Result: " . json_encode($result));
                     return [
@@ -517,6 +590,11 @@ class SignalService
                     ];
                 }
                 
+                $this->writeTradeLog("{$logPrefix} SUCCESS", [
+                    'trade_id' => $result['trade_id'],
+                    'contract_id' => $result['contract_id'] ?? 'N/A',
+                    'execution_time_ms' => $executionTime,
+                ]);
                 error_log("{$logPrefix} SUCCESS - Trade executed: trade_id={$result['trade_id']} contract_id={$result['contract_id']}");
                 
                 return [
@@ -528,6 +606,14 @@ class SignalService
                 
             } catch (Exception $e) {
                 $error = "TradingBotService execution failed: " . $e->getMessage();
+                $this->writeTradeLog("{$logPrefix} EXCEPTION", [
+                    'error' => $error,
+                    'exception_type' => get_class($e),
+                    'exception_message' => $e->getMessage(),
+                    'exception_file' => $e->getFile(),
+                    'exception_line' => $e->getLine(),
+                    'trace' => explode("\n", $e->getTraceAsString()),
+                ]);
                 error_log("{$logPrefix} ERROR: {$error}");
                 error_log("{$logPrefix} Exception type: " . get_class($e));
                 error_log("{$logPrefix} Exception trace: " . $e->getTraceAsString());
@@ -537,11 +623,21 @@ class SignalService
                     'success' => false,
                     'error' => $error,
                     'exception_type' => get_class($e),
+                    'exception_file' => $e->getFile(),
+                    'exception_line' => $e->getLine(),
                 ];
             }
             
         } catch (Exception $e) {
             $error = "Unexpected error in executeSignalForUser: " . $e->getMessage();
+            $this->writeTradeLog("{$logPrefix} FATAL EXCEPTION", [
+                'error' => $error,
+                'exception_type' => get_class($e),
+                'exception_message' => $e->getMessage(),
+                'exception_file' => $e->getFile(),
+                'exception_line' => $e->getLine(),
+                'trace' => explode("\n", $e->getTraceAsString()),
+            ]);
             error_log("{$logPrefix} FATAL ERROR: {$error}");
             error_log("{$logPrefix} Fatal exception trace: " . $e->getTraceAsString());
             

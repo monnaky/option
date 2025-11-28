@@ -567,24 +567,52 @@ class TradingBotService
                 error_log("{$logPrefix} Step 10: Creating trade record in database");
                 $tradeId = 'TRADE_' . time() . '_' . $contract['contract_id'];
                 
+                $tradeData = [
+                    'user_id' => $userId,
+                    'session_id' => $activeSession['id'],
+                    'trade_id' => $tradeId,
+                    'contract_id' => (string)$contract['contract_id'],
+                    'asset' => $asset,
+                    'direction' => $direction,
+                    'stake' => (float)$settings['stake'],
+                    'payout' => $contract['buy_price'],
+                    'profit' => 0,
+                    'status' => 'pending',
+                ];
+                
+                error_log("{$logPrefix} Trade data: " . json_encode($tradeData));
+                
                 try {
-                    $tradeRecordId = $this->helper->createTrade([
-                        'user_id' => $userId,
-                        'session_id' => $activeSession['id'],
-                        'trade_id' => $tradeId,
-                        'contract_id' => (string)$contract['contract_id'],
-                        'asset' => $asset,
-                        'direction' => $direction,
-                        'stake' => (float)$settings['stake'],
-                        'payout' => $contract['buy_price'],
-                        'profit' => 0,
-                        'status' => 'pending',
-                    ]);
+                    $tradeRecordId = $this->helper->createTrade($tradeData);
+                    
+                    if (empty($tradeRecordId) || $tradeRecordId <= 0) {
+                        $error = "Trade record creation returned invalid ID: {$tradeRecordId}";
+                        error_log("{$logPrefix} ERROR: {$error}");
+                        throw new Exception($error);
+                    }
+                    
                     error_log("{$logPrefix} Step 10: OK - Trade record ID: {$tradeRecordId}");
+                    
+                    // Verify trade was actually inserted
+                    $verifyTrade = $this->db->queryOne(
+                        "SELECT id, trade_id, contract_id, status FROM trades WHERE id = :id",
+                        ['id' => $tradeRecordId]
+                    );
+                    
+                    if (!$verifyTrade) {
+                        $error = "Trade record verification failed - trade not found in database";
+                        error_log("{$logPrefix} ERROR: {$error}");
+                        error_log("{$logPrefix} Attempted to insert trade_id: {$tradeId}");
+                        throw new Exception($error);
+                    }
+                    
+                    error_log("{$logPrefix} Trade verification OK - DB ID: {$verifyTrade['id']}, trade_id: {$verifyTrade['trade_id']}, status: {$verifyTrade['status']}");
+                    
                 } catch (Exception $e) {
                     $error = "Failed to create trade record: " . $e->getMessage();
                     error_log("{$logPrefix} ERROR: {$error}");
                     error_log("{$logPrefix} createTrade exception: " . $e->getTraceAsString());
+                    error_log("{$logPrefix} Trade data that failed: " . json_encode($tradeData));
                     throw new Exception($error, 0, $e);
                 }
                 
