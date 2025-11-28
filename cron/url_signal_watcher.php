@@ -57,7 +57,7 @@ set_error_handler(function ($severity, $message, $file, $line) {
 });
 
 set_exception_handler(function ($exception) {
-    logMessage('ERROR', 'Uncaught exception: ' . $exception->getMessage() . ' in ' .
+    logMessage('ERROR', 'Uncaught exception: $exception->getMessage() . ' in ' .
         $exception->getFile() . ' on line ' . $exception->getLine());
 });
 
@@ -192,89 +192,66 @@ logMessage('INFO', 'URL watcher shutting down');
 exit(0);
 
 /**
- * Fetch remote signal file via HTTP.
+ * Fetch signal from local file.
  */
 function fetchRemoteSignal(string $url, int $timeout): array
 {
-    $ch = curl_init($url);
-    curl_setopt_array($ch, [
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_CONNECTTIMEOUT => 5,
-        CURLOPT_TIMEOUT => $timeout,
-        CURLOPT_SSL_VERIFYPEER => true,
-        CURLOPT_SSL_VERIFYHOST => 2,
-        CURLOPT_FILETIME => true,
-        CURLOPT_HEADER => true,
-    ]);
-
     $start = microtime(true);
-    $response = curl_exec($ch);
+    
+    // Use the local file path instead of HTTP URL
+    $localFile = vtm_signal_public_path(); // This returns /app/storage/signals/getSignal.txt
+    
+    if (!file_exists($localFile)) {
+        $duration = round((microtime(true) - $start) * 1000, 2);
+        return [
+            'success' => false,
+            'error' => 'Local signal file not found',
+            'http_code' => 404,
+            'duration_ms' => $duration,
+        ];
+    }
+    
+    $content = file_get_contents($localFile);
     $duration = round((microtime(true) - $start) * 1000, 2);
-    $error = curl_error($ch);
-    $errno = curl_errno($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $filetime = curl_getinfo($ch, CURLINFO_FILETIME);
-    $length = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
-
-    $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-    $headersRaw = $headerSize ? substr($response, 0, $headerSize) : '';
-    $body = $headerSize ? substr($response, $headerSize) : $response;
-
-    curl_close($ch);
-
-    if ($errno !== 0) {
+    
+    if ($content === false) {
         return [
             'success' => false,
-            'error' => $error ?: 'Unknown cURL error',
-            'http_code' => $httpCode,
+            'error' => 'Failed to read local signal file',
+            'http_code' => 500,
             'duration_ms' => $duration,
         ];
     }
-
-    if ($httpCode !== 200) {
-        return [
-            'success' => false,
-            'error' => "HTTP $httpCode",
-            'http_code' => $httpCode,
-            'duration_ms' => $duration,
-        ];
-    }
-
+    
+    $filemtime = filemtime($localFile);
+    $filesize = filesize($localFile);
+    
     return [
         'success' => true,
-        'body' => $body,
-        'http_code' => $httpCode,
+        'body' => $content,
+        'http_code' => 200,
         'duration_ms' => $duration,
-        'length' => $length,
-        'last_modified' => $filetime > 0 ? gmdate('c', $filetime) : null,
-        'etag' => extractHeaderValue($headersRaw, 'ETag'),
+        'length' => $filesize,
+        'last_modified' => $filemtime ? gmdate('c', $filemtime) : null,
+        'etag' => md5($content),
     ];
 }
 
 /**
- * Clear remote signal file via HTTP.
+ * Clear local signal file.
  */
 function clearRemoteSignal(string $url, int $timeout): void
 {
-    $ch = curl_init($url);
-    curl_setopt_array($ch, [
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT => $timeout,
-        CURLOPT_CONNECTTIMEOUT => 5,
-        CURLOPT_SSL_VERIFYPEER => true,
-        CURLOPT_SSL_VERIFYHOST => 2,
-    ]);
-
-    $response = curl_exec($ch);
-    $error = curl_error($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
-    if ($error || $httpCode !== 200) {
-        logMessage('WARN', "Failed to clear remote signal (code=$httpCode error={$error}). Response: {$response}");
+    $localFile = vtm_signal_public_path();
+    
+    if (file_exists($localFile)) {
+        if (file_put_contents($localFile, '') !== false) {
+            logMessage('INFO', 'Local signal file cleared successfully');
+        } else {
+            logMessage('WARN', 'Failed to clear local signal file');
+        }
     } else {
-        logMessage('INFO', 'Remote signal cleared successfully');
+        logMessage('DEBUG', 'Local signal file already empty or not found');
     }
 }
 
@@ -349,4 +326,3 @@ function extractHeaderValue(string $headers, string $name): ?string
     }
     return null;
 }
-
