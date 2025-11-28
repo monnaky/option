@@ -57,7 +57,7 @@ set_error_handler(function ($severity, $message, $file, $line) {
 });
 
 set_exception_handler(function ($exception) {
-    logMessage('ERROR', 'Uncaught exception: $exception->getMessage() . ' in ' .
+    logMessage('ERROR', 'Uncaught exception: ' . $exception->getMessage() . ' in ' .
         $exception->getFile() . ' on line ' . $exception->getLine());
 });
 
