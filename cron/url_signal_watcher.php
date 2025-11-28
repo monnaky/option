@@ -82,6 +82,10 @@ require_once $bootstrapPath;
 
 use App\Services\SignalService;
 
+vtm_signal_ensure_paths();
+$localMirror = vtm_signal_public_path();
+logMessage('INFO', "Signal storage initialized. Local mirror at {$localMirror}");
+
 $signalService = SignalService::getInstance();
 
 $lastHash = null;
@@ -298,11 +302,23 @@ function parseSignalLine(string $line): array
 
     $messageLower = strtolower($message);
     $type = null;
+    $buyKeywords = ['buy', 'call', 'rise', 'long', 'up', 'bull'];
+    $sellKeywords = ['sell', 'put', 'fall', 'short', 'down', 'bear'];
 
-    if (strpos($messageLower, 'buy') !== false) {
-        $type = 'RISE';
-    } elseif (strpos($messageLower, 'sell') !== false) {
-        $type = 'FALL';
+    foreach ($buyKeywords as $keyword) {
+        if ($keyword !== '' && strpos($messageLower, $keyword) !== false) {
+            $type = 'RISE';
+            break;
+        }
+    }
+
+    if ($type === null) {
+        foreach ($sellKeywords as $keyword) {
+            if ($keyword !== '' && strpos($messageLower, $keyword) !== false) {
+                $type = 'FALL';
+                break;
+            }
+        }
     }
 
     if ($type === null) {

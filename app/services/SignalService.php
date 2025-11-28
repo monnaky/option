@@ -38,6 +38,18 @@ class SignalService
     private const TYPE_FALL = 'FALL';
     
     /**
+     * Expose signal storage paths for diagnostics
+     */
+    public static function getSignalStoragePaths(): array
+    {
+        vtm_signal_ensure_paths();
+        return [
+            'primary' => vtm_signal_primary_path(),
+            'public' => vtm_signal_public_path(),
+        ];
+    }
+    
+    /**
      * Private constructor (singleton pattern)
      */
     private function __construct()
@@ -74,7 +86,7 @@ class SignalService
             }
             
             // Extract signal information
-            $signalType = strtoupper($signalData['type'] ?? $signalData['signalType'] ?? '');
+            $signalType = $this->normalizeSignalType($signalData['type'] ?? $signalData['signalType'] ?? '');
             $asset = $signalData['asset'] ?? null;
             $rawText = $signalData['rawText'] ?? $signalData['raw_text'] ?? ($asset ? "{$signalType} {$asset}" : $signalType);
             $source = $signalData['source'] ?? self::SOURCE_API;
@@ -123,7 +135,7 @@ class SignalService
     private function validateSignal(array $signalData): array
     {
         // Check required fields
-        $type = strtoupper($signalData['type'] ?? $signalData['signalType'] ?? '');
+        $type = $this->normalizeSignalType($signalData['type'] ?? $signalData['signalType'] ?? '');
         
         if (empty($type)) {
             return [
@@ -152,6 +164,34 @@ class SignalService
         }
         
         return ['valid' => true];
+    }
+
+    /**
+     * Normalize various direction keywords to internal signal types.
+     */
+    private function normalizeSignalType(?string $type): string
+    {
+        if ($type === null) {
+            return '';
+        }
+
+        $normalized = strtoupper(trim($type));
+        if ($normalized === '') {
+            return '';
+        }
+
+        $buyMap = ['BUY', 'CALL', 'RISE', 'LONG', 'UP', 'BULL'];
+        $sellMap = ['SELL', 'PUT', 'FALL', 'SHORT', 'DOWN', 'BEAR'];
+
+        if (in_array($normalized, $buyMap, true)) {
+            return self::TYPE_RISE;
+        }
+
+        if (in_array($normalized, $sellMap, true)) {
+            return self::TYPE_FALL;
+        }
+
+        return $normalized;
     }
     
     /**

@@ -4,6 +4,17 @@ require_once __DIR__ . '/app/helpers.php';
 
 $action = $_GET['action'] ?? $_POST['action'] ?? '';
 vtm_signal_ensure_paths();
+$permissionIssues = vtm_signal_verify_writable();
+if (!empty($permissionIssues)) {
+    http_response_code(500);
+    vtm_signal_log_error('Signal storage paths not writable', ['paths' => $permissionIssues]);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Signal storage is not writable',
+        'paths' => $permissionIssues,
+    ]);
+    exit;
+}
 
 if ($action === 'clear') {
     $cleared = vtm_signal_clear();

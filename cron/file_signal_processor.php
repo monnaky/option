@@ -32,6 +32,9 @@ vtm_signal_ensure_paths();
 
 // Path to the signal file written by the MT5 bridge (now in /tmp by default)
 $signalFile = vtm_signal_primary_path();
+if (!is_writable($signalFile)) {
+    error_log('file_signal_processor: Signal file is not writable: ' . $signalFile);
+}
 
 // If file does not exist, nothing to do
 if (!file_exists($signalFile)) {
@@ -80,11 +83,26 @@ if ($asset === '') {
 $messageLower = strtolower($message);
 $type = null;
 
-if (strpos($messageLower, 'buy') !== false) {
-    $type = 'RISE';
-} elseif (strpos($messageLower, 'sell') !== false) {
-    $type = 'FALL';
-} else {
+$buyKeywords = ['buy', 'call', 'rise', 'long', 'up', 'bull'];
+$sellKeywords = ['sell', 'put', 'fall', 'short', 'down', 'bear'];
+
+foreach ($buyKeywords as $keyword) {
+    if ($keyword !== '' && strpos($messageLower, $keyword) !== false) {
+        $type = 'RISE';
+        break;
+    }
+}
+
+if ($type === null) {
+    foreach ($sellKeywords as $keyword) {
+        if ($keyword !== '' && strpos($messageLower, $keyword) !== false) {
+            $type = 'FALL';
+            break;
+        }
+    }
+}
+
+if ($type === null) {
     error_log('file_signal_processor: Unable to determine signal type from message: ' . $message);
     // Do NOT clear file so issue can be investigated
     exit(1);

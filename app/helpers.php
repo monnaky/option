@@ -94,14 +94,23 @@ if (!function_exists('vtm_signal_root_path')) {
     }
 }
 
+if (!function_exists('vtm_signal_storage_dir')) {
+    function vtm_signal_storage_dir(): string {
+        $envPath = getenv('SIGNAL_STORAGE_DIR');
+        if (!empty($envPath)) {
+            return rtrim($envPath, DIRECTORY_SEPARATOR);
+        }
+        return vtm_signal_root_path() . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'signals';
+    }
+}
+
 if (!function_exists('vtm_signal_primary_path')) {
     function vtm_signal_primary_path(): string {
         $envPath = getenv('SIGNAL_FILE_PRIMARY');
         if (!empty($envPath)) {
             return $envPath;
         }
-        $tmpDir = sys_get_temp_dir();
-        return rtrim($tmpDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'vtm_getSignal.txt';
+        return vtm_signal_storage_dir() . DIRECTORY_SEPARATOR . 'vtm_getSignal.txt';
     }
 }
 
@@ -111,22 +120,38 @@ if (!function_exists('vtm_signal_public_path')) {
         if (!empty($envPath)) {
             return $envPath;
         }
-        return vtm_signal_root_path() . DIRECTORY_SEPARATOR . 'getSignal.txt';
+        return vtm_signal_storage_dir() . DIRECTORY_SEPARATOR . 'getSignal.txt';
     }
 }
 
 if (!function_exists('vtm_signal_ensure_paths')) {
     function vtm_signal_ensure_paths(): void {
-        foreach ([vtm_signal_primary_path(), vtm_signal_public_path()] as $path) {
+        $paths = [vtm_signal_primary_path(), vtm_signal_public_path()];
+        $originalUmask = umask(0000);
+        foreach ($paths as $path) {
             $dir = dirname($path);
             if (!is_dir($dir)) {
-                @mkdir($dir, 0755, true);
+                @mkdir($dir, 0775, true);
             }
+            @chmod($dir, 0775);
             if (!file_exists($path)) {
                 @touch($path);
             }
             @chmod($path, 0666);
         }
+        umask($originalUmask);
+    }
+}
+
+if (!function_exists('vtm_signal_verify_writable')) {
+    function vtm_signal_verify_writable(): array {
+        $issues = [];
+        foreach ([vtm_signal_primary_path(), vtm_signal_public_path()] as $path) {
+            if (!is_writable($path)) {
+                $issues[] = $path;
+            }
+        }
+        return $issues;
     }
 }
 
