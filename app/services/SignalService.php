@@ -424,6 +424,36 @@ class SignalService
      */
     private function getActiveTradingUsers(): array
     {
+        // First, get all potentially active users for diagnostics
+        $diagnosticSql = "
+            SELECT DISTINCT u.id, u.email, 
+                   u.encrypted_api_token,
+                   CASE 
+                       WHEN u.encrypted_api_token IS NULL THEN 'NULL'
+                       WHEN u.encrypted_api_token = '' THEN 'EMPTY'
+                       ELSE 'HAS_TOKEN'
+                   END as token_status,
+                   s.is_bot_active,
+                   ts.state,
+                   ts.end_time
+            FROM users u
+            LEFT JOIN settings s ON u.id = s.user_id
+            LEFT JOIN trading_sessions ts ON u.id = ts.user_id AND ts.end_time IS NULL
+            WHERE u.is_active = 1
+            ORDER BY u.id
+        ";
+        
+        $allUsers = $this->db->query($diagnosticSql);
+        error_log("[SignalService] Diagnostic: Found " . count($allUsers) . " active users");
+        
+        foreach ($allUsers as $user) {
+            $status = $user['token_status'] ?? 'UNKNOWN';
+            $botActive = $user['is_bot_active'] ?? 0;
+            $sessionState = $user['state'] ?? 'NONE';
+            error_log("[SignalService] User {$user['id']} ({$user['email']}): token={$status}, bot_active={$botActive}, session_state={$sessionState}");
+        }
+        
+        // Now get the actual eligible users
         $sql = "
             SELECT DISTINCT u.id, u.email, u.encrypted_api_token
             FROM users u
@@ -438,7 +468,10 @@ class SignalService
             ORDER BY u.id
         ";
         
-        return $this->db->query($sql);
+        $eligibleUsers = $this->db->query($sql);
+        error_log("[SignalService] Found " . count($eligibleUsers) . " eligible users with valid tokens and active sessions");
+        
+        return $eligibleUsers;
     }
     
     /**
