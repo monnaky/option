@@ -130,14 +130,58 @@ if (!function_exists('vtm_signal_ensure_paths')) {
     }
 }
 
+if (!function_exists('vtm_signal_log_error')) {
+    function vtm_signal_log_error(string $message, array $context = []): void {
+        $logDir = vtm_signal_root_path() . DIRECTORY_SEPARATOR . 'logs';
+        if (!is_dir($logDir)) {
+            @mkdir($logDir, 0755, true);
+        }
+        $line = '[' . date('Y-m-d H:i:s') . '] ' . $message;
+        if (!empty($context)) {
+            $line .= ' ' . json_encode($context, JSON_UNESCAPED_SLASHES);
+        }
+        $logFile = $logDir . DIRECTORY_SEPARATOR . 'signal_sync.log';
+        @file_put_contents($logFile, $line . PHP_EOL, FILE_APPEND);
+        @error_log('[signal_sync] ' . $line);
+    }
+}
+
 if (!function_exists('vtm_signal_sync_public')) {
     function vtm_signal_sync_public(string $content): bool {
+        vtm_signal_ensure_paths();
         $publicPath = vtm_signal_public_path();
-        $result = @file_put_contents($publicPath, $content, LOCK_EX);
-        if ($result === false) {
+        $tmpPath = $publicPath . '.tmp';
+        $writeResult = @file_put_contents($tmpPath, $content, LOCK_EX);
+        if ($writeResult === false) {
+            $err = error_get_last();
+            vtm_signal_log_error('Failed writing temp public signal file', [
+                'public_path' => $publicPath,
+                'tmp_path' => $tmpPath,
+                'error' => $err['message'] ?? null,
+            ]);
+            @unlink($tmpPath);
+            return false;
+        }
+        if (!@rename($tmpPath, $publicPath)) {
+            $err = error_get_last();
+            vtm_signal_log_error('Failed moving temp public signal file into place', [
+                'public_path' => $publicPath,
+                'tmp_path' => $tmpPath,
+                'error' => $err['message'] ?? null,
+            ]);
+            @unlink($tmpPath);
             return false;
         }
         @chmod($publicPath, 0666);
+        $verifiedContent = @file_get_contents($publicPath);
+        if ($verifiedContent === false || $verifiedContent !== $content) {
+            vtm_signal_log_error('Signal sync verification failed', [
+                'public_path' => $publicPath,
+                'expected' => $content,
+                'actual' => $verifiedContent === false ? null : $verifiedContent,
+            ]);
+            return false;
+        }
         return true;
     }
 }
@@ -148,10 +192,34 @@ if (!function_exists('vtm_signal_write')) {
         $primaryPath = vtm_signal_primary_path();
         $result = @file_put_contents($primaryPath, $content, LOCK_EX);
         if ($result === false) {
+            $err = error_get_last();
+            vtm_signal_log_error('Failed writing primary signal file', [
+                'primary_path' => $primaryPath,
+                'error' => $err['message'] ?? null,
+            ]);
             return false;
         }
         @chmod($primaryPath, 0666);
-        vtm_signal_sync_public($content);
+        $diskContent = @file_get_contents($primaryPath);
+        if ($diskContent === false) {
+            $err = error_get_last();
+            vtm_signal_log_error('Failed verifying primary signal content', [
+                'primary_path' => $primaryPath,
+                'error' => $err['message'] ?? null,
+            ]);
+            return false;
+        }
+        if (!vtm_signal_sync_public($diskContent)) {
+            // Retry once with freshly read content
+            $retryContent = @file_get_contents($primaryPath);
+            if ($retryContent === false || !vtm_signal_sync_public($retryContent)) {
+                vtm_signal_log_error('Signal sync failed after retry', [
+                    'primary_path' => $primaryPath,
+                    'public_path' => vtm_signal_public_path(),
+                ]);
+                return false;
+            }
+        }
         return true;
     }
 }
