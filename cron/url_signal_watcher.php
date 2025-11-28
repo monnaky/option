@@ -256,61 +256,97 @@ function clearRemoteSignal(string $url, int $timeout): void
 }
 
 /**
- * Parse MT5 signal CSV line.
+ * Parse MT5 signal CSV line - supports multiple formats
  */
 function parseSignalLine(string $line): array
 {
     $parts = array_map('trim', explode(',', $line));
-    if (count($parts) < 3) {
-        return [
-            'success' => false,
-            'error' => 'Expected at least 3 comma-separated values (asset,message,timestamp)',
-        ];
-    }
+    
+    // Format 1: "R_100,Buy" (asset,direction) - 2 parts
+    if (count($parts) === 2) {
+        [$asset, $direction] = $parts;
 
-    [$asset, $message, $timestamp] = [$parts[0], $parts[1], $parts[2]];
-
-    if ($asset === '') {
-        return [
-            'success' => false,
-            'error' => 'Asset is empty',
-        ];
-    }
-
-    $messageLower = strtolower($message);
-    $type = null;
-    $buyKeywords = ['buy', 'call', 'rise', 'long', 'up', 'bull'];
-    $sellKeywords = ['sell', 'put', 'fall', 'short', 'down', 'bear'];
-
-    foreach ($buyKeywords as $keyword) {
-        if ($keyword !== '' && strpos($messageLower, $keyword) !== false) {
-            $type = 'RISE';
-            break;
+        if ($asset === '') {
+            return [
+                'success' => false,
+                'error' => 'Asset is empty',
+            ];
         }
-    }
 
-    if ($type === null) {
-        foreach ($sellKeywords as $keyword) {
+        $directionUpper = strtoupper($direction);
+        
+        // Convert Buy/Sell to RISE/FALL
+        if ($directionUpper === 'BUY') {
+            $type = 'RISE';
+        } elseif ($directionUpper === 'SELL') {
+            $type = 'FALL';
+        } else {
+            return [
+                'success' => false,
+                'error' => 'Invalid direction - expected Buy or Sell, got: ' . $direction,
+            ];
+        }
+
+        return [
+            'success' => true,
+            'asset' => $asset,
+            'type' => $type,
+            'timestamp' => time(), // Use current time as timestamp
+            'raw_text' => $line,
+        ];
+    }
+    
+    // Format 2: "asset,message,timestamp" - 3 parts (original format)
+    if (count($parts) >= 3) {
+        [$asset, $message, $timestamp] = [$parts[0], $parts[1], $parts[2]];
+
+        if ($asset === '') {
+            return [
+                'success' => false,
+                'error' => 'Asset is empty',
+            ];
+        }
+
+        $messageLower = strtolower($message);
+        $type = null;
+        $buyKeywords = ['buy', 'call', 'rise', 'long', 'up', 'bull'];
+        $sellKeywords = ['sell', 'put', 'fall', 'short', 'down', 'bear'];
+
+        foreach ($buyKeywords as $keyword) {
             if ($keyword !== '' && strpos($messageLower, $keyword) !== false) {
-                $type = 'FALL';
+                $type = 'RISE';
                 break;
             }
         }
-    }
 
-    if ($type === null) {
+        if ($type === null) {
+            foreach ($sellKeywords as $keyword) {
+                if ($keyword !== '' && strpos($messageLower, $keyword) !== false) {
+                    $type = 'FALL';
+                    break;
+                }
+            }
+        }
+
+        if ($type === null) {
+            return [
+                'success' => false,
+                'error' => 'Unable to determine RISE/FALL from message: ' . $message,
+            ];
+        }
+
         return [
-            'success' => false,
-            'error' => 'Unable to determine RISE/FALL from message',
+            'success' => true,
+            'asset' => $asset,
+            'type' => $type,
+            'timestamp' => $timestamp,
+            'raw_text' => $line,
         ];
     }
 
     return [
-        'success' => true,
-        'asset' => $asset,
-        'type' => $type,
-        'timestamp' => $timestamp,
-        'raw_text' => $line,
+        'success' => false,
+        'error' => 'Expected 2 values (asset,direction) or 3+ values (asset,message,timestamp), got ' . count($parts) . ' values',
     ];
 }
 
