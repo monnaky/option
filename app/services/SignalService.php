@@ -12,6 +12,7 @@ namespace App\Services;
 use App\Config\Database;
 use App\Utils\DatabaseHelper;
 use App\Services\TradingBotService;
+use App\Services\EncryptionService;
 use Exception;
 
 class SignalService
@@ -252,9 +253,91 @@ class SignalService
                 ];
             }
             
-            // Process users in batches
-            $batches = array_chunk($activeUsers, self::BATCH_SIZE);
-            error_log("Processing {$totalUsers} users in " . count($batches) . " batch(es)");
+            // Pre-validate users: Check API tokens before attempting trades
+            error_log("Pre-validating {$totalUsers} users for API token availability");
+            $validUsers = [];
+            $skippedUsers = [];
+            
+            foreach ($activeUsers as $user) {
+                $userId = (int)$user['id'];
+                $userEmail = $user['email'] ?? 'unknown';
+                $encryptedToken = $user['encrypted_api_token'] ?? null;
+                
+                // Check if token exists
+                if (empty($encryptedToken)) {
+                    $error = "User {$userId} ({$userEmail}) has no encrypted API token - skipping";
+                    error_log($error);
+                    $skippedUsers[] = [
+                        'user_id' => $userId,
+                        'email' => $userEmail,
+                        'reason' => 'No encrypted API token',
+                    ];
+                    continue;
+                }
+                
+                // Validate token format
+                if (!EncryptionService::isValidFormat($encryptedToken)) {
+                    $error = "User {$userId} ({$userEmail}) has invalid token format - skipping";
+                    error_log($error);
+                    $skippedUsers[] = [
+                        'user_id' => $userId,
+                        'email' => $userEmail,
+                        'reason' => 'Invalid token format',
+                    ];
+                    continue;
+                }
+                
+                // Try to decrypt token to verify it's valid
+                try {
+                    $decryptedToken = EncryptionService::decrypt($encryptedToken);
+                    if (empty($decryptedToken)) {
+                        $error = "User {$userId} ({$userEmail}) token decrypts to empty string - skipping";
+                        error_log($error);
+                        $skippedUsers[] = [
+                            'user_id' => $userId,
+                            'email' => $userEmail,
+                            'reason' => 'Token decrypts to empty',
+                        ];
+                        continue;
+                    }
+                    error_log("User {$userId} ({$userEmail}) token validation OK - length: " . strlen($decryptedToken));
+                } catch (Exception $e) {
+                    $error = "User {$userId} ({$userEmail}) token decryption failed: " . $e->getMessage() . " - skipping";
+                    error_log($error);
+                    $skippedUsers[] = [
+                        'user_id' => $userId,
+                        'email' => $userEmail,
+                        'reason' => 'Token decryption failed: ' . $e->getMessage(),
+                    ];
+                    continue;
+                }
+                
+                // User passed all validation checks
+                $validUsers[] = $user;
+            }
+            
+            $validUserCount = count($validUsers);
+            $skippedCount = count($skippedUsers);
+            error_log("User validation complete - Valid: {$validUserCount}, Skipped: {$skippedCount}");
+            
+            if ($validUserCount === 0) {
+                error_log("No users with valid API tokens found - cannot execute trades");
+                $this->markSignalAsProcessed($signalId, $totalUsers, 0, 0, 0);
+                return [
+                    'total_users' => $totalUsers,
+                    'valid_users' => 0,
+                    'skipped_users' => $skippedCount,
+                    'successful' => 0,
+                    'failed' => 0,
+                    'execution_time' => 0,
+                    'results' => [],
+                    'skipped' => $skippedUsers,
+                ];
+            }
+            
+            // Process users in batches (only valid users)
+            $batches = array_chunk($validUsers, self::BATCH_SIZE);
+            error_log("Processing {$validUserCount} valid users in " . count($batches) . " batch(es)");
             
             foreach ($batches as $batchIndex => $batch) {
                 error_log("Processing batch " . ($batchIndex + 1) . " of " . count($batches) . " (" . count($batch) . " users)");
@@ -313,14 +396,17 @@ class SignalService
                 $executionTime
             );
             
-            error_log("Signal executed: {$signalType}" . ($asset ? " on {$asset}" : "") . " - Users: {$totalUsers}, Successful: {$successfulExecutions}, Failed: {$failedExecutions}");
+            error_log("Signal executed: {$signalType}" . ($asset ? " on {$asset}" : "") . " - Total: {$totalUsers}, Valid: {$validUserCount}, Skipped: {$skippedCount}, Successful: {$successfulExecutions}, Failed: {$failedExecutions}");
             
             return [
                 'total_users' => $totalUsers,
+                'valid_users' => $validUserCount,
+                'skipped_users' => $skippedCount,
                 'successful' => $successfulExecutions,
                 'failed' => $failedExecutions,
                 'execution_time' => $executionTime,
                 'results' => $executionResults,
+                'skipped' => $skippedUsers,
             ];
             
         } catch (Exception $e) {
