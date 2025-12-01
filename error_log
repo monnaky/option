@@ -40189,3 +40189,614 @@ Stack trace:
 #2 Command line code(1): App\Config\Database->query('SELECT state, C...')
 #3 {main}
   thrown in C:\xampp\htdocs\option\app\config\Database.php on line 88
+[30-Nov-2025 22:50:55 UTC] [EncryptionService::decrypt] START - Encrypted data length: 96
+[30-Nov-2025 22:50:55 UTC] [EncryptionService::decrypt] Step 1: Getting encryption key
+[30-Nov-2025 22:50:55 UTC] [EncryptionService::decrypt] Step 1: OK - Key length: 32
+[30-Nov-2025 22:50:55 UTC] [EncryptionService::decrypt] Step 2: Validating encrypted data format
+[30-Nov-2025 22:50:55 UTC] [EncryptionService::decrypt] Step 3: Splitting encrypted data
+[30-Nov-2025 22:50:55 UTC] [EncryptionService::decrypt] Step 3: OK - IV length: 32, Tag length: 32, Encrypted length: 30
+[30-Nov-2025 22:50:55 UTC] [EncryptionService::decrypt] Step 4: Converting hex to binary
+[30-Nov-2025 22:50:55 UTC] [EncryptionService::decrypt] Step 4: OK - IV: 16 bytes, Tag: 16 bytes, Encrypted: 15 bytes
+[30-Nov-2025 22:50:55 UTC] [EncryptionService::decrypt] Step 5: Decrypting with OpenSSL
+[30-Nov-2025 22:50:55 UTC] [EncryptionService::decrypt] Step 5: OK - Decrypted length: 15
+[30-Nov-2025 22:50:55 UTC] [EncryptionService::decrypt] SUCCESS - Decryption completed
+[30-Nov-2025 22:50:55 UTC] [TradingBotService] Creating new DerivAPI connection for user 1
+[30-Nov-2025 22:50:55 UTC] [DerivAPI] Constructor - Building WebSocket URL
+[30-Nov-2025 22:50:55 UTC] [DerivAPI] Environment check - getenv('DERIV_APP_ID'): false
+[30-Nov-2025 22:50:55 UTC] [DerivAPI] Environment check - $_ENV['DERIV_APP_ID']: '105326'
+[30-Nov-2025 22:50:55 UTC] [DerivAPI] Environment check - DERIV_APP_ID constant: 105326
+[30-Nov-2025 22:50:55 UTC] [DerivAPI] Final appId: '105326'
+[30-Nov-2025 22:50:55 UTC] [DerivAPI] wsHost: 'ws.derivws.com'
+[30-Nov-2025 22:50:55 UTC] [DerivAPI] Final wsUrl: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[30-Nov-2025 22:50:55 UTC] [DerivAPI] wsUrl contains app_id: YES
+[30-Nov-2025 22:50:55 UTC] [DerivAPI] wsUrl length: 48
+[30-Nov-2025 22:50:55 UTC] DerivAPI initialized: wss://ws.derivws.com/websockets/v3?app_id=105326, App ID: 105326
+[30-Nov-2025 22:50:55 UTC] [TradingBotService] Closing connection for user 1
+[30-Nov-2025 22:50:55 UTC] [TradingBotService] Creating new DerivAPI connection for user 1
+[30-Nov-2025 22:50:55 UTC] [DerivAPI] Constructor - Building WebSocket URL
+[30-Nov-2025 22:50:55 UTC] [DerivAPI] Environment check - getenv('DERIV_APP_ID'): false
+[30-Nov-2025 22:50:55 UTC] [DerivAPI] Environment check - $_ENV['DERIV_APP_ID']: '105326'
+[30-Nov-2025 22:50:55 UTC] [DerivAPI] Environment check - DERIV_APP_ID constant: 105326
+[30-Nov-2025 22:50:55 UTC] [DerivAPI] Final appId: '105326'
+[30-Nov-2025 22:50:55 UTC] [DerivAPI] wsHost: 'ws.derivws.com'
+[30-Nov-2025 22:50:55 UTC] [DerivAPI] Final wsUrl: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[30-Nov-2025 22:50:55 UTC] [DerivAPI] wsUrl contains app_id: YES
+[30-Nov-2025 22:50:55 UTC] [DerivAPI] wsUrl length: 48
+[30-Nov-2025 22:50:55 UTC] DerivAPI initialized: wss://ws.derivws.com/websockets/v3?app_id=105326, App ID: 105326
+[30-Nov-2025 22:50:55 UTC] [DerivAPI::ensureConnection] About to create WebSocketClient
+[30-Nov-2025 22:50:55 UTC] [DerivAPI::ensureConnection] URL to pass: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[30-Nov-2025 22:50:55 UTC] [DerivAPI::ensureConnection] URL type: string
+[30-Nov-2025 22:50:55 UTC] [DerivAPI::ensureConnection] URL length: 48
+[30-Nov-2025 22:50:55 UTC] [DerivAPI::ensureConnection] URL empty check: NO - OK
+[30-Nov-2025 22:50:55 UTC] [DerivAPI::ensureConnection] WebSocketClient created successfully, calling connect()
+[30-Nov-2025 22:50:55 UTC] [DerivAPI::ensureConnection] Connection timeout: 8 seconds
+[30-Nov-2025 22:50:57 UTC] WebSocket connection established to Deriv API in 1649.59ms
+[30-Nov-2025 22:50:57 UTC] Not authorized, calling authorize() first
+[30-Nov-2025 22:50:57 UTC] [DerivAPI::authorize] === DerivAPI::authorize START ===
+Timestamp: 2025-11-30 22:50:57
+Token length: 15
+Token preview: KeNPW20DGi0zHyX...20DGi0zHyX
+Step 1: Built auth message
+  - Message structure: ["authorize"]
+Step 2: Ensuring WebSocket connection
+  - Connection ensured
+  - WebSocket is connected
+Step 3: Sending authorization request
+  - Request data length: 31
+  - Request preview: {"authorize":"KeNPW20DGi0zHyX"}...
+  - Request sent successfully
+Step 4: Waiting for authorization response
+  - Receiving response (attempt 1)
+  - Response received, length: 1685
+  - Response preview: {"authorize":{"account_list":[{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1444056419,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":0,"landin
+  - JSON decoded successfully
+  - Response keys: authorize, echo_req, msg_type
+  - Authorization response found!
+  - Authorize data keys: account_list, balance, country, currency, email, fullname, is_virtual, landing_company_fullname, landing_company_name, linked_to, local_currencies, loginid, preferred_language, scopes, upgradeable_landing_companies, user_id
+Step 5: Authorization successful
+  - LoginID: VRTC1155676
+  - Balance: 108.88
+  - Currency: USD
+  - Full auth data: {"account_list":[{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1444056419,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR335357"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1585006292,"currency":"BTC","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR1309754"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1627123130,"currency":"LTC","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR2672829"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1633708706,"currency":"eUSDT","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR2950600"},{"account_category":"trading","account_type":"binary","broker":"VRTC","created_at":1443990814,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":1,"landing_company_name":"virtual","linked_to":[],"loginid":"VRTC1155676"}],"balance":108.88,"country":"ng","currency":"USD","email":"gogodswilly@gmail.com","fullname":"Mr Godswill Shaibu","is_virtual":1,"landing_company_fullname":"Deriv Limited","landing_company_name":"virtual","linked_to":[],"local_currencies":{"NGN":{"fractional_digits":2}},"loginid":"VRTC1155676","preferred_language":"EN","scopes":["read","trade","trading_information"],"upgradeable_landing_companies":["svg"],"user_id":5266100}
+=== DerivAPI::authorize SUCCESS ===
+[30-Nov-2025 22:50:57 UTC] Sending WebSocket request: balance (req_id: 1)
+[30-Nov-2025 22:50:58 UTC] WebSocket receive attempt 1 failed: Deriv API error: Input validation failed: balance (InputValidationFailed)
+[30-Nov-2025 22:51:07 UTC] WebSocket receive attempt 2 failed: WebSocket receive timeout
+[30-Nov-2025 22:51:07 UTC] [DerivAPI::authorize] === DerivAPI::authorize START ===
+Timestamp: 2025-11-30 22:51:07
+Token length: 15
+Token preview: KeNPW20DGi0zHyX...20DGi0zHyX
+Step 1: Built auth message
+  - Message structure: ["authorize"]
+Step 2: Ensuring WebSocket connection
+  - Connection ensured
+  - WebSocket is connected
+Step 3: Sending authorization request
+  - Request data length: 31
+  - Request preview: {"authorize":"KeNPW20DGi0zHyX"}...
+  - Request sent successfully
+Step 4: Waiting for authorization response
+  - Receiving response (attempt 1)
+  - Response received, length: 1685
+  - Response preview: {"authorize":{"account_list":[{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1444056419,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":0,"landin
+  - JSON decoded successfully
+  - Response keys: authorize, echo_req, msg_type
+  - Authorization response found!
+  - Authorize data keys: account_list, balance, country, currency, email, fullname, is_virtual, landing_company_fullname, landing_company_name, linked_to, local_currencies, loginid, preferred_language, scopes, upgradeable_landing_companies, user_id
+Step 5: Authorization successful
+  - LoginID: VRTC1155676
+  - Balance: 108.88
+  - Currency: USD
+  - Full auth data: {"account_list":[{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1444056419,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR335357"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1585006292,"currency":"BTC","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR1309754"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1627123130,"currency":"LTC","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR2672829"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1633708706,"currency":"eUSDT","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR2950600"},{"account_category":"trading","account_type":"binary","broker":"VRTC","created_at":1443990814,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":1,"landing_company_name":"virtual","linked_to":[],"loginid":"VRTC1155676"}],"balance":108.88,"country":"ng","currency":"USD","email":"gogodswilly@gmail.com","fullname":"Mr Godswill Shaibu","is_virtual":1,"landing_company_fullname":"Deriv Limited","landing_company_name":"virtual","linked_to":[],"local_currencies":{"NGN":{"fractional_digits":2}},"loginid":"VRTC1155676","preferred_language":"EN","scopes":["read","trade","trading_information"],"upgradeable_landing_companies":["svg"],"user_id":5266100}
+=== DerivAPI::authorize SUCCESS ===
+[30-Nov-2025 22:51:07 UTC] [DerivAPI::getBalance] === DerivAPI::getBalance START ===
+Timestamp: 2025-11-30 22:50:55
+Step 1: Checking cached auth data
+  - No cached balance available
+Step 2: Ensuring connection
+  - Connection ensured
+  - isConnected(): false
+  - isAuthorized: false
+Step 3: Calling balance endpoint
+  - Request params: {"balance":1}
+  - Sending balance request
+  - Balance endpoint FAILED: Failed to get response from Deriv API after 2 attempts. Last error: WebSocket receive timeout
+  - Error type: Exception
+  - Error trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(496): App\Services\DerivAPI->sendRequest('balance', Array)
+#1 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#2 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#3 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#4 {main}
+Step 4: Falling back to authorize()
+  - authorize() completed
+  - Auth data keys: account_list, balance, currency, loginid, country, email, fullname, scopes
+  - Auth data balance: 108.88
+  - Final balance: 108.88
+=== DerivAPI::getBalance SUCCESS (authorize fallback) ===
+[30-Nov-2025 22:51:07 UTC] [TradingBotService::getAccountBalance] === TradingBotService::getAccountBalance START for user 1 ===
+Timestamp: 2025-11-30 22:50:55
+Step 1: Checking balance cache
+  - No cache found
+Step 2: Querying database for user token
+  - User query result: FOUND
+  - Email: rocketpaybiz@gmail.com
+  - Has encrypted_token: YES
+  - Token length: 96
+Step 3: Decrypting token
+  - Encrypted token length: 96
+  - Encrypted token preview: 36352142e9a15bac9ae951fbdd22d9dd:7258bf5924748a087...
+  - Decryption SUCCESS
+  - Decrypted token length: 15
+  - Decrypted token preview: KeNPW20DGi0zHyX...20DGi0zHyX
+Step 4: Getting or creating DerivAPI connection
+  - DerivAPI instance obtained
+  - Connection status: NOT CONNECTED
+Step 5: Attempt 1/2 to get balance
+  - Connection check: NOT CONNECTED
+  - Connection not healthy, recreating
+  - New connection status: NOT CONNECTED
+  - Calling derivApi->getBalance()
+  - Balance retrieved: 108.88
+  - Balance type: double
+  - Balance value: 108.88
+  - Balance cached
+=== TradingBotService::getAccountBalance SUCCESS ===
+[30-Nov-2025 22:51:07 UTC] [handleGetBalance] === handleGetBalance START for user 1 ===
+Timestamp: 2025-11-30 22:50:55
+Step 1: Querying database for user 1
+Step 1 Result: User FOUND
+  - Email: rocketpaybiz@gmail.com
+  - Has encrypted_token: YES
+  - Token length: 96
+  - Token created: 2025-11-19 11:39:20
+  - Token last used: 2025-11-19 11:39:20
+Step 3: Calling TradingBotService->getAccountBalance(1)
+Step 3: TradingBotService instance obtained
+Step 4: Balance retrieved from service: 108.88
+Step 4: Balance type: double
+Step 4: Balance value: 108.88
+Step 5: Preparing response: {"balance":108.88,"currency":"USD","hasToken":true,"debug":{"user_found":true,"has_token":true,"balance_retrieved":true,"balance_value":108.88}}
+=== handleGetBalance SUCCESS ===
+[30-Nov-2025 22:51:12 UTC] [EncryptionService::decrypt] START - Encrypted data length: 96
+[30-Nov-2025 22:51:12 UTC] [EncryptionService::decrypt] Step 1: Getting encryption key
+[30-Nov-2025 22:51:12 UTC] [EncryptionService::decrypt] Step 1: OK - Key length: 32
+[30-Nov-2025 22:51:12 UTC] [EncryptionService::decrypt] Step 2: Validating encrypted data format
+[30-Nov-2025 22:51:12 UTC] [EncryptionService::decrypt] Step 3: Splitting encrypted data
+[30-Nov-2025 22:51:12 UTC] [EncryptionService::decrypt] Step 3: OK - IV length: 32, Tag length: 32, Encrypted length: 30
+[30-Nov-2025 22:51:12 UTC] [EncryptionService::decrypt] Step 4: Converting hex to binary
+[30-Nov-2025 22:51:12 UTC] [EncryptionService::decrypt] Step 4: OK - IV: 16 bytes, Tag: 16 bytes, Encrypted: 15 bytes
+[30-Nov-2025 22:51:12 UTC] [EncryptionService::decrypt] Step 5: Decrypting with OpenSSL
+[30-Nov-2025 22:51:12 UTC] [EncryptionService::decrypt] Step 5: OK - Decrypted length: 15
+[30-Nov-2025 22:51:12 UTC] [EncryptionService::decrypt] SUCCESS - Decryption completed
+[30-Nov-2025 22:51:12 UTC] [DerivAPI] Constructor - Building WebSocket URL
+[30-Nov-2025 22:51:12 UTC] [DerivAPI] Environment check - getenv('DERIV_APP_ID'): false
+[30-Nov-2025 22:51:12 UTC] [DerivAPI] Environment check - $_ENV['DERIV_APP_ID']: '105326'
+[30-Nov-2025 22:51:12 UTC] [DerivAPI] Environment check - DERIV_APP_ID constant: 105326
+[30-Nov-2025 22:51:12 UTC] [DerivAPI] Final appId: '105326'
+[30-Nov-2025 22:51:12 UTC] [DerivAPI] wsHost: 'ws.derivws.com'
+[30-Nov-2025 22:51:12 UTC] [DerivAPI] Final wsUrl: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[30-Nov-2025 22:51:12 UTC] [DerivAPI] wsUrl contains app_id: YES
+[30-Nov-2025 22:51:12 UTC] [DerivAPI] wsUrl length: 48
+[30-Nov-2025 22:51:12 UTC] DerivAPI initialized: wss://ws.derivws.com/websockets/v3?app_id=105326, App ID: 105326
+[30-Nov-2025 22:51:12 UTC] [DerivAPI::ensureConnection] About to create WebSocketClient
+[30-Nov-2025 22:51:12 UTC] [DerivAPI::ensureConnection] URL to pass: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[30-Nov-2025 22:51:12 UTC] [DerivAPI::ensureConnection] URL type: string
+[30-Nov-2025 22:51:12 UTC] [DerivAPI::ensureConnection] URL length: 48
+[30-Nov-2025 22:51:12 UTC] [DerivAPI::ensureConnection] URL empty check: NO - OK
+[30-Nov-2025 22:51:12 UTC] [DerivAPI::ensureConnection] WebSocketClient created successfully, calling connect()
+[30-Nov-2025 22:51:12 UTC] [DerivAPI::ensureConnection] Connection timeout: 8 seconds
+[30-Nov-2025 22:51:13 UTC] WebSocket connection established to Deriv API in 1118.9ms
+[30-Nov-2025 22:51:13 UTC] Not authorized, calling authorize() first
+[30-Nov-2025 22:51:13 UTC] [DerivAPI::authorize] === DerivAPI::authorize START ===
+Timestamp: 2025-11-30 22:51:13
+Token length: 15
+Token preview: KeNPW20DGi0zHyX...20DGi0zHyX
+Step 1: Built auth message
+  - Message structure: ["authorize"]
+Step 2: Ensuring WebSocket connection
+  - Connection ensured
+  - WebSocket is connected
+Step 3: Sending authorization request
+  - Request data length: 31
+  - Request preview: {"authorize":"KeNPW20DGi0zHyX"}...
+  - Request sent successfully
+Step 4: Waiting for authorization response
+  - Receiving response (attempt 1)
+  - Response received, length: 1685
+  - Response preview: {"authorize":{"account_list":[{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1444056419,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":0,"landin
+  - JSON decoded successfully
+  - Response keys: authorize, echo_req, msg_type
+  - Authorization response found!
+  - Authorize data keys: account_list, balance, country, currency, email, fullname, is_virtual, landing_company_fullname, landing_company_name, linked_to, local_currencies, loginid, preferred_language, scopes, upgradeable_landing_companies, user_id
+Step 5: Authorization successful
+  - LoginID: VRTC1155676
+  - Balance: 108.88
+  - Currency: USD
+  - Full auth data: {"account_list":[{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1444056419,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR335357"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1585006292,"currency":"BTC","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR1309754"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1627123130,"currency":"LTC","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR2672829"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1633708706,"currency":"eUSDT","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR2950600"},{"account_category":"trading","account_type":"binary","broker":"VRTC","created_at":1443990814,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":1,"landing_company_name":"virtual","linked_to":[],"loginid":"VRTC1155676"}],"balance":108.88,"country":"ng","currency":"USD","email":"gogodswilly@gmail.com","fullname":"Mr Godswill Shaibu","is_virtual":1,"landing_company_fullname":"Deriv Limited","landing_company_name":"virtual","linked_to":[],"local_currencies":{"NGN":{"fractional_digits":2}},"loginid":"VRTC1155676","preferred_language":"EN","scopes":["read","trade","trading_information"],"upgradeable_landing_companies":["svg"],"user_id":5266100}
+=== DerivAPI::authorize SUCCESS ===
+[30-Nov-2025 22:51:13 UTC] Sending WebSocket request: balance (req_id: 1)
+[30-Nov-2025 22:51:13 UTC] WebSocket receive attempt 1 failed: Deriv API error: Input validation failed: balance (InputValidationFailed)
+[30-Nov-2025 22:51:22 UTC] WebSocket receive attempt 2 failed: WebSocket receive timeout
+[30-Nov-2025 22:51:23 UTC] [DerivAPI::authorize] === DerivAPI::authorize START ===
+Timestamp: 2025-11-30 22:51:22
+Token length: 15
+Token preview: KeNPW20DGi0zHyX...20DGi0zHyX
+Step 1: Built auth message
+  - Message structure: ["authorize"]
+Step 2: Ensuring WebSocket connection
+  - Connection ensured
+  - WebSocket is connected
+Step 3: Sending authorization request
+  - Request data length: 31
+  - Request preview: {"authorize":"KeNPW20DGi0zHyX"}...
+  - Request sent successfully
+Step 4: Waiting for authorization response
+  - Receiving response (attempt 1)
+  - Response received, length: 1685
+  - Response preview: {"authorize":{"account_list":[{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1444056419,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":0,"landin
+  - JSON decoded successfully
+  - Response keys: authorize, echo_req, msg_type
+  - Authorization response found!
+  - Authorize data keys: account_list, balance, country, currency, email, fullname, is_virtual, landing_company_fullname, landing_company_name, linked_to, local_currencies, loginid, preferred_language, scopes, upgradeable_landing_companies, user_id
+Step 5: Authorization successful
+  - LoginID: VRTC1155676
+  - Balance: 108.88
+  - Currency: USD
+  - Full auth data: {"account_list":[{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1444056419,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR335357"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1585006292,"currency":"BTC","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR1309754"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1627123130,"currency":"LTC","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR2672829"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1633708706,"currency":"eUSDT","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR2950600"},{"account_category":"trading","account_type":"binary","broker":"VRTC","created_at":1443990814,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":1,"landing_company_name":"virtual","linked_to":[],"loginid":"VRTC1155676"}],"balance":108.88,"country":"ng","currency":"USD","email":"gogodswilly@gmail.com","fullname":"Mr Godswill Shaibu","is_virtual":1,"landing_company_fullname":"Deriv Limited","landing_company_name":"virtual","linked_to":[],"local_currencies":{"NGN":{"fractional_digits":2}},"loginid":"VRTC1155676","preferred_language":"EN","scopes":["read","trade","trading_information"],"upgradeable_landing_companies":["svg"],"user_id":5266100}
+=== DerivAPI::authorize SUCCESS ===
+[30-Nov-2025 22:51:23 UTC] [DerivAPI::getBalance] === DerivAPI::getBalance START ===
+Timestamp: 2025-11-30 22:51:12
+Step 1: Checking cached auth data
+  - No cached balance available
+Step 2: Ensuring connection
+  - Connection ensured
+  - isConnected(): false
+  - isAuthorized: false
+Step 3: Calling balance endpoint
+  - Request params: {"balance":1}
+  - Sending balance request
+  - Balance endpoint FAILED: Failed to get response from Deriv API after 2 attempts. Last error: WebSocket receive timeout
+  - Error type: Exception
+  - Error trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(496): App\Services\DerivAPI->sendRequest('balance', Array)
+#1 C:\xampp\htdocs\option\app\services\TradingBotService.php(138): App\Services\DerivAPI->getBalance()
+#2 C:\xampp\htdocs\option\api\trading.php(250): App\Services\TradingBotService->startTrading(1)
+#3 C:\xampp\htdocs\option\api\trading.php(73): handleStartTrading(1)
+#4 {main}
+Step 4: Falling back to authorize()
+  - authorize() completed
+  - Auth data keys: account_list, balance, currency, loginid, country, email, fullname, scopes
+  - Auth data balance: 108.88
+  - Final balance: 108.88
+=== DerivAPI::getBalance SUCCESS (authorize fallback) ===
+[30-Nov-2025 22:51:23 UTC] Trading started for user 1. Balance: 108.88
+[01-Dec-2025 00:26:36 UTC] [EncryptionService::decrypt] START - Encrypted data length: 96
+[01-Dec-2025 00:26:36 UTC] [EncryptionService::decrypt] Step 1: Getting encryption key
+[01-Dec-2025 00:26:36 UTC] [EncryptionService::decrypt] Step 1: OK - Key length: 32
+[01-Dec-2025 00:26:36 UTC] [EncryptionService::decrypt] Step 2: Validating encrypted data format
+[01-Dec-2025 00:26:36 UTC] [EncryptionService::decrypt] Step 3: Splitting encrypted data
+[01-Dec-2025 00:26:36 UTC] [EncryptionService::decrypt] Step 3: OK - IV length: 32, Tag length: 32, Encrypted length: 30
+[01-Dec-2025 00:26:36 UTC] [EncryptionService::decrypt] Step 4: Converting hex to binary
+[01-Dec-2025 00:26:36 UTC] [EncryptionService::decrypt] Step 4: OK - IV: 16 bytes, Tag: 16 bytes, Encrypted: 15 bytes
+[01-Dec-2025 00:26:36 UTC] [EncryptionService::decrypt] Step 5: Decrypting with OpenSSL
+[01-Dec-2025 00:26:36 UTC] [EncryptionService::decrypt] Step 5: OK - Decrypted length: 15
+[01-Dec-2025 00:26:36 UTC] [EncryptionService::decrypt] SUCCESS - Decryption completed
+[01-Dec-2025 00:26:36 UTC] [TradingBotService] Creating new DerivAPI connection for user 1
+[01-Dec-2025 00:26:36 UTC] [DerivAPI] Constructor - Building WebSocket URL
+[01-Dec-2025 00:26:36 UTC] [DerivAPI] Environment check - getenv('DERIV_APP_ID'): false
+[01-Dec-2025 00:26:36 UTC] [DerivAPI] Environment check - $_ENV['DERIV_APP_ID']: '105326'
+[01-Dec-2025 00:26:36 UTC] [DerivAPI] Environment check - DERIV_APP_ID constant: 105326
+[01-Dec-2025 00:26:36 UTC] [DerivAPI] Final appId: '105326'
+[01-Dec-2025 00:26:36 UTC] [DerivAPI] wsHost: 'ws.derivws.com'
+[01-Dec-2025 00:26:36 UTC] [DerivAPI] Final wsUrl: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[01-Dec-2025 00:26:36 UTC] [DerivAPI] wsUrl contains app_id: YES
+[01-Dec-2025 00:26:36 UTC] [DerivAPI] wsUrl length: 48
+[01-Dec-2025 00:26:36 UTC] DerivAPI initialized: wss://ws.derivws.com/websockets/v3?app_id=105326, App ID: 105326
+[01-Dec-2025 00:26:36 UTC] [TradingBotService] Closing connection for user 1
+[01-Dec-2025 00:26:36 UTC] [TradingBotService] Creating new DerivAPI connection for user 1
+[01-Dec-2025 00:26:36 UTC] [DerivAPI] Constructor - Building WebSocket URL
+[01-Dec-2025 00:26:36 UTC] [DerivAPI] Environment check - getenv('DERIV_APP_ID'): false
+[01-Dec-2025 00:26:36 UTC] [DerivAPI] Environment check - $_ENV['DERIV_APP_ID']: '105326'
+[01-Dec-2025 00:26:36 UTC] [DerivAPI] Environment check - DERIV_APP_ID constant: 105326
+[01-Dec-2025 00:26:36 UTC] [DerivAPI] Final appId: '105326'
+[01-Dec-2025 00:26:36 UTC] [DerivAPI] wsHost: 'ws.derivws.com'
+[01-Dec-2025 00:26:36 UTC] [DerivAPI] Final wsUrl: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[01-Dec-2025 00:26:36 UTC] [DerivAPI] wsUrl contains app_id: YES
+[01-Dec-2025 00:26:36 UTC] [DerivAPI] wsUrl length: 48
+[01-Dec-2025 00:26:36 UTC] DerivAPI initialized: wss://ws.derivws.com/websockets/v3?app_id=105326, App ID: 105326
+[01-Dec-2025 00:26:36 UTC] [DerivAPI::ensureConnection] About to create WebSocketClient
+[01-Dec-2025 00:26:36 UTC] [DerivAPI::ensureConnection] URL to pass: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[01-Dec-2025 00:26:36 UTC] [DerivAPI::ensureConnection] URL type: string
+[01-Dec-2025 00:26:36 UTC] [DerivAPI::ensureConnection] URL length: 48
+[01-Dec-2025 00:26:36 UTC] [DerivAPI::ensureConnection] URL empty check: NO - OK
+[01-Dec-2025 00:26:36 UTC] [DerivAPI::ensureConnection] WebSocketClient created successfully, calling connect()
+[01-Dec-2025 00:26:36 UTC] [DerivAPI::ensureConnection] Connection timeout: 8 seconds
+[01-Dec-2025 00:26:37 UTC] WebSocket connection established to Deriv API in 1414.55ms
+[01-Dec-2025 00:26:37 UTC] Not authorized, calling authorize() first
+[01-Dec-2025 00:26:38 UTC] [DerivAPI::authorize] === DerivAPI::authorize START ===
+Timestamp: 2025-12-01 00:26:37
+Token length: 15
+Token preview: KeNPW20DGi0zHyX...20DGi0zHyX
+Step 1: Built auth message
+  - Message structure: ["authorize"]
+Step 2: Ensuring WebSocket connection
+  - Connection ensured
+  - WebSocket is connected
+Step 3: Sending authorization request
+  - Request data length: 31
+  - Request preview: {"authorize":"KeNPW20DGi0zHyX"}...
+  - Request sent successfully
+Step 4: Waiting for authorization response
+  - Receiving response (attempt 1)
+  - Response received, length: 1685
+  - Response preview: {"authorize":{"account_list":[{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1444056419,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":0,"landin
+  - JSON decoded successfully
+  - Response keys: authorize, echo_req, msg_type
+  - Authorization response found!
+  - Authorize data keys: account_list, balance, country, currency, email, fullname, is_virtual, landing_company_fullname, landing_company_name, linked_to, local_currencies, loginid, preferred_language, scopes, upgradeable_landing_companies, user_id
+Step 5: Authorization successful
+  - LoginID: VRTC1155676
+  - Balance: 108.88
+  - Currency: USD
+  - Full auth data: {"account_list":[{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1444056419,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR335357"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1585006292,"currency":"BTC","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR1309754"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1627123130,"currency":"LTC","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR2672829"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1633708706,"currency":"eUSDT","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR2950600"},{"account_category":"trading","account_type":"binary","broker":"VRTC","created_at":1443990814,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":1,"landing_company_name":"virtual","linked_to":[],"loginid":"VRTC1155676"}],"balance":108.88,"country":"ng","currency":"USD","email":"gogodswilly@gmail.com","fullname":"Mr Godswill Shaibu","is_virtual":1,"landing_company_fullname":"Deriv Limited","landing_company_name":"virtual","linked_to":[],"local_currencies":{"NGN":{"fractional_digits":2}},"loginid":"VRTC1155676","preferred_language":"EN","scopes":["read","trade","trading_information"],"upgradeable_landing_companies":["svg"],"user_id":5266100}
+=== DerivAPI::authorize SUCCESS ===
+[01-Dec-2025 00:26:38 UTC] Sending WebSocket request: balance (req_id: 1)
+[01-Dec-2025 00:26:38 UTC] WebSocket receive attempt 1 failed: Deriv API error: Input validation failed: balance (InputValidationFailed)
+[01-Dec-2025 00:26:47 UTC] WebSocket receive attempt 2 failed: WebSocket receive timeout
+[01-Dec-2025 00:26:48 UTC] [DerivAPI::authorize] === DerivAPI::authorize START ===
+Timestamp: 2025-12-01 00:26:47
+Token length: 15
+Token preview: KeNPW20DGi0zHyX...20DGi0zHyX
+Step 1: Built auth message
+  - Message structure: ["authorize"]
+Step 2: Ensuring WebSocket connection
+  - Connection ensured
+  - WebSocket is connected
+Step 3: Sending authorization request
+  - Request data length: 31
+  - Request preview: {"authorize":"KeNPW20DGi0zHyX"}...
+  - Request sent successfully
+Step 4: Waiting for authorization response
+  - Receiving response (attempt 1)
+  - Response received, length: 1685
+  - Response preview: {"authorize":{"account_list":[{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1444056419,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":0,"landin
+  - JSON decoded successfully
+  - Response keys: authorize, echo_req, msg_type
+  - Authorization response found!
+  - Authorize data keys: account_list, balance, country, currency, email, fullname, is_virtual, landing_company_fullname, landing_company_name, linked_to, local_currencies, loginid, preferred_language, scopes, upgradeable_landing_companies, user_id
+Step 5: Authorization successful
+  - LoginID: VRTC1155676
+  - Balance: 108.88
+  - Currency: USD
+  - Full auth data: {"account_list":[{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1444056419,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR335357"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1585006292,"currency":"BTC","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR1309754"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1627123130,"currency":"LTC","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR2672829"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1633708706,"currency":"eUSDT","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR2950600"},{"account_category":"trading","account_type":"binary","broker":"VRTC","created_at":1443990814,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":1,"landing_company_name":"virtual","linked_to":[],"loginid":"VRTC1155676"}],"balance":108.88,"country":"ng","currency":"USD","email":"gogodswilly@gmail.com","fullname":"Mr Godswill Shaibu","is_virtual":1,"landing_company_fullname":"Deriv Limited","landing_company_name":"virtual","linked_to":[],"local_currencies":{"NGN":{"fractional_digits":2}},"loginid":"VRTC1155676","preferred_language":"EN","scopes":["read","trade","trading_information"],"upgradeable_landing_companies":["svg"],"user_id":5266100}
+=== DerivAPI::authorize SUCCESS ===
+[01-Dec-2025 00:26:48 UTC] [DerivAPI::getBalance] === DerivAPI::getBalance START ===
+Timestamp: 2025-12-01 00:26:36
+Step 1: Checking cached auth data
+  - No cached balance available
+Step 2: Ensuring connection
+  - Connection ensured
+  - isConnected(): false
+  - isAuthorized: false
+Step 3: Calling balance endpoint
+  - Request params: {"balance":1}
+  - Sending balance request
+  - Balance endpoint FAILED: Failed to get response from Deriv API after 2 attempts. Last error: WebSocket receive timeout
+  - Error type: Exception
+  - Error trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(496): App\Services\DerivAPI->sendRequest('balance', Array)
+#1 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#2 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#3 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#4 {main}
+Step 4: Falling back to authorize()
+  - authorize() completed
+  - Auth data keys: account_list, balance, currency, loginid, country, email, fullname, scopes
+  - Auth data balance: 108.88
+  - Final balance: 108.88
+=== DerivAPI::getBalance SUCCESS (authorize fallback) ===
+[01-Dec-2025 00:26:48 UTC] [TradingBotService::getAccountBalance] === TradingBotService::getAccountBalance START for user 1 ===
+Timestamp: 2025-12-01 00:26:36
+Step 1: Checking balance cache
+  - No cache found
+Step 2: Querying database for user token
+  - User query result: FOUND
+  - Email: rocketpaybiz@gmail.com
+  - Has encrypted_token: YES
+  - Token length: 96
+Step 3: Decrypting token
+  - Encrypted token length: 96
+  - Encrypted token preview: 36352142e9a15bac9ae951fbdd22d9dd:7258bf5924748a087...
+  - Decryption SUCCESS
+  - Decrypted token length: 15
+  - Decrypted token preview: KeNPW20DGi0zHyX...20DGi0zHyX
+Step 4: Getting or creating DerivAPI connection
+  - DerivAPI instance obtained
+  - Connection status: NOT CONNECTED
+Step 5: Attempt 1/2 to get balance
+  - Connection check: NOT CONNECTED
+  - Connection not healthy, recreating
+  - New connection status: NOT CONNECTED
+  - Calling derivApi->getBalance()
+  - Balance retrieved: 108.88
+  - Balance type: double
+  - Balance value: 108.88
+  - Balance cached
+=== TradingBotService::getAccountBalance SUCCESS ===
+[01-Dec-2025 00:26:48 UTC] [handleGetBalance] === handleGetBalance START for user 1 ===
+Timestamp: 2025-12-01 00:26:36
+Step 1: Querying database for user 1
+Step 1 Result: User FOUND
+  - Email: rocketpaybiz@gmail.com
+  - Has encrypted_token: YES
+  - Token length: 96
+  - Token created: 2025-11-19 11:39:20
+  - Token last used: 2025-11-19 11:39:20
+Step 3: Calling TradingBotService->getAccountBalance(1)
+Step 3: TradingBotService instance obtained
+Step 4: Balance retrieved from service: 108.88
+Step 4: Balance type: double
+Step 4: Balance value: 108.88
+Step 5: Preparing response: {"balance":108.88,"currency":"USD","hasToken":true,"debug":{"user_found":true,"has_token":true,"balance_retrieved":true,"balance_value":108.88}}
+=== handleGetBalance SUCCESS ===
+[01-Dec-2025 00:26:48 UTC] PHP Warning:  session_start(): open(C:\xampp\tmp\sess_5nvm1d8e4si1p1j96g14be98n6, O_RDWR) failed: Permission denied (13) in C:\xampp\htdocs\option\app\autoload.php on line 87
+[01-Dec-2025 00:26:48 UTC] PHP Warning:  session_start(): Failed to read session data: files (path: C:\xampp\tmp) in C:\xampp\htdocs\option\app\autoload.php on line 87
+[01-Dec-2025 00:51:37 UTC] [SignalService] Diagnostic: Found 1 active users
+[01-Dec-2025 00:51:37 UTC] [SignalService] User 1 (rocketpaybiz@gmail.com): token=HAS_TOKEN, bot_active=1, session_state=active
+[01-Dec-2025 00:51:37 UTC] [SignalService] Found 1 eligible users with valid tokens and active sessions
+[01-Dec-2025 00:51:37 UTC] Pre-validating 1 users for API token availability
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] START - Encrypted data length: 96
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] Step 1: Getting encryption key
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] Step 1: OK - Key length: 32
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] Step 2: Validating encrypted data format
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] Step 3: Splitting encrypted data
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] Step 3: OK - IV length: 32, Tag length: 32, Encrypted length: 30
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] Step 4: Converting hex to binary
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] Step 4: OK - IV: 16 bytes, Tag: 16 bytes, Encrypted: 15 bytes
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] Step 5: Decrypting with OpenSSL
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] Step 5: OK - Decrypted length: 15
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] SUCCESS - Decryption completed
+[01-Dec-2025 00:51:37 UTC] User 1 (rocketpaybiz@gmail.com) token validation OK - length: 15
+[01-Dec-2025 00:51:37 UTC] User validation complete - Valid: 1, Skipped: 0
+[01-Dec-2025 00:51:37 UTC] Processing 1 valid users in 1 batch(es)
+[01-Dec-2025 00:51:37 UTC] Processing batch 1 of 1 (1 users)
+[01-Dec-2025 00:51:37 UTC] Processing user 1 (rocketpaybiz@gmail.com) - 1 of 1 in batch
+[01-Dec-2025 00:51:37 UTC] [SignalService::executeSignalForUser] user=1 START {"signalType":"RISE","asset":"R_75","timestamp":"2025-12-01 00:51:37"}
+[01-Dec-2025 00:51:37 UTC] [SignalService::executeSignalForUser] user=1 START - signalType=RISE asset=R_75
+[01-Dec-2025 00:51:37 UTC] [SignalService::executeSignalForUser] user=1 Checking if trading is active
+[01-Dec-2025 00:51:37 UTC] [SignalService::executeSignalForUser] user=1 Checking if trading is active
+[01-Dec-2025 00:51:37 UTC] [SignalService::executeSignalForUser] user=1 Trading active check result {"is_active":true}
+[01-Dec-2025 00:51:37 UTC] [SignalService::executeSignalForUser] user=1 Trading is active - proceeding with trade execution
+[01-Dec-2025 00:51:37 UTC] [SignalService::executeSignalForUser] user=1 Trading is active
+[01-Dec-2025 00:51:37 UTC] [SignalService::executeSignalForUser] user=1 Calling TradingBotService::executeSignalTrade
+[01-Dec-2025 00:51:37 UTC] [SignalService::executeSignalForUser] user=1 Calling TradingBotService::executeSignalTrade
+[01-Dec-2025 00:51:37 UTC] [TradingBot::executeSignalTrade] user=1 START - direction=RISE asset=R_75
+[01-Dec-2025 00:51:37 UTC] [TradingBot::executeSignalTrade] user=1 Step 1: Checking active trading session
+[01-Dec-2025 00:51:37 UTC] [TradingBot::executeSignalTrade] user=1 Step 1: OK - Session ID: 4, State: active
+[01-Dec-2025 00:51:37 UTC] [TradingBot::executeSignalTrade] user=1 Step 2: Loading user settings
+[01-Dec-2025 00:51:37 UTC] [TradingBot::executeSignalTrade] user=1 Step 2: OK - Stake: 1.00
+[01-Dec-2025 00:51:37 UTC] [TradingBot::executeSignalTrade] user=1 Step 3: Retrieving encrypted API token
+[01-Dec-2025 00:51:37 UTC] [TradingBot::executeSignalTrade] user=1 Step 3: OK - Encrypted token length: 96
+[01-Dec-2025 00:51:37 UTC] [TradingBot::executeSignalTrade] user=1 Step 4: Validating encrypted token format
+[01-Dec-2025 00:51:37 UTC] [TradingBot::executeSignalTrade] user=1 Step 4: OK - Token format valid
+[01-Dec-2025 00:51:37 UTC] [TradingBot::executeSignalTrade] user=1 Step 5: Decrypting API token
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] START - Encrypted data length: 96
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] Step 1: Getting encryption key
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] Step 1: OK - Key length: 32
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] Step 2: Validating encrypted data format
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] Step 3: Splitting encrypted data
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] Step 3: OK - IV length: 32, Tag length: 32, Encrypted length: 30
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] Step 4: Converting hex to binary
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] Step 4: OK - IV: 16 bytes, Tag: 16 bytes, Encrypted: 15 bytes
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] Step 5: Decrypting with OpenSSL
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] Step 5: OK - Decrypted length: 15
+[01-Dec-2025 00:51:37 UTC] [EncryptionService::decrypt] SUCCESS - Decryption completed
+[01-Dec-2025 00:51:37 UTC] [TradingBot::executeSignalTrade] user=1 Step 5: OK - Decrypted token length: 15
+[01-Dec-2025 00:51:37 UTC] [TradingBot::executeSignalTrade] user=1 Token preview: KeNPW20DGi0zHyX...20DGi0zHyX
+[01-Dec-2025 00:51:37 UTC] [TradingBot::executeSignalTrade] user=1 Step 6: Creating DerivAPI instance
+[01-Dec-2025 00:51:37 UTC] [DerivAPI] Constructor - Building WebSocket URL
+[01-Dec-2025 00:51:37 UTC] [DerivAPI] Environment check - getenv('DERIV_APP_ID'): false
+[01-Dec-2025 00:51:37 UTC] [DerivAPI] Environment check - $_ENV['DERIV_APP_ID']: '105326'
+[01-Dec-2025 00:51:37 UTC] [DerivAPI] Environment check - DERIV_APP_ID constant: 105326
+[01-Dec-2025 00:51:37 UTC] [DerivAPI] Final appId: '105326'
+[01-Dec-2025 00:51:37 UTC] [DerivAPI] wsHost: 'ws.derivws.com'
+[01-Dec-2025 00:51:37 UTC] [DerivAPI] Final wsUrl: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[01-Dec-2025 00:51:37 UTC] [DerivAPI] wsUrl contains app_id: YES
+[01-Dec-2025 00:51:37 UTC] [DerivAPI] wsUrl length: 48
+[01-Dec-2025 00:51:37 UTC] DerivAPI initialized: wss://ws.derivws.com/websockets/v3?app_id=105326, App ID: 105326
+[01-Dec-2025 00:51:37 UTC] [TradingBot::executeSignalTrade] user=1 Step 6: OK - DerivAPI instance created
+[01-Dec-2025 00:51:37 UTC] [TradingBot::executeSignalTrade] user=1 Step 7: SKIP - Asset specified: R_75
+[01-Dec-2025 00:51:37 UTC] [TradingBot::executeSignalTrade] user=1 Step 8: Contract type: CALL (from direction: RISE)
+[01-Dec-2025 00:51:37 UTC] [TradingBot::executeSignalTrade] user=1 Step 9: Placing trade - asset=R_75 type=CALL stake=1.00 duration=5
+[01-Dec-2025 00:51:37 UTC] [DerivAPI::buyContract] START - symbol=R_75 type=CALL amount=1 duration=5
+[01-Dec-2025 00:51:37 UTC] [DerivAPI::buyContract] Step 1: Ensuring authorization
+[01-Dec-2025 00:51:37 UTC] [DerivAPI::buyContract] Not authorized, calling authorize()
+[01-Dec-2025 00:51:37 UTC] [DerivAPI::ensureConnection] About to create WebSocketClient
+[01-Dec-2025 00:51:37 UTC] [DerivAPI::ensureConnection] URL to pass: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[01-Dec-2025 00:51:37 UTC] [DerivAPI::ensureConnection] URL type: string
+[01-Dec-2025 00:51:37 UTC] [DerivAPI::ensureConnection] URL length: 48
+[01-Dec-2025 00:51:37 UTC] [DerivAPI::ensureConnection] URL empty check: NO - OK
+[01-Dec-2025 00:51:37 UTC] [DerivAPI::ensureConnection] WebSocketClient created successfully, calling connect()
+[01-Dec-2025 00:51:37 UTC] [DerivAPI::ensureConnection] Connection timeout: 8 seconds
+[01-Dec-2025 00:51:38 UTC] WebSocket connection established to Deriv API in 1521.13ms
+[01-Dec-2025 00:51:39 UTC] [DerivAPI::authorize] === DerivAPI::authorize START ===
+Timestamp: 2025-12-01 00:51:37
+Token length: 15
+Token preview: KeNPW20DGi0zHyX...20DGi0zHyX
+Step 1: Built auth message
+  - Message structure: ["authorize"]
+Step 2: Ensuring WebSocket connection
+  - Connection ensured
+  - WebSocket is connected
+Step 3: Sending authorization request
+  - Request data length: 31
+  - Request preview: {"authorize":"KeNPW20DGi0zHyX"}...
+  - Request sent successfully
+Step 4: Waiting for authorization response
+  - Receiving response (attempt 1)
+  - Response received, length: 1685
+  - Response preview: {"authorize":{"account_list":[{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1444056419,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":0,"landin
+  - JSON decoded successfully
+  - Response keys: authorize, echo_req, msg_type
+  - Authorization response found!
+  - Authorize data keys: account_list, balance, country, currency, email, fullname, is_virtual, landing_company_fullname, landing_company_name, linked_to, local_currencies, loginid, preferred_language, scopes, upgradeable_landing_companies, user_id
+Step 5: Authorization successful
+  - LoginID: VRTC1155676
+  - Balance: 108.88
+  - Currency: USD
+  - Full auth data: {"account_list":[{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1444056419,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR335357"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1585006292,"currency":"BTC","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR1309754"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1627123130,"currency":"LTC","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR2672829"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1633708706,"currency":"eUSDT","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR2950600"},{"account_category":"trading","account_type":"binary","broker":"VRTC","created_at":1443990814,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":1,"landing_company_name":"virtual","linked_to":[],"loginid":"VRTC1155676"}],"balance":108.88,"country":"ng","currency":"USD","email":"gogodswilly@gmail.com","fullname":"Mr Godswill Shaibu","is_virtual":1,"landing_company_fullname":"Deriv Limited","landing_company_name":"virtual","linked_to":[],"local_currencies":{"NGN":{"fractional_digits":2}},"loginid":"VRTC1155676","preferred_language":"EN","scopes":["read","trade","trading_information"],"upgradeable_landing_companies":["svg"],"user_id":5266100}
+=== DerivAPI::authorize SUCCESS ===
+[01-Dec-2025 00:51:39 UTC] [DerivAPI::buyContract] Step 1: OK - Authorized
+[01-Dec-2025 00:51:39 UTC] [DerivAPI::buyContract] Step 2: Getting contracts_for for symbol: R_75
+[01-Dec-2025 00:51:39 UTC] [DerivAPI::getContractsFor] START - symbol=R_75
+[01-Dec-2025 00:51:39 UTC] [DerivAPI::getContractsFor] Sending contracts_for request for symbol: R_75
+[01-Dec-2025 00:51:39 UTC] Sending WebSocket request: contracts_for (req_id: 1)
+[01-Dec-2025 00:51:39 UTC] WebSocket receive attempt 1 failed: Deriv API error: Input validation failed: contracts_for (InputValidationFailed)
+[01-Dec-2025 00:51:48 UTC] WebSocket receive attempt 2 failed: WebSocket receive timeout
+[01-Dec-2025 00:51:48 UTC] [DerivAPI::getContractsFor] ERROR: Failed to get contracts for R_75: Failed to get response from Deriv API after 2 attempts. Last error: WebSocket receive timeout
+[01-Dec-2025 00:51:48 UTC] [DerivAPI::getContractsFor] Exception trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(584): App\Services\DerivAPI->sendRequest('contracts_for', Array)
+#1 C:\xampp\htdocs\option\app\services\DerivAPI.php(711): App\Services\DerivAPI->getContractsFor('R_75')
+#2 C:\xampp\htdocs\option\app\services\TradingBotService.php(548): App\Services\DerivAPI->buyContract('R_75', 'CALL', 1, 5, 't')
+#3 C:\xampp\htdocs\option\app\services\SignalService.php(556): App\Services\TradingBotService->executeSignalTrade(1, 'RISE', 'R_75')
+#4 C:\xampp\htdocs\option\app\services\SignalService.php(352): App\Services\SignalService->executeSignalForUser(1, 'RISE', 'R_75')
+#5 C:\xampp\htdocs\option\app\services\SignalService.php(117): App\Services\SignalService->executeSignalForAllUsers(1, 'RISE', 'R_75')
+#6 C:\xampp\htdocs\option\cron\url_signal_watcher.php(161): App\Services\SignalService->receiveSignal(Array)
+#7 {main}
+[01-Dec-2025 00:51:48 UTC] [DerivAPI::buyContract] FATAL ERROR: Buy contract error: Failed to get contracts for R_75: Failed to get response from Deriv API after 2 attempts. Last error: WebSocket receive timeout
+[01-Dec-2025 00:51:48 UTC] [DerivAPI::buyContract] Exception trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(711): App\Services\DerivAPI->getContractsFor('R_75')
+#1 C:\xampp\htdocs\option\app\services\TradingBotService.php(548): App\Services\DerivAPI->buyContract('R_75', 'CALL', 1, 5, 't')
+#2 C:\xampp\htdocs\option\app\services\SignalService.php(556): App\Services\TradingBotService->executeSignalTrade(1, 'RISE', 'R_75')
+#3 C:\xampp\htdocs\option\app\services\SignalService.php(352): App\Services\SignalService->executeSignalForUser(1, 'RISE', 'R_75')
+#4 C:\xampp\htdocs\option\app\services\SignalService.php(117): App\Services\SignalService->executeSignalForAllUsers(1, 'RISE', 'R_75')
+#5 C:\xampp\htdocs\option\cron\url_signal_watcher.php(161): App\Services\SignalService->receiveSignal(Array)
+#6 {main}
+[01-Dec-2025 00:51:48 UTC] [TradingBot::executeSignalTrade] user=1 ERROR: Failed to place trade: Buy contract error: Failed to get contracts for R_75: Failed to get response from Deriv API after 2 attempts. Last error: WebSocket receive timeout
+[01-Dec-2025 00:51:48 UTC] [TradingBot::executeSignalTrade] user=1 buyContract exception: #0 C:\xampp\htdocs\option\app\services\TradingBotService.php(548): App\Services\DerivAPI->buyContract('R_75', 'CALL', 1, 5, 't')
+#1 C:\xampp\htdocs\option\app\services\SignalService.php(556): App\Services\TradingBotService->executeSignalTrade(1, 'RISE', 'R_75')
+#2 C:\xampp\htdocs\option\app\services\SignalService.php(352): App\Services\SignalService->executeSignalForUser(1, 'RISE', 'R_75')
+#3 C:\xampp\htdocs\option\app\services\SignalService.php(117): App\Services\SignalService->executeSignalForAllUsers(1, 'RISE', 'R_75')
+#4 C:\xampp\htdocs\option\cron\url_signal_watcher.php(161): App\Services\SignalService->receiveSignal(Array)
+#5 {main}
+[01-Dec-2025 00:51:48 UTC] [TradingBot::executeSignalTrade] user=1 EXCEPTION in trade execution: Failed to place trade: Buy contract error: Failed to get contracts for R_75: Failed to get response from Deriv API after 2 attempts. Last error: WebSocket receive timeout
+[01-Dec-2025 00:51:48 UTC] [TradingBot::executeSignalTrade] user=1 Exception trace: #0 C:\xampp\htdocs\option\app\services\SignalService.php(556): App\Services\TradingBotService->executeSignalTrade(1, 'RISE', 'R_75')
+#1 C:\xampp\htdocs\option\app\services\SignalService.php(352): App\Services\SignalService->executeSignalForUser(1, 'RISE', 'R_75')
+#2 C:\xampp\htdocs\option\app\services\SignalService.php(117): App\Services\SignalService->executeSignalForAllUsers(1, 'RISE', 'R_75')
+#3 C:\xampp\htdocs\option\cron\url_signal_watcher.php(161): App\Services\SignalService->receiveSignal(Array)
+#4 {main}
+[01-Dec-2025 00:51:48 UTC] [TradingBot::executeSignalTrade] user=1 DerivAPI connection closed
+[01-Dec-2025 00:51:48 UTC] [TradingBot::executeSignalTrade] user=1 FATAL ERROR: Failed to place trade: Buy contract error: Failed to get contracts for R_75: Failed to get response from Deriv API after 2 attempts. Last error: WebSocket receive timeout
+[01-Dec-2025 00:51:48 UTC] [TradingBot::executeSignalTrade] user=1 Fatal exception trace: #0 C:\xampp\htdocs\option\app\services\SignalService.php(556): App\Services\TradingBotService->executeSignalTrade(1, 'RISE', 'R_75')
+#1 C:\xampp\htdocs\option\app\services\SignalService.php(352): App\Services\SignalService->executeSignalForUser(1, 'RISE', 'R_75')
+#2 C:\xampp\htdocs\option\app\services\SignalService.php(117): App\Services\SignalService->executeSignalForAllUsers(1, 'RISE', 'R_75')
+#3 C:\xampp\htdocs\option\cron\url_signal_watcher.php(161): App\Services\SignalService->receiveSignal(Array)
+#4 {main}
+[01-Dec-2025 00:51:48 UTC] [SignalService::executeSignalForUser] user=1 EXCEPTION {"error":"TradingBotService execution failed: Failed to place trade: Buy contract error: Failed to get contracts for R_75: Failed to get response from Deriv API after 2 attempts. Last error: WebSocket receive timeout","exception_type":"Exception","exception_message":"Failed to place trade: Buy contract error: Failed to get contracts for R_75: Failed to get response from Deriv API after 2 attempts. Last error: WebSocket receive timeout","exception_file":"C:\\xampp\\htdocs\\option\\app\\services\\TradingBotService.php","exception_line":563,"trace":["#0 C:\\xampp\\htdocs\\option\\app\\services\\SignalService.php(556): App\\Services\\TradingBotService->executeSignalTrade(1, 'RISE', 'R_75')","#1 C:\\xampp\\htdocs\\option\\app\\services\\SignalService.php(352): App\\Services\\SignalService->executeSignalForUser(1, 'RISE', 'R_75')","#2 C:\\xampp\\htdocs\\option\\app\\services\\SignalService.php(117): App\\Services\\SignalService->executeSignalForAllUsers(1, 'RISE', 'R_75')","#3 C:\\xampp\\htdocs\\option\\cron\\url_signal_watcher.php(161): App\\Services\\SignalService->receiveSignal(Array)","#4 {main}"]}
+[01-Dec-2025 00:51:48 UTC] [SignalService::executeSignalForUser] user=1 ERROR: TradingBotService execution failed: Failed to place trade: Buy contract error: Failed to get contracts for R_75: Failed to get response from Deriv API after 2 attempts. Last error: WebSocket receive timeout
+[01-Dec-2025 00:51:48 UTC] [SignalService::executeSignalForUser] user=1 Exception type: Exception
+[01-Dec-2025 00:51:48 UTC] [SignalService::executeSignalForUser] user=1 Exception trace: #0 C:\xampp\htdocs\option\app\services\SignalService.php(556): App\Services\TradingBotService->executeSignalTrade(1, 'RISE', 'R_75')
+#1 C:\xampp\htdocs\option\app\services\SignalService.php(352): App\Services\SignalService->executeSignalForUser(1, 'RISE', 'R_75')
+#2 C:\xampp\htdocs\option\app\services\SignalService.php(117): App\Services\SignalService->executeSignalForAllUsers(1, 'RISE', 'R_75')
+#3 C:\xampp\htdocs\option\cron\url_signal_watcher.php(161): App\Services\SignalService->receiveSignal(Array)
+#4 {main}
+[01-Dec-2025 00:51:48 UTC] User 1 trade execution FAILED - Error: TradingBotService execution failed: Failed to place trade: Buy contract error: Failed to get contracts for R_75: Failed to get response from Deriv API after 2 attempts. Last error: WebSocket receive timeout
+[01-Dec-2025 00:51:48 UTC] User 1 Exception type: Exception
+[01-Dec-2025 00:51:48 UTC] Signal executed: RISE on R_75 - Total: 1, Valid: 1, Skipped: 0, Successful: 0, Failed: 1
+[01-Dec-2025 00:51:48 UTC] === SIGNAL EXECUTION SUMMARY === {"signal_type":"RISE","asset":"R_75","total_users":1,"valid_users":1,"skipped_users":0,"successful_executions":0,"failed_executions":1,"execution_time_ms":11489,"results":[{"user_id":1,"success":false,"error":"TradingBotService execution failed: Failed to place trade: Buy contract error: Failed to get contracts for R_75: Failed to get response from Deriv API after 2 attempts. Last error: WebSocket receive timeout","exception_type":"Exception","exception_file":"C:\\xampp\\htdocs\\option\\app\\services\\TradingBotService.php","exception_line":563}],"skipped_users_details":[]}

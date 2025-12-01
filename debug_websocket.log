@@ -27217,3 +27217,371 @@ Content-Language: en
 Upgrade: websoc
 2025-11-19 04:07:22 [WebSocketClient] [connect] WebSocket handshake completed in 561.2ms
 2025-11-19 04:07:22 [WebSocketClient] WebSocket connection established successfully in 798.15ms total
+2025-11-30 22:50:55 [WebSocketClient] Constructor called with URL: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+2025-11-30 22:50:55 [WebSocketClient] URL type: string, length: 48
+2025-11-30 22:50:55 [WebSocketClient] Timeout: 8 seconds
+2025-11-30 22:50:55 [WebSocketClient] Connection timeout set to: 5 seconds
+2025-11-30 22:50:55 [WebSocketClient] General timeout set to: 8 seconds
+2025-11-30 22:50:55 [WebSocketClient] Calling parseUrl() with: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+2025-11-30 22:50:55 [WebSocketClient] [parseUrl] Starting URL parsing for: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+2025-11-30 22:50:55 [WebSocketClient] [parseUrl] parse_url() result: array (
+  'scheme' => 'wss',
+  'host' => 'ws.derivws.com',
+  'path' => '/websockets/v3',
+  'query' => 'app_id=105326',
+)
+2025-11-30 22:50:55 [WebSocketClient] [parseUrl] Scheme: wss
+2025-11-30 22:50:55 [WebSocketClient] [parseUrl] Host: ws.derivws.com
+2025-11-30 22:50:55 [WebSocketClient] [parseUrl] Port: NOT SET
+2025-11-30 22:50:55 [WebSocketClient] [parseUrl] Path: '/websockets/v3'
+2025-11-30 22:50:55 [WebSocketClient] [parseUrl] Query: app_id=105326
+2025-11-30 22:50:55 [WebSocketClient] [parseUrl] Secure mode: yes
+2025-11-30 22:50:55 [WebSocketClient] [parseUrl] Host extracted: 'ws.derivws.com'
+2025-11-30 22:50:55 [WebSocketClient] [parseUrl] Port extracted: 443
+2025-11-30 22:50:55 [WebSocketClient] [parseUrl] Raw path from parse_url: '/websockets/v3'
+2025-11-30 22:50:55 [WebSocketClient] [parseUrl] Path is empty check: NO
+2025-11-30 22:50:55 [WebSocketClient] [parseUrl] Path is null check: NO
+2025-11-30 22:50:55 [WebSocketClient] [parseUrl] Path after normalization: '/websockets/v3'
+2025-11-30 22:50:55 [WebSocketClient] [parseUrl] Appending query string: app_id=105326
+2025-11-30 22:50:55 [WebSocketClient] [parseUrl] Final path value: '/websockets/v3?app_id=105326'
+2025-11-30 22:50:55 [WebSocketClient] [parseUrl] Final path length: 28
+2025-11-30 22:50:55 [WebSocketClient] [parseUrl] Final path empty check: NO - OK
+2025-11-30 22:50:55 [WebSocketClient] [parseUrl] URL parsing completed successfully - Host: ws.derivws.com, Port: 443, Path: /websockets/v3?app_id=105326, Secure: yes
+2025-11-30 22:50:55 [WebSocketClient] Constructor completed - Host: ws.derivws.com, Port: 443, Path: '/websockets/v3?app_id=105326'
+2025-11-30 22:50:55 [WebSocketClient] [connect] Connect() method called
+2025-11-30 22:50:55 [WebSocketClient] [connect] Current connection status: not connected
+2025-11-30 22:50:55 [WebSocketClient] [connect] Current URL: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+2025-11-30 22:50:55 [WebSocketClient] [connect] Current host: 'ws.derivws.com'
+2025-11-30 22:50:55 [WebSocketClient] [connect] Current port: 443
+2025-11-30 22:50:55 [WebSocketClient] [connect] Current path: '/websockets/v3?app_id=105326'
+2025-11-30 22:50:55 [WebSocketClient] [connect] Current path empty check: NO - OK
+2025-11-30 22:50:55 [WebSocketClient] [connect] Current path length: 28
+2025-11-30 22:50:55 [WebSocketClient] [connect] Connection timeout: 5 seconds
+2025-11-30 22:50:55 [WebSocketClient] [connect] General timeout: 8 seconds
+2025-11-30 22:50:55 [WebSocketClient] [connect] Testing DNS resolution for: ws.derivws.com
+2025-11-30 22:50:55 [WebSocketClient] [connect] DNS resolution SUCCESS - ws.derivws.com resolved to 104.18.12.218 in 145.25ms
+2025-11-30 22:50:55 [WebSocketClient] [connect] Testing network connectivity to ws.derivws.com:443
+2025-11-30 22:50:56 [WebSocketClient] [connect] Network connectivity SUCCESS - Connected in 464.55ms
+2025-11-30 22:50:56 [WebSocketClient] [connect] CA bundle not found or not readable, SSL verification disabled
+2025-11-30 22:50:56 [WebSocketClient] [connect] SSL context created with options: {"verify_peer":false,"verify_peer_name":false,"allow_self_signed":true}
+2025-11-30 22:50:56 [WebSocketClient] [connect] Validating path before stream_socket_client()
+2025-11-30 22:50:56 [WebSocketClient] [connect] Path value: '/websockets/v3?app_id=105326'
+2025-11-30 22:50:56 [WebSocketClient] [connect] Path type: string
+2025-11-30 22:50:56 [WebSocketClient] [connect] Path length: 28
+2025-11-30 22:50:56 [WebSocketClient] [connect] Path empty check: NO - OK
+2025-11-30 22:50:56 [WebSocketClient] [connect] About to call stream_socket_client()
+2025-11-30 22:50:56 [WebSocketClient] [connect] Address: ssl://ws.derivws.com:443
+2025-11-30 22:50:56 [WebSocketClient] [connect] Path will be used in handshake: '/websockets/v3?app_id=105326'
+2025-11-30 22:50:56 [WebSocketClient] [connect] Path length: 28
+2025-11-30 22:50:56 [WebSocketClient] [connect] Calling stream_socket_client() with address: ssl://ws.derivws.com:443
+2025-11-30 22:50:56 [WebSocketClient] [connect] Path '/websockets/v3?app_id=105326' will be sent in HTTP handshake, not in connection string
+2025-11-30 22:50:56 [WebSocketClient] [connect] Connection timeout: 5 seconds
+2025-11-30 22:50:56 [WebSocketClient] [connect] About to execute stream_socket_client() with SSL context
+2025-11-30 22:50:56 [WebSocketClient] [connect] stream_socket_client() completed in 237.56ms
+2025-11-30 22:50:56 [WebSocketClient] [connect] stream_socket_client() returned: socket resource
+2025-11-30 22:50:56 [WebSocketClient] [connect] Socket connection established successfully
+2025-11-30 22:50:56 [WebSocketClient] [connect] Socket timeout set to 8 seconds
+2025-11-30 22:50:56 [WebSocketClient] [performHandshake] Starting WebSocket handshake
+2025-11-30 22:50:56 [WebSocketClient] [performHandshake] Current path: '/websockets/v3?app_id=105326'
+2025-11-30 22:50:56 [WebSocketClient] [performHandshake] Path length: 28
+2025-11-30 22:50:56 [WebSocketClient] [performHandshake] Path empty check: NO - OK
+2025-11-30 22:50:56 [WebSocketClient] [performHandshake] Host: 'ws.derivws.com'
+2025-11-30 22:50:56 [WebSocketClient] [performHandshake] Port: 443
+2025-11-30 22:50:56 [WebSocketClient] [performHandshake] Generated WebSocket key: BvAHEV9AQ65bZ5bRuQhp8A==
+2025-11-30 22:50:56 [WebSocketClient] [performHandshake] Host header: ws.derivws.com
+2025-11-30 22:50:56 [WebSocketClient] [performHandshake] WebSocket handshake request: GET /websockets/v3?app_id=105326 HTTP/1.1
+2025-11-30 22:50:56 [WebSocketClient] [performHandshake] Full handshake request (first 500 chars): GET /websockets/v3?app_id=105326 HTTP/1.1
+Host: ws.derivws.com
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Key: BvAHEV9AQ65bZ5bRuQhp8A==
+Sec-WebSocket-Version: 13
+Origin: https://ws.derivws.com
+
+
+2025-11-30 22:50:56 [WebSocketClient] [performHandshake] Waiting for handshake response (timeout: 8s)
+2025-11-30 22:50:57 [WebSocketClient] [performHandshake] Handshake response received: HTTP/1.1 101 Switching Protocols
+Date: Sun, 30 Nov 2025 22:50:57 GMT
+Content-Length: 0
+Connection: upgrade
+Upgrade: websocket
+Content-Language: en
+Sec-WebSocket-Accept: 5q66vSfsRCAtlvzezfnj1Fpvx
+2025-11-30 22:50:57 [WebSocketClient] [connect] WebSocket handshake completed in 747.06ms
+2025-11-30 22:50:57 [WebSocketClient] WebSocket connection established successfully in 986.36ms total
+2025-11-30 22:51:12 [WebSocketClient] Constructor called with URL: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+2025-11-30 22:51:12 [WebSocketClient] URL type: string, length: 48
+2025-11-30 22:51:12 [WebSocketClient] Timeout: 8 seconds
+2025-11-30 22:51:12 [WebSocketClient] Connection timeout set to: 5 seconds
+2025-11-30 22:51:12 [WebSocketClient] General timeout set to: 8 seconds
+2025-11-30 22:51:12 [WebSocketClient] Calling parseUrl() with: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+2025-11-30 22:51:12 [WebSocketClient] [parseUrl] Starting URL parsing for: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+2025-11-30 22:51:12 [WebSocketClient] [parseUrl] parse_url() result: array (
+  'scheme' => 'wss',
+  'host' => 'ws.derivws.com',
+  'path' => '/websockets/v3',
+  'query' => 'app_id=105326',
+)
+2025-11-30 22:51:12 [WebSocketClient] [parseUrl] Scheme: wss
+2025-11-30 22:51:12 [WebSocketClient] [parseUrl] Host: ws.derivws.com
+2025-11-30 22:51:12 [WebSocketClient] [parseUrl] Port: NOT SET
+2025-11-30 22:51:12 [WebSocketClient] [parseUrl] Path: '/websockets/v3'
+2025-11-30 22:51:12 [WebSocketClient] [parseUrl] Query: app_id=105326
+2025-11-30 22:51:12 [WebSocketClient] [parseUrl] Secure mode: yes
+2025-11-30 22:51:12 [WebSocketClient] [parseUrl] Host extracted: 'ws.derivws.com'
+2025-11-30 22:51:12 [WebSocketClient] [parseUrl] Port extracted: 443
+2025-11-30 22:51:12 [WebSocketClient] [parseUrl] Raw path from parse_url: '/websockets/v3'
+2025-11-30 22:51:12 [WebSocketClient] [parseUrl] Path is empty check: NO
+2025-11-30 22:51:12 [WebSocketClient] [parseUrl] Path is null check: NO
+2025-11-30 22:51:12 [WebSocketClient] [parseUrl] Path after normalization: '/websockets/v3'
+2025-11-30 22:51:12 [WebSocketClient] [parseUrl] Appending query string: app_id=105326
+2025-11-30 22:51:12 [WebSocketClient] [parseUrl] Final path value: '/websockets/v3?app_id=105326'
+2025-11-30 22:51:12 [WebSocketClient] [parseUrl] Final path length: 28
+2025-11-30 22:51:12 [WebSocketClient] [parseUrl] Final path empty check: NO - OK
+2025-11-30 22:51:12 [WebSocketClient] [parseUrl] URL parsing completed successfully - Host: ws.derivws.com, Port: 443, Path: /websockets/v3?app_id=105326, Secure: yes
+2025-11-30 22:51:12 [WebSocketClient] Constructor completed - Host: ws.derivws.com, Port: 443, Path: '/websockets/v3?app_id=105326'
+2025-11-30 22:51:12 [WebSocketClient] [connect] Connect() method called
+2025-11-30 22:51:12 [WebSocketClient] [connect] Current connection status: not connected
+2025-11-30 22:51:12 [WebSocketClient] [connect] Current URL: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+2025-11-30 22:51:12 [WebSocketClient] [connect] Current host: 'ws.derivws.com'
+2025-11-30 22:51:12 [WebSocketClient] [connect] Current port: 443
+2025-11-30 22:51:12 [WebSocketClient] [connect] Current path: '/websockets/v3?app_id=105326'
+2025-11-30 22:51:12 [WebSocketClient] [connect] Current path empty check: NO - OK
+2025-11-30 22:51:12 [WebSocketClient] [connect] Current path length: 28
+2025-11-30 22:51:12 [WebSocketClient] [connect] Connection timeout: 5 seconds
+2025-11-30 22:51:12 [WebSocketClient] [connect] General timeout: 8 seconds
+2025-11-30 22:51:12 [WebSocketClient] [connect] Testing DNS resolution for: ws.derivws.com
+2025-11-30 22:51:12 [WebSocketClient] [connect] DNS resolution SUCCESS - ws.derivws.com resolved to 104.18.12.218 in 0.36ms
+2025-11-30 22:51:12 [WebSocketClient] [connect] Testing network connectivity to ws.derivws.com:443
+2025-11-30 22:51:12 [WebSocketClient] [connect] Network connectivity SUCCESS - Connected in 283.6ms
+2025-11-30 22:51:12 [WebSocketClient] [connect] CA bundle not found or not readable, SSL verification disabled
+2025-11-30 22:51:12 [WebSocketClient] [connect] SSL context created with options: {"verify_peer":false,"verify_peer_name":false,"allow_self_signed":true}
+2025-11-30 22:51:12 [WebSocketClient] [connect] Validating path before stream_socket_client()
+2025-11-30 22:51:12 [WebSocketClient] [connect] Path value: '/websockets/v3?app_id=105326'
+2025-11-30 22:51:12 [WebSocketClient] [connect] Path type: string
+2025-11-30 22:51:12 [WebSocketClient] [connect] Path length: 28
+2025-11-30 22:51:12 [WebSocketClient] [connect] Path empty check: NO - OK
+2025-11-30 22:51:12 [WebSocketClient] [connect] About to call stream_socket_client()
+2025-11-30 22:51:12 [WebSocketClient] [connect] Address: ssl://ws.derivws.com:443
+2025-11-30 22:51:12 [WebSocketClient] [connect] Path will be used in handshake: '/websockets/v3?app_id=105326'
+2025-11-30 22:51:12 [WebSocketClient] [connect] Path length: 28
+2025-11-30 22:51:12 [WebSocketClient] [connect] Calling stream_socket_client() with address: ssl://ws.derivws.com:443
+2025-11-30 22:51:12 [WebSocketClient] [connect] Path '/websockets/v3?app_id=105326' will be sent in HTTP handshake, not in connection string
+2025-11-30 22:51:12 [WebSocketClient] [connect] Connection timeout: 5 seconds
+2025-11-30 22:51:12 [WebSocketClient] [connect] About to execute stream_socket_client() with SSL context
+2025-11-30 22:51:12 [WebSocketClient] [connect] stream_socket_client() completed in 233.24ms
+2025-11-30 22:51:12 [WebSocketClient] [connect] stream_socket_client() returned: socket resource
+2025-11-30 22:51:12 [WebSocketClient] [connect] Socket connection established successfully
+2025-11-30 22:51:12 [WebSocketClient] [connect] Socket timeout set to 8 seconds
+2025-11-30 22:51:12 [WebSocketClient] [performHandshake] Starting WebSocket handshake
+2025-11-30 22:51:12 [WebSocketClient] [performHandshake] Current path: '/websockets/v3?app_id=105326'
+2025-11-30 22:51:12 [WebSocketClient] [performHandshake] Path length: 28
+2025-11-30 22:51:12 [WebSocketClient] [performHandshake] Path empty check: NO - OK
+2025-11-30 22:51:12 [WebSocketClient] [performHandshake] Host: 'ws.derivws.com'
+2025-11-30 22:51:12 [WebSocketClient] [performHandshake] Port: 443
+2025-11-30 22:51:12 [WebSocketClient] [performHandshake] Generated WebSocket key: zjUxjBJJpZ6zI4X/htvr6A==
+2025-11-30 22:51:12 [WebSocketClient] [performHandshake] Host header: ws.derivws.com
+2025-11-30 22:51:12 [WebSocketClient] [performHandshake] WebSocket handshake request: GET /websockets/v3?app_id=105326 HTTP/1.1
+2025-11-30 22:51:12 [WebSocketClient] [performHandshake] Full handshake request (first 500 chars): GET /websockets/v3?app_id=105326 HTTP/1.1
+Host: ws.derivws.com
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Key: zjUxjBJJpZ6zI4X/htvr6A==
+Sec-WebSocket-Version: 13
+Origin: https://ws.derivws.com
+
+
+2025-11-30 22:51:12 [WebSocketClient] [performHandshake] Waiting for handshake response (timeout: 8s)
+2025-11-30 22:51:13 [WebSocketClient] [performHandshake] Handshake response received: HTTP/1.1 101 Switching Protocols
+Date: Sun, 30 Nov 2025 22:51:13 GMT
+Content-Length: 0
+Connection: upgrade
+Upgrade: websocket
+Sec-WebSocket-Accept: 9RbRi6DGuPiZdEQKyqCCc+RHLv8=
+Content-Language:
+2025-11-30 22:51:13 [WebSocketClient] [connect] WebSocket handshake completed in 586.53ms
+2025-11-30 22:51:13 [WebSocketClient] WebSocket connection established successfully in 823.28ms total
+2025-12-01 00:26:36 [WebSocketClient] Constructor called with URL: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+2025-12-01 00:26:36 [WebSocketClient] URL type: string, length: 48
+2025-12-01 00:26:36 [WebSocketClient] Timeout: 8 seconds
+2025-12-01 00:26:36 [WebSocketClient] Connection timeout set to: 5 seconds
+2025-12-01 00:26:36 [WebSocketClient] General timeout set to: 8 seconds
+2025-12-01 00:26:36 [WebSocketClient] Calling parseUrl() with: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+2025-12-01 00:26:36 [WebSocketClient] [parseUrl] Starting URL parsing for: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+2025-12-01 00:26:36 [WebSocketClient] [parseUrl] parse_url() result: array (
+  'scheme' => 'wss',
+  'host' => 'ws.derivws.com',
+  'path' => '/websockets/v3',
+  'query' => 'app_id=105326',
+)
+2025-12-01 00:26:36 [WebSocketClient] [parseUrl] Scheme: wss
+2025-12-01 00:26:36 [WebSocketClient] [parseUrl] Host: ws.derivws.com
+2025-12-01 00:26:36 [WebSocketClient] [parseUrl] Port: NOT SET
+2025-12-01 00:26:36 [WebSocketClient] [parseUrl] Path: '/websockets/v3'
+2025-12-01 00:26:36 [WebSocketClient] [parseUrl] Query: app_id=105326
+2025-12-01 00:26:36 [WebSocketClient] [parseUrl] Secure mode: yes
+2025-12-01 00:26:36 [WebSocketClient] [parseUrl] Host extracted: 'ws.derivws.com'
+2025-12-01 00:26:36 [WebSocketClient] [parseUrl] Port extracted: 443
+2025-12-01 00:26:36 [WebSocketClient] [parseUrl] Raw path from parse_url: '/websockets/v3'
+2025-12-01 00:26:36 [WebSocketClient] [parseUrl] Path is empty check: NO
+2025-12-01 00:26:36 [WebSocketClient] [parseUrl] Path is null check: NO
+2025-12-01 00:26:36 [WebSocketClient] [parseUrl] Path after normalization: '/websockets/v3'
+2025-12-01 00:26:36 [WebSocketClient] [parseUrl] Appending query string: app_id=105326
+2025-12-01 00:26:36 [WebSocketClient] [parseUrl] Final path value: '/websockets/v3?app_id=105326'
+2025-12-01 00:26:36 [WebSocketClient] [parseUrl] Final path length: 28
+2025-12-01 00:26:36 [WebSocketClient] [parseUrl] Final path empty check: NO - OK
+2025-12-01 00:26:36 [WebSocketClient] [parseUrl] URL parsing completed successfully - Host: ws.derivws.com, Port: 443, Path: /websockets/v3?app_id=105326, Secure: yes
+2025-12-01 00:26:36 [WebSocketClient] Constructor completed - Host: ws.derivws.com, Port: 443, Path: '/websockets/v3?app_id=105326'
+2025-12-01 00:26:36 [WebSocketClient] [connect] Connect() method called
+2025-12-01 00:26:36 [WebSocketClient] [connect] Current connection status: not connected
+2025-12-01 00:26:36 [WebSocketClient] [connect] Current URL: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+2025-12-01 00:26:36 [WebSocketClient] [connect] Current host: 'ws.derivws.com'
+2025-12-01 00:26:36 [WebSocketClient] [connect] Current port: 443
+2025-12-01 00:26:36 [WebSocketClient] [connect] Current path: '/websockets/v3?app_id=105326'
+2025-12-01 00:26:36 [WebSocketClient] [connect] Current path empty check: NO - OK
+2025-12-01 00:26:36 [WebSocketClient] [connect] Current path length: 28
+2025-12-01 00:26:36 [WebSocketClient] [connect] Connection timeout: 5 seconds
+2025-12-01 00:26:36 [WebSocketClient] [connect] General timeout: 8 seconds
+2025-12-01 00:26:36 [WebSocketClient] [connect] Testing DNS resolution for: ws.derivws.com
+2025-12-01 00:26:36 [WebSocketClient] [connect] DNS resolution SUCCESS - ws.derivws.com resolved to 104.18.12.218 in 136.35ms
+2025-12-01 00:26:36 [WebSocketClient] [connect] Testing network connectivity to ws.derivws.com:443
+2025-12-01 00:26:37 [WebSocketClient] [connect] Network connectivity SUCCESS - Connected in 412.23ms
+2025-12-01 00:26:37 [WebSocketClient] [connect] CA bundle not found or not readable, SSL verification disabled
+2025-12-01 00:26:37 [WebSocketClient] [connect] SSL context created with options: {"verify_peer":false,"verify_peer_name":false,"allow_self_signed":true}
+2025-12-01 00:26:37 [WebSocketClient] [connect] Validating path before stream_socket_client()
+2025-12-01 00:26:37 [WebSocketClient] [connect] Path value: '/websockets/v3?app_id=105326'
+2025-12-01 00:26:37 [WebSocketClient] [connect] Path type: string
+2025-12-01 00:26:37 [WebSocketClient] [connect] Path length: 28
+2025-12-01 00:26:37 [WebSocketClient] [connect] Path empty check: NO - OK
+2025-12-01 00:26:37 [WebSocketClient] [connect] About to call stream_socket_client()
+2025-12-01 00:26:37 [WebSocketClient] [connect] Address: ssl://ws.derivws.com:443
+2025-12-01 00:26:37 [WebSocketClient] [connect] Path will be used in handshake: '/websockets/v3?app_id=105326'
+2025-12-01 00:26:37 [WebSocketClient] [connect] Path length: 28
+2025-12-01 00:26:37 [WebSocketClient] [connect] Calling stream_socket_client() with address: ssl://ws.derivws.com:443
+2025-12-01 00:26:37 [WebSocketClient] [connect] Path '/websockets/v3?app_id=105326' will be sent in HTTP handshake, not in connection string
+2025-12-01 00:26:37 [WebSocketClient] [connect] Connection timeout: 5 seconds
+2025-12-01 00:26:37 [WebSocketClient] [connect] About to execute stream_socket_client() with SSL context
+2025-12-01 00:26:37 [WebSocketClient] [connect] stream_socket_client() completed in 244.46ms
+2025-12-01 00:26:37 [WebSocketClient] [connect] stream_socket_client() returned: socket resource
+2025-12-01 00:26:37 [WebSocketClient] [connect] Socket connection established successfully
+2025-12-01 00:26:37 [WebSocketClient] [connect] Socket timeout set to 8 seconds
+2025-12-01 00:26:37 [WebSocketClient] [performHandshake] Starting WebSocket handshake
+2025-12-01 00:26:37 [WebSocketClient] [performHandshake] Current path: '/websockets/v3?app_id=105326'
+2025-12-01 00:26:37 [WebSocketClient] [performHandshake] Path length: 28
+2025-12-01 00:26:37 [WebSocketClient] [performHandshake] Path empty check: NO - OK
+2025-12-01 00:26:37 [WebSocketClient] [performHandshake] Host: 'ws.derivws.com'
+2025-12-01 00:26:37 [WebSocketClient] [performHandshake] Port: 443
+2025-12-01 00:26:37 [WebSocketClient] [performHandshake] Generated WebSocket key: 9JLQfpbvAheI480dgboUSQ==
+2025-12-01 00:26:37 [WebSocketClient] [performHandshake] Host header: ws.derivws.com
+2025-12-01 00:26:37 [WebSocketClient] [performHandshake] WebSocket handshake request: GET /websockets/v3?app_id=105326 HTTP/1.1
+2025-12-01 00:26:37 [WebSocketClient] [performHandshake] Full handshake request (first 500 chars): GET /websockets/v3?app_id=105326 HTTP/1.1
+Host: ws.derivws.com
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Key: 9JLQfpbvAheI480dgboUSQ==
+Sec-WebSocket-Version: 13
+Origin: https://ws.derivws.com
+
+
+2025-12-01 00:26:37 [WebSocketClient] [performHandshake] Waiting for handshake response (timeout: 8s)
+2025-12-01 00:26:37 [WebSocketClient] [performHandshake] Handshake response received: HTTP/1.1 101 Switching Protocols
+Date: Mon, 01 Dec 2025 00:26:38 GMT
+Content-Length: 0
+Connection: upgrade
+Upgrade: websocket
+Sec-WebSocket-Accept: KcyIAZrkAtUajMY06oY1mqouRUs=
+Content-Language:
+2025-12-01 00:26:37 [WebSocketClient] [connect] WebSocket handshake completed in 591.9ms
+2025-12-01 00:26:37 [WebSocketClient] WebSocket connection established successfully in 838.88ms total
+2025-12-01 00:51:37 [WebSocketClient] Constructor called with URL: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+2025-12-01 00:51:37 [WebSocketClient] URL type: string, length: 48
+2025-12-01 00:51:37 [WebSocketClient] Timeout: 8 seconds
+2025-12-01 00:51:37 [WebSocketClient] Connection timeout set to: 5 seconds
+2025-12-01 00:51:37 [WebSocketClient] General timeout set to: 8 seconds
+2025-12-01 00:51:37 [WebSocketClient] Calling parseUrl() with: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+2025-12-01 00:51:37 [WebSocketClient] [parseUrl] Starting URL parsing for: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+2025-12-01 00:51:37 [WebSocketClient] [parseUrl] parse_url() result: array (
+  'scheme' => 'wss',
+  'host' => 'ws.derivws.com',
+  'path' => '/websockets/v3',
+  'query' => 'app_id=105326',
+)
+2025-12-01 00:51:37 [WebSocketClient] [parseUrl] Scheme: wss
+2025-12-01 00:51:37 [WebSocketClient] [parseUrl] Host: ws.derivws.com
+2025-12-01 00:51:37 [WebSocketClient] [parseUrl] Port: NOT SET
+2025-12-01 00:51:37 [WebSocketClient] [parseUrl] Path: '/websockets/v3'
+2025-12-01 00:51:37 [WebSocketClient] [parseUrl] Query: app_id=105326
+2025-12-01 00:51:37 [WebSocketClient] [parseUrl] Secure mode: yes
+2025-12-01 00:51:37 [WebSocketClient] [parseUrl] Host extracted: 'ws.derivws.com'
+2025-12-01 00:51:37 [WebSocketClient] [parseUrl] Port extracted: 443
+2025-12-01 00:51:37 [WebSocketClient] [parseUrl] Raw path from parse_url: '/websockets/v3'
+2025-12-01 00:51:37 [WebSocketClient] [parseUrl] Path is empty check: NO
+2025-12-01 00:51:37 [WebSocketClient] [parseUrl] Path is null check: NO
+2025-12-01 00:51:37 [WebSocketClient] [parseUrl] Path after normalization: '/websockets/v3'
+2025-12-01 00:51:37 [WebSocketClient] [parseUrl] Appending query string: app_id=105326
+2025-12-01 00:51:37 [WebSocketClient] [parseUrl] Final path value: '/websockets/v3?app_id=105326'
+2025-12-01 00:51:37 [WebSocketClient] [parseUrl] Final path length: 28
+2025-12-01 00:51:37 [WebSocketClient] [parseUrl] Final path empty check: NO - OK
+2025-12-01 00:51:37 [WebSocketClient] [parseUrl] URL parsing completed successfully - Host: ws.derivws.com, Port: 443, Path: /websockets/v3?app_id=105326, Secure: yes
+2025-12-01 00:51:37 [WebSocketClient] Constructor completed - Host: ws.derivws.com, Port: 443, Path: '/websockets/v3?app_id=105326'
+2025-12-01 00:51:37 [WebSocketClient] [connect] Connect() method called
+2025-12-01 00:51:37 [WebSocketClient] [connect] Current connection status: not connected
+2025-12-01 00:51:37 [WebSocketClient] [connect] Current URL: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+2025-12-01 00:51:37 [WebSocketClient] [connect] Current host: 'ws.derivws.com'
+2025-12-01 00:51:37 [WebSocketClient] [connect] Current port: 443
+2025-12-01 00:51:37 [WebSocketClient] [connect] Current path: '/websockets/v3?app_id=105326'
+2025-12-01 00:51:37 [WebSocketClient] [connect] Current path empty check: NO - OK
+2025-12-01 00:51:37 [WebSocketClient] [connect] Current path length: 28
+2025-12-01 00:51:37 [WebSocketClient] [connect] Connection timeout: 5 seconds
+2025-12-01 00:51:37 [WebSocketClient] [connect] General timeout: 8 seconds
+2025-12-01 00:51:37 [WebSocketClient] [connect] Testing DNS resolution for: ws.derivws.com
+2025-12-01 00:51:37 [WebSocketClient] [connect] DNS resolution SUCCESS - ws.derivws.com resolved to 104.18.12.218 in 323.22ms
+2025-12-01 00:51:37 [WebSocketClient] [connect] Testing network connectivity to ws.derivws.com:443
+2025-12-01 00:51:37 [WebSocketClient] [connect] Network connectivity SUCCESS - Connected in 392.44ms
+2025-12-01 00:51:37 [WebSocketClient] [connect] CA bundle not found or not readable, SSL verification disabled
+2025-12-01 00:51:37 [WebSocketClient] [connect] SSL context created with options: {"verify_peer":false,"verify_peer_name":false,"allow_self_signed":true}
+2025-12-01 00:51:37 [WebSocketClient] [connect] Validating path before stream_socket_client()
+2025-12-01 00:51:37 [WebSocketClient] [connect] Path value: '/websockets/v3?app_id=105326'
+2025-12-01 00:51:37 [WebSocketClient] [connect] Path type: string
+2025-12-01 00:51:37 [WebSocketClient] [connect] Path length: 28
+2025-12-01 00:51:37 [WebSocketClient] [connect] Path empty check: NO - OK
+2025-12-01 00:51:37 [WebSocketClient] [connect] About to call stream_socket_client()
+2025-12-01 00:51:37 [WebSocketClient] [connect] Address: ssl://ws.derivws.com:443
+2025-12-01 00:51:37 [WebSocketClient] [connect] Path will be used in handshake: '/websockets/v3?app_id=105326'
+2025-12-01 00:51:37 [WebSocketClient] [connect] Path length: 28
+2025-12-01 00:51:37 [WebSocketClient] [connect] Calling stream_socket_client() with address: ssl://ws.derivws.com:443
+2025-12-01 00:51:37 [WebSocketClient] [connect] Path '/websockets/v3?app_id=105326' will be sent in HTTP handshake, not in connection string
+2025-12-01 00:51:37 [WebSocketClient] [connect] Connection timeout: 5 seconds
+2025-12-01 00:51:37 [WebSocketClient] [connect] About to execute stream_socket_client() with SSL context
+2025-12-01 00:51:38 [WebSocketClient] [connect] stream_socket_client() completed in 233.59ms
+2025-12-01 00:51:38 [WebSocketClient] [connect] stream_socket_client() returned: socket resource
+2025-12-01 00:51:38 [WebSocketClient] [connect] Socket connection established successfully
+2025-12-01 00:51:38 [WebSocketClient] [connect] Socket timeout set to 8 seconds
+2025-12-01 00:51:38 [WebSocketClient] [performHandshake] Starting WebSocket handshake
+2025-12-01 00:51:38 [WebSocketClient] [performHandshake] Current path: '/websockets/v3?app_id=105326'
+2025-12-01 00:51:38 [WebSocketClient] [performHandshake] Path length: 28
+2025-12-01 00:51:38 [WebSocketClient] [performHandshake] Path empty check: NO - OK
+2025-12-01 00:51:38 [WebSocketClient] [performHandshake] Host: 'ws.derivws.com'
+2025-12-01 00:51:38 [WebSocketClient] [performHandshake] Port: 443
+2025-12-01 00:51:38 [WebSocketClient] [performHandshake] Generated WebSocket key: g2AjkMkQAMq9tALB7fpMXg==
+2025-12-01 00:51:38 [WebSocketClient] [performHandshake] Host header: ws.derivws.com
+2025-12-01 00:51:38 [WebSocketClient] [performHandshake] WebSocket handshake request: GET /websockets/v3?app_id=105326 HTTP/1.1
+2025-12-01 00:51:38 [WebSocketClient] [performHandshake] Full handshake request (first 500 chars): GET /websockets/v3?app_id=105326 HTTP/1.1
+Host: ws.derivws.com
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Key: g2AjkMkQAMq9tALB7fpMXg==
+Sec-WebSocket-Version: 13
+Origin: https://ws.derivws.com
+
+
+2025-12-01 00:51:38 [WebSocketClient] [performHandshake] Waiting for handshake response (timeout: 8s)
+2025-12-01 00:51:38 [WebSocketClient] [performHandshake] Handshake response received: HTTP/1.1 101 Switching Protocols
+Date: Mon, 01 Dec 2025 00:51:38 GMT
+Content-Length: 0
+Connection: upgrade
+Upgrade: websocket
+Content-Language: en
+Sec-WebSocket-Accept: BlAJen+UTwlgB5LUvqjG6wrHx
+2025-12-01 00:51:38 [WebSocketClient] [connect] WebSocket handshake completed in 552.31ms
+2025-12-01 00:51:38 [WebSocketClient] WebSocket connection established successfully in 788.05ms total

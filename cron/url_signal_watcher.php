@@ -192,48 +192,54 @@ logMessage('INFO', 'URL watcher shutting down');
 exit(0);
 
 /**
- * Fetch signal from local file.
+ * Fetch signal from remote URL using cURL.
  */
 function fetchRemoteSignal(string $url, int $timeout): array
 {
     $start = microtime(true);
     
-    // Use the local file path instead of HTTP URL
-    $localFile = vtm_signal_public_path(); // This returns /app/storage/signals/getSignal.txt
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // For testing/dev environments
+    curl_setopt($ch, CURLOPT_HEADER, true); // Include headers in output
     
-    if (!file_exists($localFile)) {
-        $duration = round((microtime(true) - $start) * 1000, 2);
-        return [
-            'success' => false,
-            'error' => 'Local signal file not found',
-            'http_code' => 404,
-            'duration_ms' => $duration,
-        ];
-    }
-    
-    $content = file_get_contents($localFile);
+    $response = curl_exec($ch);
     $duration = round((microtime(true) - $start) * 1000, 2);
     
-    if ($content === false) {
+    if ($response === false) {
+        $error = curl_error($ch);
+        curl_close($ch);
         return [
             'success' => false,
-            'error' => 'Failed to read local signal file',
-            'http_code' => 500,
+            'error' => "cURL error: $error",
+            'http_code' => 0,
             'duration_ms' => $duration,
         ];
     }
     
-    $filemtime = filemtime($localFile);
-    $filesize = filesize($localFile);
+    $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $headers = substr($response, 0, $headerSize);
+    $body = substr($response, $headerSize);
+    
+    curl_close($ch);
+    
+    // Extract headers for metadata
+    $contentLength = extractHeaderValue($headers, 'Content-Length');
+    $lastModified = extractHeaderValue($headers, 'Last-Modified');
+    $etag = extractHeaderValue($headers, 'ETag');
     
     return [
         'success' => true,
-        'body' => $content,
-        'http_code' => 200,
+        'body' => $body,
+        'http_code' => $httpCode,
         'duration_ms' => $duration,
-        'length' => $filesize,
-        'last_modified' => $filemtime ? gmdate('c', $filemtime) : null,
-        'etag' => md5($content),
+        'length' => $contentLength !== null ? (int)$contentLength : strlen($body),
+        'last_modified' => $lastModified,
+        'etag' => $etag,
     ];
 }
 
