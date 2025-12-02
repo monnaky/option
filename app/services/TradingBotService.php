@@ -104,9 +104,9 @@ class TradingBotService
                 throw new Exception('API token not found. Please connect your Deriv API token first.');
             }
             
-            // Decrypt API token
+            // Decrypt API token (supports legacy key fallback)
             try {
-                $apiToken = EncryptionService::decrypt($user['encrypted_api_token']);
+                $apiToken = $this->decryptUserApiToken($userId, $user['encrypted_api_token']);
             } catch (Exception $e) {
                 throw new Exception('Failed to decrypt API token: ' . $e->getMessage());
             }
@@ -328,7 +328,7 @@ class TradingBotService
         }
         
         // Decrypt token
-        $apiToken = EncryptionService::decrypt($user['encrypted_api_token']);
+        $apiToken = $this->decryptUserApiToken($userId, $user['encrypted_api_token']);
         
         // Create Deriv API instance
         $derivApi = new DerivAPI($apiToken, null, (string)$userId);
@@ -397,6 +397,26 @@ class TradingBotService
             // Close API connection
             $derivApi->close();
         }
+    }
+
+    /**
+     * Decrypt a stored API token with legacy key fallback and rotation
+     */
+    private function decryptUserApiToken(int $userId, string $encryptedToken): string
+    {
+        [$token, $usedLegacyKey] = EncryptionService::decryptWithLegacySupport($encryptedToken);
+        
+        if ($usedLegacyKey) {
+            try {
+                $reEncrypted = EncryptionService::encrypt($token);
+                $this->helper->rotateUserApiToken($userId, $reEncrypted);
+                error_log("[TradingBotService] Rotated API token encryption for user {$userId} after legacy key fallback");
+            } catch (Exception $rotateError) {
+                error_log("[TradingBotService] Failed to rotate API token for user {$userId}: " . $rotateError->getMessage());
+            }
+        }
+        
+        return $token;
     }
     
     /**
@@ -479,7 +499,7 @@ class TradingBotService
             // Step 5: Decrypt token
             error_log("{$logPrefix} Step 5: Decrypting API token");
             try {
-                $apiToken = EncryptionService::decrypt($user['encrypted_api_token']);
+                $apiToken = $this->decryptUserApiToken($userId, $user['encrypted_api_token']);
             } catch (Exception $e) {
                 $error = "Token decryption failed for user {$userId}: " . $e->getMessage();
                 error_log("{$logPrefix} ERROR: {$error}");
@@ -780,7 +800,7 @@ class TradingBotService
     {
         try {
             // Decrypt token
-            $apiToken = EncryptionService::decrypt($encryptedToken);
+            $apiToken = $this->decryptUserApiToken($userId, $encryptedToken);
             
             // Create Deriv API instance
             $derivApi = new DerivAPI($apiToken, null, (string)$userId);
@@ -998,7 +1018,7 @@ class TradingBotService
             $debugLog[] = "  - Encrypted token preview: " . substr($user['encrypted_api_token'], 0, 50) . '...';
             
             try {
-                $apiToken = EncryptionService::decrypt($user['encrypted_api_token']);
+                $apiToken = $this->decryptUserApiToken($userId, $user['encrypted_api_token']);
                 $debugLog[] = "  - Decryption SUCCESS";
                 $debugLog[] = "  - Decrypted token length: " . strlen($apiToken);
                 $debugLog[] = "  - Decrypted token preview: " . substr($apiToken, 0, 20) . '...' . substr($apiToken, -10);

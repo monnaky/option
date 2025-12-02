@@ -61,6 +61,19 @@ class DatabaseHelper
     }
     
     /**
+     * Rotate user API token encryption in-place (used during key migration)
+     */
+    public function rotateUserApiToken(int $userId, string $encryptedToken): bool
+    {
+        $data = [
+            'encrypted_api_token' => $encryptedToken,
+            'api_token_last_used' => date('Y-m-d H:i:s'),
+        ];
+        
+        return $this->db->update('users', $data, ['id' => $userId]) > 0;
+    }
+    
+    /**
      * Update user last API token usage
      */
     public function updateUserApiTokenLastUsed(int $userId): bool
