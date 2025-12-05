@@ -41304,3 +41304,649 @@ Step 4: Balance type: double
 Step 4: Balance value: 108.88
 Step 5: Preparing response: {"balance":108.88,"currency":"USD","hasToken":true,"debug":{"user_found":true,"has_token":true,"balance_retrieved":true,"balance_value":108.88}}
 === handleGetBalance SUCCESS ===
+[04-Dec-2025 23:51:26 UTC] [EncryptionService::decrypt] START - Encrypted data length: 96
+[04-Dec-2025 23:51:26 UTC] [EncryptionService::decrypt] Step 1: Getting encryption key
+[04-Dec-2025 23:51:26 UTC] [EncryptionService::decrypt] Step 1: OK - Key length: 32
+[04-Dec-2025 23:51:26 UTC] [EncryptionService::decrypt] Step 2: Validating encrypted data format
+[04-Dec-2025 23:51:26 UTC] [EncryptionService::decrypt] Step 3: Splitting encrypted data
+[04-Dec-2025 23:51:26 UTC] [EncryptionService::decrypt] Step 3: OK - IV length: 32, Tag length: 32, Encrypted length: 30
+[04-Dec-2025 23:51:26 UTC] [EncryptionService::decrypt] Step 4: Converting hex to binary
+[04-Dec-2025 23:51:26 UTC] [EncryptionService::decrypt] Step 4: OK - IV: 16 bytes, Tag: 16 bytes, Encrypted: 15 bytes
+[04-Dec-2025 23:51:26 UTC] [EncryptionService::decrypt] Step 5: Decrypting with OpenSSL
+[04-Dec-2025 23:51:27 UTC] [EncryptionService::decrypt] Step 5: OK - Decrypted length: 15
+[04-Dec-2025 23:51:27 UTC] [EncryptionService::decrypt] SUCCESS - Decryption completed
+[04-Dec-2025 23:51:27 UTC] [TradingBotService] Creating new DerivAPI connection for user 1
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Constructor - Building WebSocket URL
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Environment check - getenv('DERIV_APP_ID'): false
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Environment check - $_ENV['DERIV_APP_ID']: '105326'
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Environment check - DERIV_APP_ID constant: 105326
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Final appId: '105326'
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] wsHost: 'ws.derivws.com'
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Final wsUrl: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] wsUrl contains app_id: YES
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] wsUrl length: 48
+[04-Dec-2025 23:51:27 UTC] DerivAPI initialized: wss://ws.derivws.com/websockets/v3?app_id=105326, App ID: 105326
+[04-Dec-2025 23:51:27 UTC] [TradingBotService] Closing connection for user 1
+[04-Dec-2025 23:51:27 UTC] [TradingBotService] Creating new DerivAPI connection for user 1
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Constructor - Building WebSocket URL
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Environment check - getenv('DERIV_APP_ID'): false
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Environment check - $_ENV['DERIV_APP_ID']: '105326'
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Environment check - DERIV_APP_ID constant: 105326
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Final appId: '105326'
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] wsHost: 'ws.derivws.com'
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Final wsUrl: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] wsUrl contains app_id: YES
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] wsUrl length: 48
+[04-Dec-2025 23:51:27 UTC] DerivAPI initialized: wss://ws.derivws.com/websockets/v3?app_id=105326, App ID: 105326
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] About to create WebSocketClient
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] URL to pass: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] URL type: string
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] URL length: 48
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] URL empty check: NO - OK
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] WebSocketClient created successfully, calling connect()
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] Connection timeout: 8 seconds
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] ERROR: WebSocket connection failed
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] Exception message: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] Exception trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(171): App\Services\WebSocketClient->connect()
+#1 C:\xampp\htdocs\option\app\services\DerivAPI.php(484): App\Services\DerivAPI->ensureConnection()
+#2 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#3 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#4 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#5 {main}
+[04-Dec-2025 23:51:27 UTC] WebSocket connection failed: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::getBalance] === DerivAPI::getBalance START ===
+Timestamp: 2025-12-04 23:51:27
+Step 1: Checking cached auth data
+  - No cached balance available
+Step 2: Ensuring connection
+EXCEPTION CAUGHT: Failed to connect to Deriv API: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+Exception type: Exception
+Stack trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(484): App\Services\DerivAPI->ensureConnection()
+#1 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#2 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#3 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#4 {main}
+=== DerivAPI::getBalance FAILED ===
+[04-Dec-2025 23:51:27 UTC] [TradingBotService] Closing connection for user 1
+[04-Dec-2025 23:51:27 UTC] [TradingBotService] Creating new DerivAPI connection for user 1
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Constructor - Building WebSocket URL
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Environment check - getenv('DERIV_APP_ID'): false
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Environment check - $_ENV['DERIV_APP_ID']: '105326'
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Environment check - DERIV_APP_ID constant: 105326
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Final appId: '105326'
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] wsHost: 'ws.derivws.com'
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Final wsUrl: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] wsUrl contains app_id: YES
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] wsUrl length: 48
+[04-Dec-2025 23:51:27 UTC] DerivAPI initialized: wss://ws.derivws.com/websockets/v3?app_id=105326, App ID: 105326
+[04-Dec-2025 23:51:27 UTC] [TradingBotService] Closing connection for user 1
+[04-Dec-2025 23:51:27 UTC] [TradingBotService] Creating new DerivAPI connection for user 1
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Constructor - Building WebSocket URL
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Environment check - getenv('DERIV_APP_ID'): false
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Environment check - $_ENV['DERIV_APP_ID']: '105326'
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Environment check - DERIV_APP_ID constant: 105326
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Final appId: '105326'
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] wsHost: 'ws.derivws.com'
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] Final wsUrl: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] wsUrl contains app_id: YES
+[04-Dec-2025 23:51:27 UTC] [DerivAPI] wsUrl length: 48
+[04-Dec-2025 23:51:27 UTC] DerivAPI initialized: wss://ws.derivws.com/websockets/v3?app_id=105326, App ID: 105326
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] About to create WebSocketClient
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] URL to pass: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] URL type: string
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] URL length: 48
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] URL empty check: NO - OK
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] WebSocketClient created successfully, calling connect()
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] Connection timeout: 8 seconds
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] ERROR: WebSocket connection failed
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] Exception message: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::ensureConnection] Exception trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(171): App\Services\WebSocketClient->connect()
+#1 C:\xampp\htdocs\option\app\services\DerivAPI.php(484): App\Services\DerivAPI->ensureConnection()
+#2 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#3 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#4 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#5 {main}
+[04-Dec-2025 23:51:27 UTC] WebSocket connection failed: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+[04-Dec-2025 23:51:27 UTC] [DerivAPI::getBalance] === DerivAPI::getBalance START ===
+Timestamp: 2025-12-04 23:51:27
+Step 1: Checking cached auth data
+  - No cached balance available
+Step 2: Ensuring connection
+EXCEPTION CAUGHT: Failed to connect to Deriv API: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+Exception type: Exception
+Stack trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(484): App\Services\DerivAPI->ensureConnection()
+#1 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#2 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#3 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#4 {main}
+=== DerivAPI::getBalance FAILED ===
+[04-Dec-2025 23:51:27 UTC] [TradingBotService] Closing connection for user 1
+[04-Dec-2025 23:51:27 UTC] [TradingBotService::getAccountBalance] === TradingBotService::getAccountBalance START for user 1 ===
+Timestamp: 2025-12-04 23:51:26
+Step 1: Checking balance cache
+  - No cache found
+Step 2: Querying database for user token
+  - User query result: FOUND
+  - Email: rocketpaybiz@gmail.com
+  - Has encrypted_token: YES
+  - Token length: 96
+Step 3: Decrypting token
+  - Encrypted token length: 96
+  - Encrypted token preview: 36352142e9a15bac9ae951fbdd22d9dd:7258bf5924748a087...
+  - Decryption SUCCESS
+  - Decrypted token length: 15
+  - Decrypted token preview: KeNPW20DGi0zHyX...20DGi0zHyX
+Step 4: Getting or creating DerivAPI connection
+  - DerivAPI instance obtained
+  - Connection status: NOT CONNECTED
+Step 5: Attempt 1/2 to get balance
+  - Connection check: NOT CONNECTED
+  - Connection not healthy, recreating
+  - New connection status: NOT CONNECTED
+  - Calling derivApi->getBalance()
+  - Attempt 1 FAILED: Failed to connect to Deriv API: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+  - Error type: Exception
+  - Error trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(484): App\Services\DerivAPI->ensureConnection()
+#1 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#2 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#3 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#4 {main}
+  - Connection error detected, closing connection
+  - Waiting 0.5s before retry
+  - Recreating connection
+Step 5: Attempt 2/2 to get balance
+  - Connection check: NOT CONNECTED
+  - Connection not healthy, recreating
+  - New connection status: NOT CONNECTED
+  - Calling derivApi->getBalance()
+  - Attempt 2 FAILED: Failed to connect to Deriv API: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+  - Error type: Exception
+  - Error trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(484): App\Services\DerivAPI->ensureConnection()
+#1 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#2 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#3 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#4 {main}
+  - Connection error detected, closing connection
+Step 5 FAILED: All retries exhausted
+  - Last error: Failed to connect to Deriv API: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+=== TradingBotService::getAccountBalance FAILED ===
+[04-Dec-2025 23:51:27 UTC] [TradingBotService::getAccountBalance] === TradingBotService::getAccountBalance START for user 1 ===
+Timestamp: 2025-12-04 23:51:26
+Step 1: Checking balance cache
+  - No cache found
+Step 2: Querying database for user token
+  - User query result: FOUND
+  - Email: rocketpaybiz@gmail.com
+  - Has encrypted_token: YES
+  - Token length: 96
+Step 3: Decrypting token
+  - Encrypted token length: 96
+  - Encrypted token preview: 36352142e9a15bac9ae951fbdd22d9dd:7258bf5924748a087...
+  - Decryption SUCCESS
+  - Decrypted token length: 15
+  - Decrypted token preview: KeNPW20DGi0zHyX...20DGi0zHyX
+Step 4: Getting or creating DerivAPI connection
+  - DerivAPI instance obtained
+  - Connection status: NOT CONNECTED
+Step 5: Attempt 1/2 to get balance
+  - Connection check: NOT CONNECTED
+  - Connection not healthy, recreating
+  - New connection status: NOT CONNECTED
+  - Calling derivApi->getBalance()
+  - Attempt 1 FAILED: Failed to connect to Deriv API: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+  - Error type: Exception
+  - Error trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(484): App\Services\DerivAPI->ensureConnection()
+#1 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#2 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#3 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#4 {main}
+  - Connection error detected, closing connection
+  - Waiting 0.5s before retry
+  - Recreating connection
+Step 5: Attempt 2/2 to get balance
+  - Connection check: NOT CONNECTED
+  - Connection not healthy, recreating
+  - New connection status: NOT CONNECTED
+  - Calling derivApi->getBalance()
+  - Attempt 2 FAILED: Failed to connect to Deriv API: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+  - Error type: Exception
+  - Error trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(484): App\Services\DerivAPI->ensureConnection()
+#1 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#2 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#3 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#4 {main}
+  - Connection error detected, closing connection
+Step 5 FAILED: All retries exhausted
+  - Last error: Failed to connect to Deriv API: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+=== TradingBotService::getAccountBalance FAILED ===
+EXCEPTION CAUGHT: Failed to connect to Deriv API: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+Exception type: Exception
+Stack trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(484): App\Services\DerivAPI->ensureConnection()
+#1 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#2 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#3 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#4 {main}
+=== TradingBotService::getAccountBalance EXCEPTION ===
+[04-Dec-2025 23:51:27 UTC] [handleGetBalance] === handleGetBalance START for user 1 ===
+Timestamp: 2025-12-04 23:51:26
+Step 1: Querying database for user 1
+Step 1 Result: User FOUND
+  - Email: rocketpaybiz@gmail.com
+  - Has encrypted_token: YES
+  - Token length: 96
+  - Token created: 2025-11-19 11:39:20
+  - Token last used: 2025-11-19 11:39:20
+Step 3: Calling TradingBotService->getAccountBalance(1)
+Step 3: TradingBotService instance obtained
+Step 4: Balance retrieved from service: 0
+Step 4: Balance type: double
+Step 4: Balance value: 0.0
+Step 5: Preparing response: {"balance":0,"currency":"USD","hasToken":true,"debug":{"user_found":true,"has_token":true,"balance_retrieved":true,"balance_value":0}}
+=== handleGetBalance SUCCESS ===
+[04-Dec-2025 23:51:54 UTC] [EncryptionService::decrypt] START - Encrypted data length: 96
+[04-Dec-2025 23:51:54 UTC] [EncryptionService::decrypt] Step 1: Getting encryption key
+[04-Dec-2025 23:51:54 UTC] [EncryptionService::decrypt] Step 1: OK - Key length: 32
+[04-Dec-2025 23:51:54 UTC] [EncryptionService::decrypt] Step 2: Validating encrypted data format
+[04-Dec-2025 23:51:54 UTC] [EncryptionService::decrypt] Step 3: Splitting encrypted data
+[04-Dec-2025 23:51:54 UTC] [EncryptionService::decrypt] Step 3: OK - IV length: 32, Tag length: 32, Encrypted length: 30
+[04-Dec-2025 23:51:54 UTC] [EncryptionService::decrypt] Step 4: Converting hex to binary
+[04-Dec-2025 23:51:54 UTC] [EncryptionService::decrypt] Step 4: OK - IV: 16 bytes, Tag: 16 bytes, Encrypted: 15 bytes
+[04-Dec-2025 23:51:54 UTC] [EncryptionService::decrypt] Step 5: Decrypting with OpenSSL
+[04-Dec-2025 23:51:54 UTC] [EncryptionService::decrypt] Step 5: OK - Decrypted length: 15
+[04-Dec-2025 23:51:54 UTC] [EncryptionService::decrypt] SUCCESS - Decryption completed
+[04-Dec-2025 23:51:54 UTC] [TradingBotService] Creating new DerivAPI connection for user 1
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Constructor - Building WebSocket URL
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Environment check - getenv('DERIV_APP_ID'): false
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Environment check - $_ENV['DERIV_APP_ID']: '105326'
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Environment check - DERIV_APP_ID constant: 105326
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Final appId: '105326'
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] wsHost: 'ws.derivws.com'
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Final wsUrl: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] wsUrl contains app_id: YES
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] wsUrl length: 48
+[04-Dec-2025 23:51:54 UTC] DerivAPI initialized: wss://ws.derivws.com/websockets/v3?app_id=105326, App ID: 105326
+[04-Dec-2025 23:51:54 UTC] [TradingBotService] Closing connection for user 1
+[04-Dec-2025 23:51:54 UTC] [TradingBotService] Creating new DerivAPI connection for user 1
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Constructor - Building WebSocket URL
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Environment check - getenv('DERIV_APP_ID'): false
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Environment check - $_ENV['DERIV_APP_ID']: '105326'
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Environment check - DERIV_APP_ID constant: 105326
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Final appId: '105326'
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] wsHost: 'ws.derivws.com'
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Final wsUrl: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] wsUrl contains app_id: YES
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] wsUrl length: 48
+[04-Dec-2025 23:51:54 UTC] DerivAPI initialized: wss://ws.derivws.com/websockets/v3?app_id=105326, App ID: 105326
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] About to create WebSocketClient
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] URL to pass: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] URL type: string
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] URL length: 48
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] URL empty check: NO - OK
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] WebSocketClient created successfully, calling connect()
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] Connection timeout: 8 seconds
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] ERROR: WebSocket connection failed
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] Exception message: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] Exception trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(171): App\Services\WebSocketClient->connect()
+#1 C:\xampp\htdocs\option\app\services\DerivAPI.php(484): App\Services\DerivAPI->ensureConnection()
+#2 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#3 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#4 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#5 {main}
+[04-Dec-2025 23:51:54 UTC] WebSocket connection failed: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::getBalance] === DerivAPI::getBalance START ===
+Timestamp: 2025-12-04 23:51:54
+Step 1: Checking cached auth data
+  - No cached balance available
+Step 2: Ensuring connection
+EXCEPTION CAUGHT: Failed to connect to Deriv API: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+Exception type: Exception
+Stack trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(484): App\Services\DerivAPI->ensureConnection()
+#1 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#2 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#3 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#4 {main}
+=== DerivAPI::getBalance FAILED ===
+[04-Dec-2025 23:51:54 UTC] [TradingBotService] Closing connection for user 1
+[04-Dec-2025 23:51:54 UTC] [TradingBotService] Creating new DerivAPI connection for user 1
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Constructor - Building WebSocket URL
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Environment check - getenv('DERIV_APP_ID'): false
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Environment check - $_ENV['DERIV_APP_ID']: '105326'
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Environment check - DERIV_APP_ID constant: 105326
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Final appId: '105326'
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] wsHost: 'ws.derivws.com'
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Final wsUrl: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] wsUrl contains app_id: YES
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] wsUrl length: 48
+[04-Dec-2025 23:51:54 UTC] DerivAPI initialized: wss://ws.derivws.com/websockets/v3?app_id=105326, App ID: 105326
+[04-Dec-2025 23:51:54 UTC] [TradingBotService] Closing connection for user 1
+[04-Dec-2025 23:51:54 UTC] [TradingBotService] Creating new DerivAPI connection for user 1
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Constructor - Building WebSocket URL
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Environment check - getenv('DERIV_APP_ID'): false
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Environment check - $_ENV['DERIV_APP_ID']: '105326'
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Environment check - DERIV_APP_ID constant: 105326
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Final appId: '105326'
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] wsHost: 'ws.derivws.com'
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] Final wsUrl: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] wsUrl contains app_id: YES
+[04-Dec-2025 23:51:54 UTC] [DerivAPI] wsUrl length: 48
+[04-Dec-2025 23:51:54 UTC] DerivAPI initialized: wss://ws.derivws.com/websockets/v3?app_id=105326, App ID: 105326
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] About to create WebSocketClient
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] URL to pass: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] URL type: string
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] URL length: 48
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] URL empty check: NO - OK
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] WebSocketClient created successfully, calling connect()
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] Connection timeout: 8 seconds
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] ERROR: WebSocket connection failed
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] Exception message: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::ensureConnection] Exception trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(171): App\Services\WebSocketClient->connect()
+#1 C:\xampp\htdocs\option\app\services\DerivAPI.php(484): App\Services\DerivAPI->ensureConnection()
+#2 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#3 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#4 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#5 {main}
+[04-Dec-2025 23:51:54 UTC] WebSocket connection failed: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+[04-Dec-2025 23:51:54 UTC] [DerivAPI::getBalance] === DerivAPI::getBalance START ===
+Timestamp: 2025-12-04 23:51:54
+Step 1: Checking cached auth data
+  - No cached balance available
+Step 2: Ensuring connection
+EXCEPTION CAUGHT: Failed to connect to Deriv API: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+Exception type: Exception
+Stack trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(484): App\Services\DerivAPI->ensureConnection()
+#1 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#2 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#3 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#4 {main}
+=== DerivAPI::getBalance FAILED ===
+[04-Dec-2025 23:51:54 UTC] [TradingBotService] Closing connection for user 1
+[04-Dec-2025 23:51:54 UTC] [TradingBotService::getAccountBalance] === TradingBotService::getAccountBalance START for user 1 ===
+Timestamp: 2025-12-04 23:51:54
+Step 1: Checking balance cache
+  - No cache found
+Step 2: Querying database for user token
+  - User query result: FOUND
+  - Email: rocketpaybiz@gmail.com
+  - Has encrypted_token: YES
+  - Token length: 96
+Step 3: Decrypting token
+  - Encrypted token length: 96
+  - Encrypted token preview: 36352142e9a15bac9ae951fbdd22d9dd:7258bf5924748a087...
+  - Decryption SUCCESS
+  - Decrypted token length: 15
+  - Decrypted token preview: KeNPW20DGi0zHyX...20DGi0zHyX
+Step 4: Getting or creating DerivAPI connection
+  - DerivAPI instance obtained
+  - Connection status: NOT CONNECTED
+Step 5: Attempt 1/2 to get balance
+  - Connection check: NOT CONNECTED
+  - Connection not healthy, recreating
+  - New connection status: NOT CONNECTED
+  - Calling derivApi->getBalance()
+  - Attempt 1 FAILED: Failed to connect to Deriv API: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+  - Error type: Exception
+  - Error trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(484): App\Services\DerivAPI->ensureConnection()
+#1 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#2 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#3 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#4 {main}
+  - Connection error detected, closing connection
+  - Waiting 0.5s before retry
+  - Recreating connection
+Step 5: Attempt 2/2 to get balance
+  - Connection check: NOT CONNECTED
+  - Connection not healthy, recreating
+  - New connection status: NOT CONNECTED
+  - Calling derivApi->getBalance()
+  - Attempt 2 FAILED: Failed to connect to Deriv API: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+  - Error type: Exception
+  - Error trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(484): App\Services\DerivAPI->ensureConnection()
+#1 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#2 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#3 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#4 {main}
+  - Connection error detected, closing connection
+Step 5 FAILED: All retries exhausted
+  - Last error: Failed to connect to Deriv API: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+=== TradingBotService::getAccountBalance FAILED ===
+[04-Dec-2025 23:51:54 UTC] [TradingBotService::getAccountBalance] === TradingBotService::getAccountBalance START for user 1 ===
+Timestamp: 2025-12-04 23:51:54
+Step 1: Checking balance cache
+  - No cache found
+Step 2: Querying database for user token
+  - User query result: FOUND
+  - Email: rocketpaybiz@gmail.com
+  - Has encrypted_token: YES
+  - Token length: 96
+Step 3: Decrypting token
+  - Encrypted token length: 96
+  - Encrypted token preview: 36352142e9a15bac9ae951fbdd22d9dd:7258bf5924748a087...
+  - Decryption SUCCESS
+  - Decrypted token length: 15
+  - Decrypted token preview: KeNPW20DGi0zHyX...20DGi0zHyX
+Step 4: Getting or creating DerivAPI connection
+  - DerivAPI instance obtained
+  - Connection status: NOT CONNECTED
+Step 5: Attempt 1/2 to get balance
+  - Connection check: NOT CONNECTED
+  - Connection not healthy, recreating
+  - New connection status: NOT CONNECTED
+  - Calling derivApi->getBalance()
+  - Attempt 1 FAILED: Failed to connect to Deriv API: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+  - Error type: Exception
+  - Error trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(484): App\Services\DerivAPI->ensureConnection()
+#1 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#2 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#3 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#4 {main}
+  - Connection error detected, closing connection
+  - Waiting 0.5s before retry
+  - Recreating connection
+Step 5: Attempt 2/2 to get balance
+  - Connection check: NOT CONNECTED
+  - Connection not healthy, recreating
+  - New connection status: NOT CONNECTED
+  - Calling derivApi->getBalance()
+  - Attempt 2 FAILED: Failed to connect to Deriv API: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+  - Error type: Exception
+  - Error trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(484): App\Services\DerivAPI->ensureConnection()
+#1 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#2 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#3 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#4 {main}
+  - Connection error detected, closing connection
+Step 5 FAILED: All retries exhausted
+  - Last error: Failed to connect to Deriv API: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+=== TradingBotService::getAccountBalance FAILED ===
+EXCEPTION CAUGHT: Failed to connect to Deriv API: DNS resolution failed for ws.derivws.com. Check your network connection and DNS settings.
+Exception type: Exception
+Stack trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(484): App\Services\DerivAPI->ensureConnection()
+#1 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#2 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#3 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#4 {main}
+=== TradingBotService::getAccountBalance EXCEPTION ===
+[04-Dec-2025 23:51:54 UTC] [handleGetBalance] === handleGetBalance START for user 1 ===
+Timestamp: 2025-12-04 23:51:54
+Step 1: Querying database for user 1
+Step 1 Result: User FOUND
+  - Email: rocketpaybiz@gmail.com
+  - Has encrypted_token: YES
+  - Token length: 96
+  - Token created: 2025-11-19 11:39:20
+  - Token last used: 2025-11-19 11:39:20
+Step 3: Calling TradingBotService->getAccountBalance(1)
+Step 3: TradingBotService instance obtained
+Step 4: Balance retrieved from service: 0
+Step 4: Balance type: double
+Step 4: Balance value: 0.0
+Step 5: Preparing response: {"balance":0,"currency":"USD","hasToken":true,"debug":{"user_found":true,"has_token":true,"balance_retrieved":true,"balance_value":0}}
+=== handleGetBalance SUCCESS ===
+[04-Dec-2025 23:58:19 UTC] [EncryptionService::decrypt] START - Encrypted data length: 96
+[04-Dec-2025 23:58:19 UTC] [EncryptionService::decrypt] Step 1: Getting encryption key
+[04-Dec-2025 23:58:19 UTC] [EncryptionService::decrypt] Step 1: OK - Key length: 32
+[04-Dec-2025 23:58:19 UTC] [EncryptionService::decrypt] Step 2: Validating encrypted data format
+[04-Dec-2025 23:58:19 UTC] [EncryptionService::decrypt] Step 3: Splitting encrypted data
+[04-Dec-2025 23:58:19 UTC] [EncryptionService::decrypt] Step 3: OK - IV length: 32, Tag length: 32, Encrypted length: 30
+[04-Dec-2025 23:58:19 UTC] [EncryptionService::decrypt] Step 4: Converting hex to binary
+[04-Dec-2025 23:58:19 UTC] [EncryptionService::decrypt] Step 4: OK - IV: 16 bytes, Tag: 16 bytes, Encrypted: 15 bytes
+[04-Dec-2025 23:58:19 UTC] [EncryptionService::decrypt] Step 5: Decrypting with OpenSSL
+[04-Dec-2025 23:58:19 UTC] [EncryptionService::decrypt] Step 5: OK - Decrypted length: 15
+[04-Dec-2025 23:58:19 UTC] [EncryptionService::decrypt] SUCCESS - Decryption completed
+[04-Dec-2025 23:58:19 UTC] [TradingBotService] Creating new DerivAPI connection for user 1
+[04-Dec-2025 23:58:19 UTC] [DerivAPI] Constructor - Building WebSocket URL
+[04-Dec-2025 23:58:19 UTC] [DerivAPI] Environment check - getenv('DERIV_APP_ID'): false
+[04-Dec-2025 23:58:19 UTC] [DerivAPI] Environment check - $_ENV['DERIV_APP_ID']: '105326'
+[04-Dec-2025 23:58:19 UTC] [DerivAPI] Environment check - DERIV_APP_ID constant: 105326
+[04-Dec-2025 23:58:19 UTC] [DerivAPI] Final appId: '105326'
+[04-Dec-2025 23:58:19 UTC] [DerivAPI] wsHost: 'ws.derivws.com'
+[04-Dec-2025 23:58:19 UTC] [DerivAPI] Final wsUrl: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[04-Dec-2025 23:58:19 UTC] [DerivAPI] wsUrl contains app_id: YES
+[04-Dec-2025 23:58:19 UTC] [DerivAPI] wsUrl length: 48
+[04-Dec-2025 23:58:19 UTC] DerivAPI initialized: wss://ws.derivws.com/websockets/v3?app_id=105326, App ID: 105326
+[04-Dec-2025 23:58:19 UTC] [TradingBotService] Closing connection for user 1
+[04-Dec-2025 23:58:19 UTC] [TradingBotService] Creating new DerivAPI connection for user 1
+[04-Dec-2025 23:58:19 UTC] [DerivAPI] Constructor - Building WebSocket URL
+[04-Dec-2025 23:58:19 UTC] [DerivAPI] Environment check - getenv('DERIV_APP_ID'): false
+[04-Dec-2025 23:58:19 UTC] [DerivAPI] Environment check - $_ENV['DERIV_APP_ID']: '105326'
+[04-Dec-2025 23:58:19 UTC] [DerivAPI] Environment check - DERIV_APP_ID constant: 105326
+[04-Dec-2025 23:58:19 UTC] [DerivAPI] Final appId: '105326'
+[04-Dec-2025 23:58:19 UTC] [DerivAPI] wsHost: 'ws.derivws.com'
+[04-Dec-2025 23:58:19 UTC] [DerivAPI] Final wsUrl: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[04-Dec-2025 23:58:19 UTC] [DerivAPI] wsUrl contains app_id: YES
+[04-Dec-2025 23:58:19 UTC] [DerivAPI] wsUrl length: 48
+[04-Dec-2025 23:58:19 UTC] DerivAPI initialized: wss://ws.derivws.com/websockets/v3?app_id=105326, App ID: 105326
+[04-Dec-2025 23:58:19 UTC] [DerivAPI::ensureConnection] About to create WebSocketClient
+[04-Dec-2025 23:58:19 UTC] [DerivAPI::ensureConnection] URL to pass: 'wss://ws.derivws.com/websockets/v3?app_id=105326'
+[04-Dec-2025 23:58:19 UTC] [DerivAPI::ensureConnection] URL type: string
+[04-Dec-2025 23:58:19 UTC] [DerivAPI::ensureConnection] URL length: 48
+[04-Dec-2025 23:58:19 UTC] [DerivAPI::ensureConnection] URL empty check: NO - OK
+[04-Dec-2025 23:58:19 UTC] [DerivAPI::ensureConnection] WebSocketClient created successfully, calling connect()
+[04-Dec-2025 23:58:19 UTC] [DerivAPI::ensureConnection] Connection timeout: 8 seconds
+[04-Dec-2025 23:58:20 UTC] WebSocket connection established to Deriv API in 1694.65ms
+[04-Dec-2025 23:58:20 UTC] Not authorized, calling authorize() first
+[04-Dec-2025 23:58:21 UTC] [DerivAPI::authorize] === DerivAPI::authorize START ===
+Timestamp: 2025-12-04 23:58:20
+Token length: 15
+Token preview: KeNPW20DGi0zHyX...20DGi0zHyX
+Step 1: Built auth message
+  - Message structure: ["authorize"]
+Step 2: Ensuring WebSocket connection
+  - Connection ensured
+  - WebSocket is connected
+Step 3: Sending authorization request
+  - Request data length: 31
+  - Request preview: {"authorize":"KeNPW20DGi0zHyX"}...
+  - Request sent successfully
+Step 4: Waiting for authorization response
+  - Receiving response (attempt 1)
+  - Response received, length: 1685
+  - Response preview: {"authorize":{"account_list":[{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1444056419,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":0,"landin
+  - JSON decoded successfully
+  - Response keys: authorize, echo_req, msg_type
+  - Authorization response found!
+  - Authorize data keys: account_list, balance, country, currency, email, fullname, is_virtual, landing_company_fullname, landing_company_name, linked_to, local_currencies, loginid, preferred_language, scopes, upgradeable_landing_companies, user_id
+Step 5: Authorization successful
+  - LoginID: VRTC1155676
+  - Balance: 108.88
+  - Currency: USD
+  - Full auth data: {"account_list":[{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1444056419,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR335357"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1585006292,"currency":"BTC","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR1309754"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1627123130,"currency":"LTC","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR2672829"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1633708706,"currency":"eUSDT","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR2950600"},{"account_category":"trading","account_type":"binary","broker":"VRTC","created_at":1443990814,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":1,"landing_company_name":"virtual","linked_to":[],"loginid":"VRTC1155676"}],"balance":108.88,"country":"ng","currency":"USD","email":"gogodswilly@gmail.com","fullname":"Mr Godswill Shaibu","is_virtual":1,"landing_company_fullname":"Deriv Limited","landing_company_name":"virtual","linked_to":[],"local_currencies":{"NGN":{"fractional_digits":2}},"loginid":"VRTC1155676","preferred_language":"EN","scopes":["read","trade","trading_information"],"upgradeable_landing_companies":["svg"],"user_id":5266100}
+=== DerivAPI::authorize SUCCESS ===
+[04-Dec-2025 23:58:21 UTC] Sending WebSocket request: balance (req_id: 1)
+[04-Dec-2025 23:58:21 UTC] WebSocket receive attempt 1 failed: Deriv API error: Input validation failed: balance (InputValidationFailed)
+[04-Dec-2025 23:58:30 UTC] WebSocket receive attempt 2 failed: WebSocket receive timeout
+[04-Dec-2025 23:58:31 UTC] [DerivAPI::authorize] === DerivAPI::authorize START ===
+Timestamp: 2025-12-04 23:58:30
+Token length: 15
+Token preview: KeNPW20DGi0zHyX...20DGi0zHyX
+Step 1: Built auth message
+  - Message structure: ["authorize"]
+Step 2: Ensuring WebSocket connection
+  - Connection ensured
+  - WebSocket is connected
+Step 3: Sending authorization request
+  - Request data length: 31
+  - Request preview: {"authorize":"KeNPW20DGi0zHyX"}...
+  - Request sent successfully
+Step 4: Waiting for authorization response
+  - Receiving response (attempt 1)
+  - Response received, length: 1685
+  - Response preview: {"authorize":{"account_list":[{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1444056419,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":0,"landin
+  - JSON decoded successfully
+  - Response keys: authorize, echo_req, msg_type
+  - Authorization response found!
+  - Authorize data keys: account_list, balance, country, currency, email, fullname, is_virtual, landing_company_fullname, landing_company_name, linked_to, local_currencies, loginid, preferred_language, scopes, upgradeable_landing_companies, user_id
+Step 5: Authorization successful
+  - LoginID: VRTC1155676
+  - Balance: 108.88
+  - Currency: USD
+  - Full auth data: {"account_list":[{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1444056419,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR335357"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1585006292,"currency":"BTC","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR1309754"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1627123130,"currency":"LTC","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR2672829"},{"account_category":"trading","account_type":"binary","broker":"CR","created_at":1633708706,"currency":"eUSDT","currency_type":"crypto","is_disabled":0,"is_virtual":0,"landing_company_name":"svg","linked_to":[],"loginid":"CR2950600"},{"account_category":"trading","account_type":"binary","broker":"VRTC","created_at":1443990814,"currency":"USD","currency_type":"fiat","is_disabled":0,"is_virtual":1,"landing_company_name":"virtual","linked_to":[],"loginid":"VRTC1155676"}],"balance":108.88,"country":"ng","currency":"USD","email":"gogodswilly@gmail.com","fullname":"Mr Godswill Shaibu","is_virtual":1,"landing_company_fullname":"Deriv Limited","landing_company_name":"virtual","linked_to":[],"local_currencies":{"NGN":{"fractional_digits":2}},"loginid":"VRTC1155676","preferred_language":"EN","scopes":["read","trade","trading_information"],"upgradeable_landing_companies":["svg"],"user_id":5266100}
+=== DerivAPI::authorize SUCCESS ===
+[04-Dec-2025 23:58:31 UTC] [DerivAPI::getBalance] === DerivAPI::getBalance START ===
+Timestamp: 2025-12-04 23:58:19
+Step 1: Checking cached auth data
+  - No cached balance available
+Step 2: Ensuring connection
+  - Connection ensured
+  - isConnected(): false
+  - isAuthorized: false
+Step 3: Calling balance endpoint
+  - Request params: {"balance":1}
+  - Sending balance request
+  - Balance endpoint FAILED: Failed to get response from Deriv API after 2 attempts. Last error: WebSocket receive timeout
+  - Error type: Exception
+  - Error trace: #0 C:\xampp\htdocs\option\app\services\DerivAPI.php(496): App\Services\DerivAPI->sendRequest('balance', Array)
+#1 C:\xampp\htdocs\option\app\services\TradingBotService.php(1036): App\Services\DerivAPI->getBalance()
+#2 C:\xampp\htdocs\option\api\trading.php(327): App\Services\TradingBotService->getAccountBalance(1)
+#3 C:\xampp\htdocs\option\api\trading.php(61): handleGetBalance(1)
+#4 {main}
+Step 4: Falling back to authorize()
+  - authorize() completed
+  - Auth data keys: account_list, balance, currency, loginid, country, email, fullname, scopes
+  - Auth data balance: 108.88
+  - Final balance: 108.88
+=== DerivAPI::getBalance SUCCESS (authorize fallback) ===
+[04-Dec-2025 23:58:31 UTC] [TradingBotService::getAccountBalance] === TradingBotService::getAccountBalance START for user 1 ===
+Timestamp: 2025-12-04 23:58:19
+Step 1: Checking balance cache
+  - No cache found
+Step 2: Querying database for user token
+  - User query result: FOUND
+  - Email: rocketpaybiz@gmail.com
+  - Has encrypted_token: YES
+  - Token length: 96
+Step 3: Decrypting token
+  - Encrypted token length: 96
+  - Encrypted token preview: 36352142e9a15bac9ae951fbdd22d9dd:7258bf5924748a087...
+  - Decryption SUCCESS
+  - Decrypted token length: 15
+  - Decrypted token preview: KeNPW20DGi0zHyX...20DGi0zHyX
+Step 4: Getting or creating DerivAPI connection
+  - DerivAPI instance obtained
+  - Connection status: NOT CONNECTED
+Step 5: Attempt 1/2 to get balance
+  - Connection check: NOT CONNECTED
+  - Connection not healthy, recreating
+  - New connection status: NOT CONNECTED
+  - Calling derivApi->getBalance()
+  - Balance retrieved: 108.88
+  - Balance type: double
+  - Balance value: 108.88
+  - Balance cached
+=== TradingBotService::getAccountBalance SUCCESS ===
+[04-Dec-2025 23:58:31 UTC] [handleGetBalance] === handleGetBalance START for user 1 ===
+Timestamp: 2025-12-04 23:58:19
+Step 1: Querying database for user 1
+Step 1 Result: User FOUND
+  - Email: rocketpaybiz@gmail.com
+  - Has encrypted_token: YES
+  - Token length: 96
+  - Token created: 2025-11-19 11:39:20
+  - Token last used: 2025-11-19 11:39:20
+Step 3: Calling TradingBotService->getAccountBalance(1)
+Step 3: TradingBotService instance obtained
+Step 4: Balance retrieved from service: 108.88
+Step 4: Balance type: double
+Step 4: Balance value: 108.88
+Step 5: Preparing response: {"balance":108.88,"currency":"USD","hasToken":true,"debug":{"user_found":true,"has_token":true,"balance_retrieved":true,"balance_value":108.88}}
+=== handleGetBalance SUCCESS ===

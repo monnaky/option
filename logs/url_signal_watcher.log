@@ -9625,3 +9625,843 @@
 [2025-12-01 02:25:11] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
 [2025-12-01 02:25:12] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
 [2025-12-01 02:25:12] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:13] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:13] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:13] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:13] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:14] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:14] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:15] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:15] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:15] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:15] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:16] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:17] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:17] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:17] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:17] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:17] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:20] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:20] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:20] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:20] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:20] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:20] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:22] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:22] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:22] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:22] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:22] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:22] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:24] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:24] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:24] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:24] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:24] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:24] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:26] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:26] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:26] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:26] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:26] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:26] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:28] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:28] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:28] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:28] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:28] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:28] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:30] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:30] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:30] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:30] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:30] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:30] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:32] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:32] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:32] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:32] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:32] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:32] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:34] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:34] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:34] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:34] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:34] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:34] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:36] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:36] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:36] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:36] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:36] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:36] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:38] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:38] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:38] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:38] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:38] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:38] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:40] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:40] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:40] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:40] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:40] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:40] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:42] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:42] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:42] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:42] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:42] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:42] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:44] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:44] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:44] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:44] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:44] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:44] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:46] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:46] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:46] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:46] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:46] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:46] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:48] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:48] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:48] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:48] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:48] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:48] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:50] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:50] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:50] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:50] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:50] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:50] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:52] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:52] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:52] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:52] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:52] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:52] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:54] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:54] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:54] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:54] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:54] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:54] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:56] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:56] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:56] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:56] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:56] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:56] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:58] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:58] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:58] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:58] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:25:58] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:25:58] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:00] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:00] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:00] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:00] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:00] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:00] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:02] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:02] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:02] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:02] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:02] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:02] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:04] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:04] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:04] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:04] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:04] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:04] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:06] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:06] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:06] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:06] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:06] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:06] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:08] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:08] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:08] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:08] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:08] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:08] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:10] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:10] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:10] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:10] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:10] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:10] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:12] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:12] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:12] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:12] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:12] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:12] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:14] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:14] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:14] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:14] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:14] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:14] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:16] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:16] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:16] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:16] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:16] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:16] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:18] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:19] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:19] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:19] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:19] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:19] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:21] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:21] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:21] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:21] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:21] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:21] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:23] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:23] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:23] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:23] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:23] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:23] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:25] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:25] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:25] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:25] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:25] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:25] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:27] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:27] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:27] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:27] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:27] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:27] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:29] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:29] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:29] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:29] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:29] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:29] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:31] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:31] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:31] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:31] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:31] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:31] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:33] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:33] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:33] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:33] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:33] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:33] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:35] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:35] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:35] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:35] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:35] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:35] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:37] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:37] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:37] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:37] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:37] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:37] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:39] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:39] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:39] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:39] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:39] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:39] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:41] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:41] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:41] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:41] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 02:26:41] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 02:26:41] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:26:45] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:26:45] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:26:45] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:26:47] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:26:47] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:26:47] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:26:49] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:26:49] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:26:49] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:26:49] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:26:49] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:26:49] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:26:51] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:26:51] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:26:51] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:26:52] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:26:52] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:26:52] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:26:54] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:26:54] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:26:54] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:26:55] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:26:55] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:26:55] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:00] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:00] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:00] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:00] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:00] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:00] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:02] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:02] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:02] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:02] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:02] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:02] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:04] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:04] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:04] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:04] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:04] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:04] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:06] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:07] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:07] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:07] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:07] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:07] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:09] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:09] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:09] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:09] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:09] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:09] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:11] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:11] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:12] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:12] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:12] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:12] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:13] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:13] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:14] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:14] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:14] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:14] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:15] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:15] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:16] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:16] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:16] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:16] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:17] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:17] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:18] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:18] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:18] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:18] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:19] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:19] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:20] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:20] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:20] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:20] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:21] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:21] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:22] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:22] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:22] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:22] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:23] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:23] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:24] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:24] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 05:27:24] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 05:27:24] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:29] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:29] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:29] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:32] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:32] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:32] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:35] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:35] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:35] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:35] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:35] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:35] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:38] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:38] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:38] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:38] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:38] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:40] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:40] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:41] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:41] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:42] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:42] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:43] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:44] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:44] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:44] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:44] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:45] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:46] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:47] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:47] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:47] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:47] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:49] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:49] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:49] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:49] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:49] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:49] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:51] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:51] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:51] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:51] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:51] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:51] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:53] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:53] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:53] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:54] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:54] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:54] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:56] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:56] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:56] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:56] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:56] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:56] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:59] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:59] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:59] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:59] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:07:59] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:07:59] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:01] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:01] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:01] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:01] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:01] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:02] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:03] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:03] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:03] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:03] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:04] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:04] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:05] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:05] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:05] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:05] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:06] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:06] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:07] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:08] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:07] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:08] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:08] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:08] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:10] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:10] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:10] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:10] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:11] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:11] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:12] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:12] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:12] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:12] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:13] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:13] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:14] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:14] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:14] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:14] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:15] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:15] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:17] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:17] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:17] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:17] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:18] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:18] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:19] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:20] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:20] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:20] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:19] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:20] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:22] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:22] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:22] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:22] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:22] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:22] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:24] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:24] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:24] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:24] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:24] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:25] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:26] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:26] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:26] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:26] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:27] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:27] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:28] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:28] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:28] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:28] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:29] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:29] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:30] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:30] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:30] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:30] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:31] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:31] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:32] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:32] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:32] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:32] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:33] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:33] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:34] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:34] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:34] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:34] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:37] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:37] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:37] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:38] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:38] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:38] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:40] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:40] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:40] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:40] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:40] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:40] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:42] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:42] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:42] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:42] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:42] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:42] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:44] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:44] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:44] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:44] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:44] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:44] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:46] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:46] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:46] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:46] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:46] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:46] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:48] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:48] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:48] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:48] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:48] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:48] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:50] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:50] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:50] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:50] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:50] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:50] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:52] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:52] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:52] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:52] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:52] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:52] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:54] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:54] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:54] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:54] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:54] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:54] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:56] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:56] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:56] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:56] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:56] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:56] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:58] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:58] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:58] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:58] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:08:58] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:08:58] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:00] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:00] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:00] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:00] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:00] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:00] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:03] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:03] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:03] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:03] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:03] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:03] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:05] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:05] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:05] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:05] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:05] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:05] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:07] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:07] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:07] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:07] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:07] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:07] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:09] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:09] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:09] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:09] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:09] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:09] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:11] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:11] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:11] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:11] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:11] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:11] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:13] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:13] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:13] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:13] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:13] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:13] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:15] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:15] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:15] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:15] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:15] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:15] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:17] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:17] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:17] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:17] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:17] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:17] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:19] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:19] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:19] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:19] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:19] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:19] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:21] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:21] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:21] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:21] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:21] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:21] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:24] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:24] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:24] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:25] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:25] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:25] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:27] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:27] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:27] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:27] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:27] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:27] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:29] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:29] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:29] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:29] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:29] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:29] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:31] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:31] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:31] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:31] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:31] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:31] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:33] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:33] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:33] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:33] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:33] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:33] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:35] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:35] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:35] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:35] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:35] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:35] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:37] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:37] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:37] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:37] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:37] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:37] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:39] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:39] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:39] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:39] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:39] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:39] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:41] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:41] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:41] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:41] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:41] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:41] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:43] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:43] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:43] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:43] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:43] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:43] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:45] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:45] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:45] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:45] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:45] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:45] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:47] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:47] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:47] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:47] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:47] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:47] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:49] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:49] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:49] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:49] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:49] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:49] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:51] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:51] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:51] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:51] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:51] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:51] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:53] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:53] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:53] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:53] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:53] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:53] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:55] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:55] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:55] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:55] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:55] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:55] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:57] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:57] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:57] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:57] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:57] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:57] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:59] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:59] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:59] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:59] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:09:59] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:09:59] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:01] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:01] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:01] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:01] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:01] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:01] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:03] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:03] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:03] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:03] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:03] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:03] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:05] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:05] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:05] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:05] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:05] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:05] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:07] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:07] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:07] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:07] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:07] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:07] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:09] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:09] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:09] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:09] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:09] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:09] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:11] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:11] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:11] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:11] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:11] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:11] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:13] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:13] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:13] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:13] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:13] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:13] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:15] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:15] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:15] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:15] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:15] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:15] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:17] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:17] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:17] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:17] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:17] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:17] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:19] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:19] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:19] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:19] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:19] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:19] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:21] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:21] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:21] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:21] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:21] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:21] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:23] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:23] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:23] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:23] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:23] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:23] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:25] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:25] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:25] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:25] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:25] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:25] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:27] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:27] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:27] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:27] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
+[2025-12-01 09:10:27] [DEBUG] Poll ok: code=0 len=24 last_mod=n/a etag=n/a hash=95855a2f5dc350338638682fb7f1514d21df2473d7eb9fac74e2eb9d6060d6b5
+[2025-12-01 09:10:28] [ERROR] Parse failure: Invalid direction - expected Buy or Sell, got: S e l l raw="ÿþR _ 5 0 , S e l l"
