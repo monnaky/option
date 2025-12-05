@@ -1,0 +1,62 @@
+# Docker Compose for Local Testing
+# This file helps test the Docker setup locally before deploying to Coolify
+
+version: '3.8'
+
+services:
+  # PHP Application
+  app:
+    build: .
+    container_name: vtmoption_app
+    ports:
+      - "8080:80"
+    volumes:
+      - ./storage:/var/www/html/storage
+      - ./error_log:/var/www/html/error_log
+    environment:
+      - APP_ENV=development
+      - APP_URL=http://localhost:8080
+      - APP_TIMEZONE=UTC
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_NAME=vtmoption
+      - DB_USER=vtmoption_user
+      - DB_PASS=vtmoption_password
+      - DB_CHARSET=utf8mb4
+      - ENCRYPTION_KEY=7f3a9b2c8d4e1f6a5b9c2d7e3f8a1b4c6d9e2f5a8b1c4d7e0f3a6b9c2d5e8f1a4
+      - DERIV_APP_ID=105326
+      - DERIV_WS_HOST=ws.derivws.com
+    depends_on:
+      - mariadb
+    networks:
+      - vtmoption_network
+
+  # MariaDB Database
+  mariadb:
+    image: mariadb:10.9
+    container_name: vtmoption_db
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_password
+      - MYSQL_DATABASE=vtmoption
+      - MYSQL_USER=vtmoption_user
+      - MYSQL_PASSWORD=vtmoption_password
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./database/migrations:/docker-entrypoint-initdb.d
+    networks:
+      - vtmoption_network
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mariadb_data:
+
+networks:
+  vtmoption_network:
+    driver: bridge
+
