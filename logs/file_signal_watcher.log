@@ -1,5 +1,0 @@
-[2025-11-27 09:01:07] [INFO] Signal file not found; creating empty file at C:\xampp\htdocs\option/getSignal.txt
-[2025-11-27 09:01:07] [INFO] Starting stable file signal watcher on C:\xampp\htdocs\option/getSignal.txt
-[2025-11-27 09:01:07] [INFO] Poll interval: 1s, Processor: C:\xampp\htdocs\option\cron/file_signal_processor.php
-[2025-11-27 09:03:25] [INFO] Starting stable file signal watcher on C:\xampp\htdocs\option/getSignal.txt
-[2025-11-27 09:03:25] [INFO] Poll interval: 1s, Processor: C:\xampp\htdocs\option\cron/file_signal_processor.php
