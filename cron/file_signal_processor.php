@@ -61,6 +61,11 @@ $lines = preg_split('/\r\n|\r|\n/', $rawContent);
 $lines = array_filter($lines, 'strlen');
 $signalLine = trim(end($lines));
 
+// Normalize encoding/BOM/control characters (handles UTF-16/Windows issues)
+if (function_exists('vtm_signal_normalize_encoding')) {
+    $signalLine = vtm_signal_normalize_encoding($signalLine);
+}
+
 // Expected format: ASSET,SIGNAL_TYPE_MESSAGE,TIMESTAMP
 $parts = explode(',', $signalLine);
 if (count($parts) < 3) {

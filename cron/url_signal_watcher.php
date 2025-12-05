@@ -266,6 +266,11 @@ function clearRemoteSignal(string $url, int $timeout): void
  */
 function parseSignalLine(string $line): array
 {
+    // Normalize encoding/BOM/control characters first
+    if (function_exists('vtm_signal_normalize_encoding')) {
+        $line = vtm_signal_normalize_encoding($line);
+    }
+
     $parts = array_map('trim', explode(',', $line));
     
     // Format 1: "R_100,Buy" (asset,direction) - 2 parts
@@ -279,7 +284,12 @@ function parseSignalLine(string $line): array
             ];
         }
 
-        $directionUpper = strtoupper($direction);
+        // Normalize direction (strip any stray control characters/BOMs)
+        $directionUpper = strtoupper(
+            function_exists('vtm_signal_normalize_encoding')
+                ? vtm_signal_normalize_encoding($direction)
+                : trim($direction)
+        );
         
         // Convert Buy/Sell to RISE/FALL
         if ($directionUpper === 'BUY') {
