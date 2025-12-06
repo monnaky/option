@@ -80,8 +80,8 @@ require_once SERVICES_PATH . '/QueueService.php';
 require_once UTILS_PATH . '/Validator.php';
 require_once UTILS_PATH . '/Response.php';
 require_once UTILS_PATH . '/DatabaseHelper.php';
-//require_once UTILS_PATH . '/CSRF.php';
-//require_once UTILS_PATH . '/RateLimit.php';
+require_once UTILS_PATH . '/CSRF.php';
+require_once UTILS_PATH . '/RateLimit.php';
 
 // Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {

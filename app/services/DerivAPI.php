@@ -27,7 +27,8 @@ class DerivAPI
     
     // Configuration constants (production-safe with higher resilience)
     // NOTE: Trading is latency-tolerant; it's better to succeed than to fail fast.
-    private const HTTP_TIMEOUT = 15;       // Seconds to wait for each WebSocket response
+    // NOTE: Trading is latency-tolerant; it's better to succeed than to fail fast.
+    private const HTTP_TIMEOUT = 30;       // Seconds to wait for each WebSocket response
     private const CONNECTION_TIMEOUT = 10; // Connection establishment timeout (seconds)
     private const MAX_RETRY_ATTEMPTS = 5;  // Number of receive retries before giving up
     private const RETRY_DELAY = 1;         // Base delay (seconds) for backoff in sendRequest
@@ -579,6 +580,8 @@ class DerivAPI
         try {
             $payload = [
                 'contracts_for' => $symbol,
+                'currency' => $this->authData['currency'] ?? 'USD',
+                'product_type' => 'basic',
             ];
             
             error_log("{$logPrefix} Sending contracts_for request for symbol: {$symbol}");

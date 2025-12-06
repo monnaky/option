@@ -31,10 +31,21 @@ class EncryptionService
      */
     private static function resolveKeyFromEnv(string $envKey): string
     {
+        // Try $_ENV first
         $rawKey = $_ENV[$envKey] ?? '';
         
+        // Try getenv()
         if (empty($rawKey)) {
-            throw new Exception("{$envKey} is not set in environment");
+            $rawKey = getenv($envKey);
+        }
+        
+        // Try constant (defined in config.php)
+        if (empty($rawKey) && defined($envKey)) {
+            $rawKey = constant($envKey);
+        }
+        
+        if (empty($rawKey)) {
+            throw new Exception("{$envKey} is not set in environment or constants");
         }
         
         return self::normalizeKeyMaterial($rawKey, $envKey);

@@ -45,6 +45,12 @@ try {
     try {
         $user = AuthMiddleware::requireAuth();
         $userId = $user['id'];
+        
+        // PERFORMANCE FIX: Release session lock immediately after auth
+        // This allows other concurrent requests (like polling) to proceed
+        // while this request might be waiting for slow external APIs (Deriv)
+        session_write_close();
+        
     } catch (Exception $e) {
         Response::error('Authentication required', 401);
     }

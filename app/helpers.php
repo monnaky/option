@@ -12,44 +12,38 @@
  * @return string Base path (e.g., '/vtmoption' or '')
  */
 function getBasePath() {
-    // Get the script filename
+    // Check if APP_URL is defined and valid
+    if (defined('APP_URL') && filter_var(APP_URL, FILTER_VALIDATE_URL)) {
+        $path = parse_url(APP_URL, PHP_URL_PATH);
+        return rtrim($path ?? '', '/');
+    }
+
+    // Fallback: Calculate from script location
     $scriptName = $_SERVER['SCRIPT_NAME'];
-    
-    // Get the directory of the script
     $scriptDir = dirname($scriptName);
     
     // Normalize path separators
     $scriptDir = str_replace('\\', '/', $scriptDir);
     
     // Remove leading slash if present
-    $scriptDir = ltrim($scriptDir, '/');
+    $scriptDir = '/' . ltrim($scriptDir, '/');
     
-    // If script is in root, base path is empty
-    if ($scriptDir === '.' || $scriptDir === '') {
+    // Known subdirectories that should NOT be part of the base path
+    $subdirs = ['/admin', '/api', '/cron', '/views'];
+    
+    foreach ($subdirs as $subdir) {
+        if (substr($scriptDir, -strlen($subdir)) === $subdir) {
+            $scriptDir = substr($scriptDir, 0, -strlen($subdir));
+            break;
+        }
+    }
+    
+    // If we are at root ('/' or ''), return empty string
+    if ($scriptDir === '/' || $scriptDir === '.') {
         return '';
     }
     
-    // Get the project root by going up from script directory
-    // For root files (index.php, login.php), scriptDir is '.'
-    // For admin files (admin/dashboard.php), scriptDir is 'admin'
-    // We want the base path to be the project folder name
-    
-    // Extract project folder from document root and script name
-    $documentRoot = str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']);
-    $scriptFile = str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME']);
-    
-    // Get the path relative to document root
-    $relativePath = str_replace($documentRoot, '', dirname($scriptFile));
-    $relativePath = str_replace('\\', '/', $relativePath);
-    $relativePath = trim($relativePath, '/');
-    
-    // Extract project folder (first segment)
-    $segments = explode('/', $relativePath);
-    if (!empty($segments[0])) {
-        return '/' . $segments[0];
-    }
-    
-    return '';
+    return rtrim($scriptDir, '/');
 }
 
 /**

@@ -19,8 +19,8 @@ class WebSocketClient
     private int $port = 443;
     private string $path = '/';
     private bool $secure = true;
-    private int $timeout = 8; // Reduced from 15 to 8 seconds for faster failure
-    private int $connectionTimeout = 5; // Reduced from 10 to 5 seconds
+    private int $timeout = 30; // Increased to 30 seconds for stability
+    private int $connectionTimeout = 25; // Increased to 25 seconds
     private bool $connected = false;
     private ?string $debugLogFile = null;
     
@@ -314,14 +314,18 @@ class WebSocketClient
             
             $connectionStartTime = microtime(true);
             
-            // Use connectionTimeout for the initial connection
-            $this->socket = @stream_socket_client(
-                $address,
+            // Use fsockopen as it proved more reliable in this environment than stream_socket_client
+            // fsockopen("ssl://host", port, ...)
+            $fsockHost = ($this->secure ? 'ssl://' : '') . $this->host;
+            
+            $this->debugLog("[connect] Calling fsockopen with host: {$fsockHost}, port: {$this->port}");
+            
+            $this->socket = @fsockopen(
+                $fsockHost,
+                $this->port,
                 $errno,
                 $errstr,
-                $this->connectionTimeout, // Use shorter timeout for connection
-                STREAM_CLIENT_CONNECT,
-                $context
+                $this->connectionTimeout
             );
             
             $connectionTime = round((microtime(true) - $connectionStartTime) * 1000, 2);
@@ -516,19 +520,64 @@ class WebSocketClient
     /**
      * Receive message
      */
+    /**
+     * Read specific number of bytes from socket
+     */
+    private function readBytes(int $length): string
+    {
+        $buffer = '';
+        $bytesRead = 0;
+        
+        while ($bytesRead < $length) {
+            $chunk = fread($this->socket, $length - $bytesRead);
+            
+            if ($chunk === false || strlen($chunk) === 0) {
+                $meta = stream_get_meta_data($this->socket);
+                if ($meta['timed_out']) {
+                    return $buffer; // Return what we have so far
+                }
+                if (feof($this->socket)) {
+                    throw new Exception("WebSocket connection closed during read");
+                }
+                // Wait a bit before retrying to avoid CPU spin
+                usleep(1000); 
+                continue;
+            }
+            
+            $buffer .= $chunk;
+            $bytesRead += strlen($chunk);
+        }
+        
+        return $buffer;
+    }
+
+    /**
+     * Receive message
+     */
     public function receive(int $timeout = 30): string
     {
         if (!$this->connected || !$this->socket) {
             throw new Exception("WebSocket is not connected");
         }
         
+        // Update socket timeout
+        stream_set_timeout($this->socket, $timeout);
+        
         $startTime = time();
         
         while ((time() - $startTime) < $timeout) {
-            $data = fread($this->socket, 2);
+            // Read first 2 bytes (FIN + Opcode + MASK + Length)
+            // using readBytes to ensure we don't drop single bytes
+            $data = $this->readBytes(2);
             
-            if ($data === false || strlen($data) < 2) {
-                // Check if connection is still alive
+            if (strlen($data) < 2) {
+                // Determine if it was a timeout or just no data yet
+                $meta = stream_get_meta_data($this->socket);
+                if ($meta['timed_out']) {
+                    // It was a timeout, check overall timeout
+                    continue; 
+                }
+                // Connection likely closed or broken if we can't read 2 bytes
                 if (feof($this->socket)) {
                     throw new Exception("WebSocket connection closed");
                 }
@@ -551,21 +600,25 @@ class WebSocketClient
             
             // Handle ping frame
             if ($opcode === self::OPCODE_PING) {
+                // Read payload if any
+                if ($payloadLength > 0) {
+                    $this->readBytes($payloadLength); // Consume payload
+                }
                 $this->sendPong();
                 continue;
             }
             
             // Read extended payload length if needed
             if ($payloadLength === 126) {
-                $lengthData = fread($this->socket, 2);
+                $lengthData = $this->readBytes(2);
                 if (strlen($lengthData) < 2) {
-                    continue;
+                    throw new Exception("Failed to read extended payload length (126)");
                 }
                 $payloadLength = unpack('n', $lengthData)[1];
             } elseif ($payloadLength === 127) {
-                $lengthData = fread($this->socket, 8);
+                $lengthData = $this->readBytes(8);
                 if (strlen($lengthData) < 8) {
-                    continue;
+                    throw new Exception("Failed to read extended payload length (127)");
                 }
                 $unpacked = unpack('N2', $lengthData);
                 $payloadLength = $unpacked[1] * 4294967296 + $unpacked[2];
@@ -574,26 +627,19 @@ class WebSocketClient
             // Read masking key
             $maskingKey = '';
             if ($masked) {
-                $maskingKey = fread($this->socket, 4);
+                $maskingKey = $this->readBytes(4);
                 if (strlen($maskingKey) < 4) {
-                    continue;
+                    throw new Exception("Failed to read masking key");
                 }
             }
             
             // Read payload
             $payload = '';
-            $bytesRead = 0;
-            while ($bytesRead < $payloadLength) {
-                $chunk = fread($this->socket, $payloadLength - $bytesRead);
-                if ($chunk === false) {
-                    break;
+            if ($payloadLength > 0) {
+                $payload = $this->readBytes($payloadLength);
+                if (strlen($payload) < $payloadLength) {
+                    throw new Exception("Failed to read payload: expected {$payloadLength} bytes, got " . strlen($payload));
                 }
-                $payload .= $chunk;
-                $bytesRead += strlen($chunk);
-            }
-            
-            if (strlen($payload) < $payloadLength) {
-                continue;
             }
             
             // Unmask payload if needed
@@ -606,7 +652,7 @@ class WebSocketClient
                 return $payload;
             }
             
-            // Continue for other opcodes
+            // Continue for other opcodes (or fragments, though we don't handle fragments properly yet)
         }
         
         throw new Exception("WebSocket receive timeout");
@@ -623,19 +669,27 @@ class WebSocketClient
         // First byte: FIN (1) + RSV (000) + Opcode (0001 = text)
         $frame .= chr(0x81);
         
-        // Second byte: MASK (0, server doesn't mask) + Payload length
+        // Generate masking key (4 bytes)
+        $maskingKey = openssl_random_pseudo_bytes(4);
+        
+        // Second byte: MASK (1) + Payload length
         if ($payloadLength < 126) {
-            $frame .= chr($payloadLength);
+            $frame .= chr($payloadLength | 0x80);
         } elseif ($payloadLength < 65536) {
-            $frame .= chr(126);
+            $frame .= chr(126 | 0x80);
             $frame .= pack('n', $payloadLength);
         } else {
-            $frame .= chr(127);
-            $frame .= pack('N', 0) . pack('N', $payloadLength);
+            $frame .= chr(127 | 0x80);
+            $frame .= pack('J', $payloadLength); // PHP 5.6.3+ supports 'J' for 64-bit big endian
         }
         
-        // Payload
-        $frame .= $payload;
+        // Append masking key
+        $frame .= $maskingKey;
+        
+        // Mask payload
+        for ($i = 0; $i < $payloadLength; $i++) {
+            $frame .= $payload[$i] ^ $maskingKey[$i % 4];
+        }
         
         return $frame;
     }
