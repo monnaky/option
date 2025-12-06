@@ -70,17 +70,18 @@ require_once CONFIG_PATH . '/Database.php';
 require_once MIDDLEWARE_PATH . '/Authentication.php';
 require_once MIDDLEWARE_PATH . '/AuthMiddleware.php';
 require_once MIDDLEWARE_PATH . '/AdminMiddleware.php';
-require_once MIDDLEWARE_PATH . '/CSRFProtection.php';
 require_once MIDDLEWARE_PATH . '/SecurityMiddleware.php';
-require_once MIDDLEWARE_PATH . '/RateLimiter.php';
 require_once SERVICES_PATH . '/EncryptionService.php';
 require_once SERVICES_PATH . '/WebSocketClient.php'; // Load before DerivAPI
 require_once SERVICES_PATH . '/DerivAPI.php';
 require_once SERVICES_PATH . '/TradingBotService.php';
 require_once SERVICES_PATH . '/SignalService.php';
+require_once SERVICES_PATH . '/QueueService.php';
 require_once UTILS_PATH . '/Validator.php';
 require_once UTILS_PATH . '/Response.php';
 require_once UTILS_PATH . '/DatabaseHelper.php';
+//require_once UTILS_PATH . '/CSRF.php';
+//require_once UTILS_PATH . '/RateLimit.php';
 
 // Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {

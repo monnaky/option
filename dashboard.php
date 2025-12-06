@@ -367,14 +367,23 @@ async function loadProfile() {
 // Load trade history
 async function loadTradeHistory() {
     try {
-        // This would call a trade history endpoint
-        // For now, we'll use the stats endpoint
-        const data = await apiCall(`${apiBase}/trading.php?action=stats`);
+        const data = await apiCall(`${apiBase}/trading.php?action=history`);
         
-        // Update trade history display
-        updateTradeHistory([]);
+        if (data.trades) {
+            updateTradeHistory(data.trades);
+        }
     } catch (error) {
         console.error('Error loading trade history:', error);
+        // Don't show toast on initial load to avoid spamming
+        const container = document.getElementById('tradeHistoryContainer');
+        if (container.innerHTML.includes('Loading')) {
+             container.innerHTML = `
+                <div class="text-center py-5 text-danger">
+                    <p>Failed to load history</p>
+                    <button class="btn btn-sm btn-outline-light" onclick="loadTradeHistory()">Retry</button>
+                </div>
+            `;
+        }
     }
 }
 
@@ -448,10 +457,13 @@ async function handleUpdateSettings(e) {
     
     try {
         // Update via API
-        await apiCall(`${apiBase}/trading.php?action=update-settings`, 'POST', {
-            stake: stake,
-            target: target,
-            stopLimit: stopLimit
+        await apiCall(`${apiBase}/trading.php?action=update-settings`, {
+            method: 'POST',
+            body: JSON.stringify({
+                stake: stake,
+                target: target,
+                stopLimit: stopLimit
+            })
         });
         
         settings.stake = stake;

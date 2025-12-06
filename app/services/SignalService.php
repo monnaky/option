@@ -83,7 +83,16 @@ class SignalService
             // Validate signal
             $validation = $this->validateSignal($signalData);
             if (!$validation['valid']) {
-                throw new Exception($validation['error']);
+                // If type is UNKNOWN but we have raw text, we might want to save it anyway for debugging?
+                // For now, strict validation.
+                if (($signalData['type'] ?? '') === 'UNKNOWN') {
+                     // Try to parse from raw text if type is unknown
+                     // (Simple fallback logic could go here)
+                }
+                
+                if (!$validation['valid']) {
+                     throw new Exception($validation['error']);
+                }
             }
             
             // Extract signal information
@@ -113,7 +122,18 @@ class SignalService
                 'source_ip' => $sourceIp,
             ]);
             
-            // Process signal immediately
+            // Check if we should skip immediate execution (e.g. if using queue)
+            if (!empty($signalData['skip_execution'])) {
+                return [
+                    'success' => true,
+                    'signal_id' => $signalId,
+                    'signal_type' => $signalType,
+                    'asset' => $asset,
+                    'queued' => true,
+                ];
+            }
+            
+            // Process signal immediately (Legacy/Direct mode)
             $executionResult = $this->executeSignalForAllUsers($signalId, $signalType, $asset);
             
             return [
@@ -126,7 +146,11 @@ class SignalService
             
         } catch (Exception $e) {
             error_log("Signal reception error: " . $e->getMessage());
-            throw $e;
+            throw $e; // Re-throw or return error array
+            return [
+                'success' => false,
+                'error' => $e->getMessage(),
+            ];
         }
     }
     

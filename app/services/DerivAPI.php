@@ -25,11 +25,12 @@ class DerivAPI
     private ?string $userId = null;
     private ?array $authData = null;
     
-    // Configuration constants (optimized for speed)
-    private const HTTP_TIMEOUT = 8; // Reduced from 15 to 8 seconds for faster failure detection
-    private const CONNECTION_TIMEOUT = 5; // Reduced from 10 to 5 seconds
-    private const MAX_RETRY_ATTEMPTS = 2; // Reduced from 3
-    private const RETRY_DELAY = 1; // Reduced from 2 seconds
+    // Configuration constants (production-safe with higher resilience)
+    // NOTE: Trading is latency-tolerant; it's better to succeed than to fail fast.
+    private const HTTP_TIMEOUT = 15;       // Seconds to wait for each WebSocket response
+    private const CONNECTION_TIMEOUT = 10; // Connection establishment timeout (seconds)
+    private const MAX_RETRY_ATTEMPTS = 5;  // Number of receive retries before giving up
+    private const RETRY_DELAY = 1;         // Base delay (seconds) for backoff in sendRequest
     private const DERIV_WS_DOMAIN = 'ws.derivws.com';
     
     // Rate limiting

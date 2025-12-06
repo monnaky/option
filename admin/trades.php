@@ -144,13 +144,15 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// Load initial data
-loadTrades();
+// Load initial data when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    loadTrades();
 
-// Auto-refresh every 30 seconds
-tradesInterval = setInterval(() => {
-    loadTrades(currentPage);
-}, 30000);
+    // Auto-refresh every 30 seconds
+    tradesInterval = setInterval(() => {
+        loadTrades(currentPage);
+    }, 30000);
+});
 
 // Cleanup on page unload
 window.addEventListener('beforeunload', () => {

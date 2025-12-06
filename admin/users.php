@@ -212,8 +212,10 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// Load initial data
-loadUsers();
+// Load initial data when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    loadUsers();
+});
 </script>
 
 <?php

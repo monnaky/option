@@ -192,13 +192,15 @@ function refreshSystem() {
     loadSystemInfo();
 }
 
-// Load initial data
-loadSystemInfo();
-
-// Auto-refresh every 60 seconds
-systemInterval = setInterval(() => {
+// Load initial data when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
     loadSystemInfo();
-}, 60000);
+
+    // Auto-refresh every 60 seconds
+    systemInterval = setInterval(() => {
+        loadSystemInfo();
+    }, 60000);
+});
 
 // Cleanup on page unload
 window.addEventListener('beforeunload', () => {

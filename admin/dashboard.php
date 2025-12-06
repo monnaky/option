@@ -11,6 +11,9 @@ require_once __DIR__ . '/../views/includes/admin-header.php';
         <button class="btn btn-sm btn-outline-primary" onclick="refreshStats()">
             <i class="bi bi-arrow-clockwise"></i> Refresh
         </button>
+        <button class="btn btn-sm btn-outline-success" onclick="activateCron()">
+            <i class="bi bi-play-circle"></i> Activate Cron
+        </button>
     </div>
 </div>
 
@@ -190,20 +193,37 @@ async function loadSystemHealth() {
     }
 }
 
-function refreshStats() {
-    loadStats();
-    loadSystemHealth();
+function activateCron() {
+    try {
+        const apiBase = (window.APP_CONFIG && window.APP_CONFIG.apiBase) || '/api';
+        // POST request to activate cron jobs
+        apiCall(`${apiBase}/admin.php?action=cron-activate`, { method: 'POST' })
+            .then(response => {
+                alert(response.message || 'Cron jobs activated');
+                // Refresh system health to reflect new status
+                loadSystemHealth();
+            })
+            .catch(error => {
+                console.error('Error activating cron jobs:', error);
+                alert('Failed to activate cron jobs');
+            });
+    } catch (e) {
+        console.error('activateCron exception:', e);
+    }
 }
 
-// Load initial data
-loadStats();
-loadSystemHealth();
 
-// Auto-refresh every 30 seconds
-statsInterval = setInterval(() => {
+// Load initial data when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
     loadStats();
     loadSystemHealth();
-}, 30000);
+
+    // Auto-refresh every 30 seconds
+    statsInterval = setInterval(() => {
+        loadStats();
+        loadSystemHealth();
+    }, 30000);
+});
 
 // Cleanup on page unload
 window.addEventListener('beforeunload', () => {

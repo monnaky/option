@@ -305,14 +305,48 @@ async function loadTradingData() {
 // Load trade history
 async function loadTradeHistory() {
     try {
-        // This would call a dedicated trade history endpoint
-        // For now, we'll simulate with empty array
-        tradingData.trades = [];
-        updateTradeHistory();
+        const container = document.getElementById('tradeHistoryContainer');
+        
+        // Show loading state if it's a manual refresh (container has content)
+        if (container.innerHTML.trim() !== '') {
+            const btn = document.querySelector('button[onclick="loadTradeHistory()"]');
+            if (btn) {
+                const originalContent = btn.innerHTML;
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+                btn.disabled = true;
+                
+                // Restore button after fetch
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                }, 500);
+            }
+        }
+
+        const data = await apiCall(`${apiBase}/trading.php?action=history`);
+        
+        if (data.trades) {
+            tradingData.trades = data.trades;
+            updateTradeHistory();
+        } else {
+            throw new Error('Invalid data format received');
+        }
         
     } catch (error) {
         console.error('Error loading trade history:', error);
         showToast('Failed to load trade history', 'error');
+        
+        // Show error state in container if empty
+        const container = document.getElementById('tradeHistoryContainer');
+        if (!tradingData.trades || tradingData.trades.length === 0) {
+            container.innerHTML = `
+                <div class="text-center py-5 text-danger">
+                    <i class="bi bi-exclamation-circle fs-1 d-block mb-3"></i>
+                    <p>Failed to load trade history</p>
+                    <button class="btn btn-sm btn-outline-light mt-2" onclick="loadTradeHistory()">Try Again</button>
+                </div>
+            `;
+        }
     }
 }
 

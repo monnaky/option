@@ -142,11 +142,36 @@ try {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             
             try {
+                // First create or get the regular user account
+                $existingUser = $db->queryOne(
+                    "SELECT id FROM users WHERE email = :email",
+                    ['email' => $email]
+                );
+                
+                if (!$existingUser) {
+                    // Create regular user account first
+                    $userId = $db->insert('users', [
+                        'email' => $email,
+                        'password' => $hashedPassword,
+                        'is_active' => 1,
+                        'is_admin' => 1, // Mark as admin in users table
+                    ]);
+                } else {
+                    $userId = $existingUser['id'];
+                    // Update existing user to be admin
+                    $db->execute(
+                        "UPDATE users SET is_admin = 1 WHERE id = :id",
+                        ['id' => $userId]
+                    );
+                }
+                
+                // Now create admin_users record
                 $db->insert('admin_users', [
+                    'user_id' => $userId,
+                    'username' => 'admin',
                     'email' => $email,
-                    'password_hash' => $hashedPassword,
-                    'role' => 'admin',
-                    'is_active' => true,
+                    'password' => $hashedPassword, // Correct column name
+                    'is_active' => 1,
                 ]);
                 
                 echo "   ✓ Admin user created successfully!\n\n";
@@ -154,6 +179,7 @@ try {
                 echo "   ⚠ Could not create admin user: " . $e->getMessage() . "\n\n";
             }
         }
+
     } else {
         echo "   Skipped admin user creation.\n\n";
     }

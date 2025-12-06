@@ -94,6 +94,48 @@ if (!function_exists('vtm_signal_root_path')) {
     }
 }
 
+/**
+ * Normalize raw signal line encoding/whitespace/BOM.
+ *
+ * Handles common MT5/Windows issues:
+ * - UTF-16 BOM (ÿþ / þÿ) converted to UTF-8
+ * - UTF-8 BOM removed
+ * - Control characters and NULLs stripped
+ */
+if (!function_exists('vtm_signal_normalize_encoding')) {
+    function vtm_signal_normalize_encoding(string $line): string {
+        // Trim basic whitespace first
+        $raw = $line;
+
+        // Detect UTF-16 BOM and convert to UTF-8
+        $bom16le = "\xFF\xFE";
+        $bom16be = "\xFE\xFF";
+        $prefix2 = substr($raw, 0, 2);
+        if ($prefix2 === $bom16le || $prefix2 === $bom16be) {
+            // Suppress warnings if mbstring/iconv not available
+            if (function_exists('mb_convert_encoding')) {
+                $raw = @mb_convert_encoding($raw, 'UTF-8', 'UTF-16');
+            } elseif (function_exists('iconv')) {
+                $raw = @iconv('UTF-16', 'UTF-8//IGNORE', $raw);
+            } else {
+                // Fallback: strip first two bytes (BOM) and continue
+                $raw = substr($raw, 2);
+            }
+        }
+
+        // Strip UTF-8 BOM if present
+        if (substr($raw, 0, 3) === "\xEF\xBB\xBF") {
+            $raw = substr($raw, 3);
+        }
+
+        // Remove non-printable control characters (including NULL)
+        $raw = preg_replace('/[\x00-\x1F\x7F\x80-\x9F]/u', '', $raw);
+
+        // Final trim
+        return trim($raw);
+    }
+}
+
 if (!function_exists('vtm_signal_storage_dir')) {
     function vtm_signal_storage_dir(): string {
         $envPath = getenv('SIGNAL_STORAGE_DIR');

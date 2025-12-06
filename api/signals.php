@@ -63,7 +63,10 @@ try {
         
         case 'GET':
             if (empty($action)) {
-                Response::error('Action parameter is required. Valid GET actions: get, history, stats', 400);
+                Response::error('Action parameter is required. Valid GET actions: get, history, stats, health', 400);
+            } elseif ($action === 'health') {
+                // Simple health check – no auth required
+                handleSignalHealth();
             } elseif ($action === 'get') {
                 // Public endpoint to get signal details
                 handleGetSignal();
@@ -76,13 +79,14 @@ try {
                     } elseif ($action === 'stats') {
                         handleGetStats($user['id']);
                     } else {
-                        Response::error('Invalid action. Valid GET actions: get, history, stats', 400);
+                        Response::error('Invalid action. Valid GET actions: get, history, stats, health', 400);
                     }
                 } catch (Exception $e) {
                     Response::error('Authentication required', 401);
                 }
             }
             break;
+
         
         default:
             Response::error("Method {$method} not allowed. Use GET or POST with action parameter", 405);
@@ -280,6 +284,21 @@ function handleGetStats(int $userId)
         Response::error('Failed to fetch signal statistics', 500);
     }
 }
+
+/**
+ * Simple health check for Signal API (no auth required)
+ */
+function handleSignalHealth()
+{
+    try {
+        // Just return a static healthy response
+        Response::success(['status' => 'healthy', 'message' => 'Signal API is reachable']);
+    } catch (Exception $e) {
+        error_log('Signal health check error: ' . $e->getMessage());
+        Response::error('Health check failed', 500);
+    }
+}
+
 
 /**
  * Handle get single signal

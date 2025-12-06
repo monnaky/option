@@ -13,12 +13,12 @@
 class BalanceManager {
     constructor(options = {}) {
         this.apiBase = options.apiBase || (window.APP_CONFIG && window.APP_CONFIG.apiBase) || '/api';
-        this.maxRetries = options.maxRetries || 3; // Reduced from 10 for faster failure
-        this.retryDelay = options.retryDelay || 50; // Reduced from 100ms for faster retries
-        this.maxRetryDelay = options.maxRetryDelay || 1000; // Reduced from 5000ms to 1s max
-        this.heartbeatInterval = options.heartbeatInterval || 5000; // Check every 5 seconds
-        this.domReadyTimeout = options.domReadyTimeout || 2000; // Reduced from 10s to 2s max wait
-        this.initialLoadTimeout = options.initialLoadTimeout || 500; // Fast initial load timeout
+        this.maxRetries = options.maxRetries || 3; 
+        this.retryDelay = options.retryDelay || 1000; // Increased to 1s
+        this.maxRetryDelay = options.maxRetryDelay || 5000; // Increased to 5s
+        this.heartbeatInterval = options.heartbeatInterval || 10000; // Check every 10 seconds
+        this.domReadyTimeout = options.domReadyTimeout || 5000; // Increased to 5s
+        this.initialLoadTimeout = options.initialLoadTimeout || 1000; // Increased to 1s
         
         // State
         this.currentBalance = null;

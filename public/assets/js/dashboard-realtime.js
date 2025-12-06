@@ -21,7 +21,7 @@ let previousState = {
 };
 
 // Start polling when page loads
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     realtime.startPolling();
     setupEventHandlers();
 });
@@ -29,41 +29,41 @@ document.addEventListener('DOMContentLoaded', function() {
 // Setup event handlers
 function setupEventHandlers() {
     // Handle status updates
-    realtime.on('status', function(data) {
+    realtime.on('status', function (data) {
         updateTradingStatus(data);
     });
-    
+
     // Balance updates REMOVED - handled by BalanceManager
     // BalanceManager is the single source of truth for balance display
     // Listen to BalanceManager's 'balanceUpdated' event if needed
-    
+
     // Handle trade updates
-    realtime.on('trades', function(data) {
+    realtime.on('trades', function (data) {
         updateTrades(data);
     });
-    
+
     // Handle comprehensive updates
-    realtime.on('updates', function(data) {
+    realtime.on('updates', function (data) {
         updateDashboard(data);
     });
-    
+
     // Handle trade started
-    realtime.on('trade-started', function(data) {
+    realtime.on('trade-started', function (data) {
         handleTradeStarted(data.trade);
     });
-    
+
     // Handle trade result
-    realtime.on('trade-result', function(data) {
+    realtime.on('trade-result', function (data) {
         handleTradeResult(data.trade);
     });
-    
+
     // Handle notifications
-    realtime.on('notification', function(notification) {
+    realtime.on('notification', function (notification) {
         handleNotification(notification);
     });
-    
+
     // Handle errors
-    realtime.on('error', function(error) {
+    realtime.on('error', function (error) {
         console.error('Real-time error:', error);
     });
 }
@@ -73,13 +73,13 @@ function setupEventHandlers() {
  */
 function updateTradingStatus(data) {
     if (!data) return;
-    
+
     // Update bot active status
     if (data.isActive !== previousState.isBotActive) {
         previousState.isBotActive = data.isActive;
         updateBotStatus(data.isActive);
     }
-    
+
     // Update settings if changed
     if (data.settings) {
         if (data.settings.dailyProfit !== previousState.dailyProfit ||
@@ -111,12 +111,12 @@ function updateBalance(data) {
  */
 function updateTrades(data) {
     if (!data) return;
-    
+
     // Update live trades
     if (data.liveTrades) {
         updateLiveTrades(data.liveTrades);
     }
-    
+
     // Update trade history
     if (data.trades) {
         updateTradeHistory(data.trades);
@@ -128,28 +128,28 @@ function updateTrades(data) {
  */
 function updateDashboard(data) {
     if (!data) return;
-    
+
     // Update settings
     if (data.settings) {
         updateSettings(data.settings);
     }
-    
+
     // Update session info
     if (data.session) {
         updateSessionInfo(data.session);
     }
-    
+
     // Balance updates handled by BalanceManager - skip here
-    
+
     // Update trades
     if (data.recentTrades) {
         updateTradeHistory(data.recentTrades);
     }
-    
+
     if (data.liveTrades) {
         updateLiveTrades(data.liveTrades);
     }
-    
+
     // Handle new trades
     if (data.newTrades && data.newTrades.length > 0) {
         data.newTrades.forEach(trade => {
@@ -169,16 +169,16 @@ function handleTradeStarted(trade) {
     if (trade.trade_id === previousState.lastTradeId) {
         return; // Already processed
     }
-    
+
     previousState.lastTradeId = trade.trade_id;
-    
+
     const message = `Trade started: ${trade.direction} on ${trade.asset}`;
     showToast(message, 'info');
     addNotification('info', message);
-    
+
     // Add to live trades
     addLiveTrade(trade);
-    
+
     // Reload trade history
     loadTradeHistory();
 }
@@ -190,16 +190,16 @@ function handleTradeResult(trade) {
     if (trade.trade_id === previousState.lastTradeId && trade.status !== 'pending') {
         return; // Already processed
     }
-    
+
     const status = trade.status === 'won' ? 'success' : 'error';
     const message = `Trade ${trade.status}: ${trade.profit > 0 ? '+' : ''}$${parseFloat(trade.profit).toFixed(2)}`;
-    
+
     showToast(message, status);
     addNotification(status, message);
-    
+
     // Update live trades
     updateLiveTradeStatus(trade);
-    
+
     // Reload trade history after delay
     setTimeout(() => {
         loadTradeHistory();
@@ -212,11 +212,54 @@ function handleTradeResult(trade) {
 function handleNotification(notification) {
     showToast(notification.message, notification.type);
     addNotification(notification.type, notification.message);
-    
+
     // Handle special notifications
     if (notification.message.includes('target') || notification.message.includes('limit')) {
         // Bot stopped due to target/limit
-        updateBotStatus(false);
+        // Update status badge
+        const statusBadge = document.getElementById('botStatus');
+        const botError = document.getElementById('botError');
+        const botRunning = document.getElementById('botRunning');
+        const startStopBtn = document.getElementById('startStopBtn');
+        const startStopText = document.getElementById('startStopText');
+
+        if (data.activeSession && (data.activeSession.state === 'active' || data.activeSession.state === 'initializing')) {
+            const isInitializing = data.activeSession.state === 'initializing';
+
+            statusBadge.className = isInitializing ? 'badge bg-warning text-dark' : 'badge bg-success';
+            statusBadge.textContent = isInitializing ? '⏳ Starting...' : '🟢 Running';
+
+            botRunning.classList.remove('d-none');
+            botRunning.className = isInitializing ? 'alert alert-warning mt-3' : 'alert alert-success mt-3';
+            botRunning.textContent = isInitializing ? 'Bot is starting up...' : 'Bot is actively trading. Monitoring for trade opportunities...';
+
+            botError.classList.add('d-none');
+
+            // Update button state
+            startStopBtn.className = 'btn btn-danger btn-lg w-100 mb-3';
+            startStopText.textContent = '🛑 STOP TRADING';
+            startStopBtn.disabled = isInitializing; // Disable stop while initializing
+
+            // Update global settings
+            if (typeof settings !== 'undefined') {
+                settings.isBotActive = true;
+            }
+        } else {
+            statusBadge.className = 'badge bg-secondary';
+            statusBadge.textContent = '⚫ Stopped';
+
+            botRunning.classList.add('d-none');
+
+            // Update button state
+            startStopBtn.className = 'btn btn-success btn-lg w-100 mb-3';
+            startStopText.textContent = '▶️ START TRADING';
+            startStopBtn.disabled = false;
+
+            // Update global settings
+            if (typeof settings !== 'undefined') {
+                settings.isBotActive = false;
+            }
+        }
     }
 }
 
@@ -227,7 +270,7 @@ function updateBotStatus(isActive) {
     const statusBadge = document.getElementById('botStatus');
     const btn = document.getElementById('startStopBtn');
     const text = document.getElementById('startStopText');
-    
+
     if (statusBadge) {
         if (isActive) {
             statusBadge.className = 'badge bg-success';
@@ -237,7 +280,7 @@ function updateBotStatus(isActive) {
             statusBadge.textContent = '⚫ Stopped';
         }
     }
-    
+
     if (btn && text) {
         if (isActive) {
             btn.className = 'btn btn-danger btn-lg w-100 mb-3';
@@ -256,15 +299,15 @@ function updateDailyStats(settings) {
     const dailyProfitEl = document.getElementById('dailyProfit');
     const dailyLossEl = document.getElementById('dailyLoss');
     const netProfitEl = document.getElementById('netProfit');
-    
+
     if (dailyProfitEl) {
         dailyProfitEl.textContent = `+$${parseFloat(settings.dailyProfit).toFixed(2)}`;
     }
-    
+
     if (dailyLossEl) {
         dailyLossEl.textContent = `-$${parseFloat(settings.dailyLoss).toFixed(2)}`;
     }
-    
+
     if (netProfitEl) {
         const netProfit = parseFloat(settings.dailyProfit) - parseFloat(settings.dailyLoss);
         netProfitEl.textContent = `${netProfit >= 0 ? '+' : ''}$${netProfit.toFixed(2)}`;
@@ -280,15 +323,15 @@ function updateSettings(settings) {
     const stakeInput = document.getElementById('stake');
     const targetInput = document.getElementById('target');
     const stopLimitInput = document.getElementById('stopLimit');
-    
+
     if (stakeInput && !stakeInput.matches(':focus')) {
         stakeInput.value = settings.stake;
     }
-    
+
     if (targetInput && !targetInput.matches(':focus')) {
         targetInput.value = settings.target;
     }
-    
+
     if (stopLimitInput && !stopLimitInput.matches(':focus')) {
         stopLimitInput.value = settings.stopLimit;
     }
@@ -327,7 +370,7 @@ function updateLiveTradeStatus(trade) {
                 statusBadge.className = `badge ${trade.status === 'won' ? 'bg-success' : 'bg-danger'}`;
                 statusBadge.textContent = trade.status.toUpperCase();
             }
-            
+
             // Update profit
             const profitEl = tradeElement.querySelector('.profit');
             if (profitEl) {
@@ -344,9 +387,9 @@ function updateLiveTradeStatus(trade) {
 function updateLiveTrades(trades) {
     const container = document.getElementById('liveTradesContainer');
     const count = document.getElementById('liveTradesCount');
-    
+
     if (!container) return;
-    
+
     if (count) {
         count.textContent = `${trades.length} Active`;
         if (trades.length > 0) {
@@ -355,7 +398,7 @@ function updateLiveTrades(trades) {
             count.classList.add('d-none');
         }
     }
-    
+
     if (trades.length === 0) {
         container.innerHTML = `
             <div class="text-center py-5 text-muted">
@@ -366,7 +409,7 @@ function updateLiveTrades(trades) {
         `;
         return;
     }
-    
+
     const html = trades.map(trade => `
         <div class="card bg-dark mb-2 border-dark-custom" data-trade-id="${trade.trade_id}">
             <div class="card-body p-3">
@@ -377,28 +420,26 @@ function updateLiveTrades(trades) {
                             ${trade.direction}
                         </span>
                     </div>
-                    <span class="badge ${
-                        trade.status === 'won' ? 'bg-success' : 
-                        trade.status === 'lost' ? 'bg-danger' : 
-                        'bg-warning'
-                    }">
+                    <span class="badge ${trade.status === 'won' ? 'bg-success' :
+            trade.status === 'lost' ? 'bg-danger' :
+                'bg-warning'
+        }">
                         ${trade.status === 'pending' ? '⏳ Pending...' : trade.status.toUpperCase()}
                     </span>
                 </div>
                 <div class="d-flex justify-content-between align-items-center pt-2 border-top border-dark-custom">
                     <small class="text-muted">Stake: <span class="text-white">$${parseFloat(trade.stake).toFixed(2)}</span></small>
-                    <span class="fw-bold profit ${
-                        trade.profit > 0 ? 'text-success' : 
-                        trade.profit < 0 ? 'text-danger' : 
-                        'text-muted'
-                    }">
+                    <span class="fw-bold profit ${trade.profit > 0 ? 'text-success' :
+            trade.profit < 0 ? 'text-danger' :
+                'text-muted'
+        }">
                         ${trade.profit > 0 ? '+' : ''}$${parseFloat(trade.profit).toFixed(2)}
                     </span>
                 </div>
             </div>
         </div>
     `).join('');
-    
+
     container.innerHTML = html;
 }
 
@@ -408,13 +449,13 @@ function updateLiveTrades(trades) {
 function updateTradeHistory(trades) {
     const container = document.getElementById('tradeHistoryContainer');
     const count = document.getElementById('tradeHistoryCount');
-    
+
     if (!container) return;
-    
+
     if (count) {
         count.textContent = trades.length;
     }
-    
+
     if (trades.length === 0) {
         container.innerHTML = `
             <div class="text-center py-5 text-muted">
@@ -425,7 +466,7 @@ function updateTradeHistory(trades) {
         `;
         return;
     }
-    
+
     const table = `
         <table class="table table-dark table-hover">
             <thead>
@@ -450,19 +491,17 @@ function updateTradeHistory(trades) {
                         </td>
                         <td>$${parseFloat(trade.stake).toFixed(2)}</td>
                         <td>
-                            <span class="badge ${
-                                trade.status === 'won' ? 'bg-success' : 
-                                trade.status === 'lost' ? 'bg-danger' : 
-                                'bg-warning'
-                            }">
+                            <span class="badge ${trade.status === 'won' ? 'bg-success' :
+            trade.status === 'lost' ? 'bg-danger' :
+                'bg-warning'
+        }">
                                 ${trade.status.toUpperCase()}
                             </span>
                         </td>
-                        <td class="text-end ${
-                            trade.profit > 0 ? 'text-success' : 
-                            trade.profit < 0 ? 'text-danger' : 
-                            'text-muted'
-                        }">
+                        <td class="text-end ${trade.profit > 0 ? 'text-success' :
+            trade.profit < 0 ? 'text-danger' :
+                'text-muted'
+        }">
                             ${trade.profit > 0 ? '+' : ''}$${parseFloat(trade.profit).toFixed(2)}
                         </td>
                     </tr>
@@ -470,7 +509,7 @@ function updateTradeHistory(trades) {
             </tbody>
         </table>
     `;
-    
+
     container.innerHTML = table;
 }
 
@@ -494,14 +533,14 @@ async function loadTradeHistory() {
 function addNotification(type, message) {
     const container = document.getElementById('notificationsContainer');
     if (!container) return;
-    
+
     const notification = {
         id: Date.now(),
         type: type,
         message: message,
         timestamp: new Date(),
     };
-    
+
     // Get existing notifications
     let notifications = [];
     const existing = container.querySelectorAll('.alert');
@@ -511,27 +550,27 @@ function addNotification(type, message) {
             notifications.push({
                 id: parseInt(id),
                 type: el.classList.contains('alert-success') ? 'success' :
-                      el.classList.contains('alert-danger') ? 'error' :
-                      el.classList.contains('alert-warning') ? 'warning' : 'info',
+                    el.classList.contains('alert-danger') ? 'error' :
+                        el.classList.contains('alert-warning') ? 'warning' : 'info',
                 message: el.querySelector('p')?.textContent || '',
             });
         }
     });
-    
+
     // Add new notification
     notifications.unshift(notification);
-    
+
     // Keep only last 10
     if (notifications.length > 10) {
         notifications = notifications.slice(0, 10);
     }
-    
+
     // Update display
     if (notifications.length === 0) {
         container.innerHTML = '<p class="text-muted text-center py-3">No notifications</p>';
         return;
     }
-    
+
     const html = notifications.map(notif => {
         const alertClass = {
             success: 'alert-success',
@@ -539,7 +578,7 @@ function addNotification(type, message) {
             warning: 'alert-warning',
             info: 'alert-info'
         }[notif.type] || 'alert-info';
-        
+
         return `
             <div class="alert ${alertClass} alert-dismissible fade show" role="alert" data-notification-id="${notif.id}">
                 <p class="mb-0">${notif.message}</p>
@@ -548,7 +587,7 @@ function addNotification(type, message) {
             </div>
         `;
     }).join('');
-    
+
     container.innerHTML = html;
 }
 
@@ -558,12 +597,12 @@ function addNotification(type, message) {
 function removeNotification(id) {
     const container = document.getElementById('notificationsContainer');
     if (!container) return;
-    
+
     const notification = container.querySelector(`[data-notification-id="${id}"]`);
     if (notification) {
         notification.remove();
     }
-    
+
     // Update empty state
     if (container.querySelectorAll('.alert').length === 0) {
         container.innerHTML = '<p class="text-muted text-center py-3">No notifications</p>';
@@ -571,7 +610,7 @@ function removeNotification(id) {
 }
 
 // Cleanup on page unload
-window.addEventListener('beforeunload', function() {
+window.addEventListener('beforeunload', function () {
     realtime.stopPolling();
 });
 

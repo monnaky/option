@@ -73,15 +73,19 @@ try {
         
         case 'POST':
             if (empty($action)) {
-                Response::error('Action parameter is required. Valid POST actions: user-suspend, user-activate, user-delete', 400);
+                Response::error('Action parameter is required. Valid POST actions: user-suspend, user-activate, user-delete, cron-activate', 400);
             } elseif ($action === 'user-suspend') {
                 handleSuspendUser();
             } elseif ($action === 'user-activate') {
                 handleActivateUser();
             } elseif ($action === 'user-delete') {
                 handleDeleteUser();
+            } elseif ($action === 'cron-activate') {
+                handleCronActivate();
+            } elseif ($action === 'broadcast-signal') {
+                handleBroadcastSignal();
             } else {
-                Response::error('Invalid action. Valid POST actions: user-suspend, user-activate, user-delete', 400);
+                Response::error('Invalid action. Valid POST actions: user-suspend, user-activate, user-delete, cron-activate, broadcast-signal', 400);
             }
             break;
         
@@ -514,3 +518,22 @@ function handleDeleteUser()
     }
 }
 
+/**
+ * Handle cron activation (manual trigger)
+ */
+function handleCronActivate()
+{
+    try {
+        // Trigger trading loop
+        $tradingBot = TradingBotService::getInstance();
+        $tradingBot->processTradingLoop();
+        $tradingBot->processContractResults();
+        // Trigger signal processing (process up to 10 signals)
+        $signalService = SignalService::getInstance();
+        $signalService->processUnprocessedSignals(10);
+        Response::success(['message' => 'Cron jobs activated successfully']);
+    } catch (Exception $e) {
+        error_log('Cron activation error: ' . $e->getMessage());
+        Response::error('Failed to activate cron jobs', 500);
+    }
+}

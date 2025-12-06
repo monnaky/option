@@ -13,6 +13,26 @@
 // ENVIRONMENT CONFIGURATION
 // ============================================================================
 
+// Load .env file manually if it exists (for local development/XAMPP)
+if (file_exists(__DIR__ . '/.env')) {
+    $lines = file(__DIR__ . '/.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        if (strpos(trim($line), '#') === 0) {
+            continue;
+        }
+        
+        list($name, $value) = explode('=', $line, 2);
+        $name = trim($name);
+        $value = trim($value);
+        
+        if (!array_key_exists($name, $_SERVER) && !array_key_exists($name, $_ENV)) {
+            putenv(sprintf('%s=%s', $name, $value));
+            $_ENV[$name] = $value;
+            $_SERVER[$name] = $value;
+        }
+    }
+}
+
 // Application environment (development or production)
 // Supports environment variables for Docker/Coolify deployment
 define('APP_ENV', $_ENV['APP_ENV'] ?? 'development'); // Change to 'production' for production hosting
@@ -60,7 +80,21 @@ define('DB_CHARSET', $_ENV['DB_CHARSET'] ?? 'utf8mb4');
 // IMPORTANT: Keep this key secure and never commit it to version control
 // For Coolify: Set ENCRYPTION_KEY environment variable
 // To generate a new key, run: php -r "echo bin2hex(random_bytes(32));"
-define('ENCRYPTION_KEY', $_ENV['ENCRYPTION_KEY'] ?? '7f3a9b2c8d4e1f6a5b9c2d7e3f8a1b4c6d9e2f5a8b1c4d7e0f3a6b9c2d5e8f1a4');
+
+// In production, ENCRYPTION_KEY must be set in environment
+if (APP_ENV === 'production' && empty($_ENV['ENCRYPTION_KEY'])) {
+    error_log('CRITICAL: ENCRYPTION_KEY not set in production environment');
+    die('Configuration error: ENCRYPTION_KEY must be set in environment variables for production');
+}
+
+// For development, allow fallback to .env file or show warning
+if (empty($_ENV['ENCRYPTION_KEY'])) {
+    error_log('WARNING: ENCRYPTION_KEY not set - using default (INSECURE for production)');
+    // Only use default in development
+    define('ENCRYPTION_KEY', 'a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456');
+} else {
+    define('ENCRYPTION_KEY', $_ENV['ENCRYPTION_KEY']);
+}
 
 // Session configuration
 define('SESSION_LIFETIME', 86400); // 24 hours in seconds

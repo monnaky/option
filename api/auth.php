@@ -81,6 +81,14 @@ try {
 function handleRegister()
 {
     try {
+        // Rate limiting: 5 registrations per hour per IP
+        $identifier = \App\Utils\RateLimit::getIdentifier();
+        try {
+            \App\Utils\RateLimit::require($identifier, 'register', 5, 3600);
+        } catch (Exception $e) {
+            Response::error('Too many registration attempts. Please try again later.', 429);
+        }
+        
         // Get request data
         $data = json_decode(file_get_contents('php://input'), true);
         
@@ -164,6 +172,14 @@ function handleRegister()
 function handleLogin()
 {
     try {
+        // Rate limiting: 10 login attempts per minute per IP
+        $identifier = \App\Utils\RateLimit::getIdentifier();
+        try {
+            \App\Utils\RateLimit::require($identifier, 'login', 10, 60);
+        } catch (Exception $e) {
+            Response::error('Too many login attempts. Please try again in a minute.', 429);
+        }
+        
         // Get request data
         $data = json_decode(file_get_contents('php://input'), true);
         
@@ -206,14 +222,26 @@ function handleLogin()
             Response::error('Account is inactive', 403);
         }
         
+        // Regenerate session ID to prevent session fixation attacks
+        session_regenerate_id(true);
+        
         // Set session
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_email'] = $user['email'];
         $_SESSION['is_admin'] = !empty($user['is_admin']) ? (bool)$user['is_admin'] : false;
+        $_SESSION['login_time'] = time();
+        $_SESSION['last_activity'] = time();
+        
+        // Generate CSRF token
+        if (!function_exists('App\\Utils\\CSRF::generateToken')) {
+            require_once __DIR__ . '/../app/utils/CSRF.php';
+        }
+        $csrfToken = \App\Utils\CSRF::generateToken();
         
         // Return response
         Response::success([
             'token' => session_id(), // Using session ID as token
+            'csrf_token' => $csrfToken,
             'user' => [
                 'id' => $user['id'],
                 'email' => $user['email'],
