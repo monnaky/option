@@ -99,7 +99,11 @@ class SignalService
             $signalType = $this->normalizeSignalType($signalData['type'] ?? $signalData['signalType'] ?? '');
             $asset = $signalData['asset'] ?? null;
             $rawText = $signalData['rawText'] ?? $signalData['raw_text'] ?? ($asset ? "{$signalType} {$asset}" : $signalType);
-            $source = $signalData['source'] ?? self::SOURCE_API;
+            
+            // Normalize and validate source to prevent database errors
+            $rawSource = $signalData['source'] ?? self::SOURCE_API;
+            $source = $this->normalizeSource($rawSource);
+            
             $sourceIp = $signalData['sourceIp'] ?? $signalData['source_ip'] ?? ($_SERVER['REMOTE_ADDR'] ?? 'unknown');
             
             // Check for duplicate signals (within last 5 seconds)
@@ -217,6 +221,33 @@ class SignalService
         }
 
         return $normalized;
+    }
+    
+    /**
+     * Normalize source to valid ENUM value
+     * Prevents database truncation errors by ensuring source is one of: 'api', 'file', 'manual'
+     */
+    private function normalizeSource(?string $source): string
+    {
+        if ($source === null || $source === '') {
+            return self::SOURCE_API;
+        }
+        
+        $normalized = strtolower(trim($source));
+        
+        // Map variations to valid ENUM values
+        $validSources = [
+            'api' => self::SOURCE_API,
+            'file' => self::SOURCE_FILE,
+            'manual' => self::SOURCE_MANUAL,
+            'url' => self::SOURCE_API,      // URL signals are API signals
+            'webhook' => self::SOURCE_API,   // Webhook signals are API signals
+            'http' => self::SOURCE_API,      // HTTP signals are API signals
+            'https' => self::SOURCE_API,     // HTTPS signals are API signals
+        ];
+        
+        // Return mapped value or default to API
+        return $validSources[$normalized] ?? self::SOURCE_API;
     }
     
     /**

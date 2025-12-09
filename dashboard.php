@@ -340,7 +340,9 @@ async function loadProfile() {
                 stake: parseFloat(data.settings.stake) || 1.00,
                 target: parseFloat(data.settings.target) || 100.00,
                 stopLimit: parseFloat(data.settings.stop_limit) || 50.00,
-                isBotActive: data.settings.is_bot_active || false,
+                // Check BOTH database flag AND active session to ensure accurate state
+                // This fixes the issue where button shows "START" even when bot is running
+                isBotActive: (data.settings.is_bot_active && data.has_active_session) || false,
                 dailyProfit: parseFloat(data.settings.daily_profit) || 0.00,
                 dailyLoss: parseFloat(data.settings.daily_loss) || 0.00
             };

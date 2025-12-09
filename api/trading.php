@@ -127,6 +127,9 @@ function handleGetStats(int $userId)
             $winRate = ($stats['won_trades'] / $stats['total_trades']) * 100;
         }
         
+        // Check if there's a truly active session (state='active' and end_time IS NULL)
+        $hasActiveSession = $activeSession && $activeSession['state'] === 'active' && empty($activeSession['end_time']);
+        
         // Return response
         Response::success([
             'settings' => $settings ? [
@@ -146,6 +149,7 @@ function handleGetStats(int $userId)
                 'total_loss' => number_format((float)$stats['total_loss'], 2),
                 'net_profit' => number_format((float)$stats['total_profit'] - (float)$stats['total_loss'], 2),
             ],
+            'has_active_session' => $hasActiveSession,
             'active_session' => $activeSession ? [
                 'id' => $activeSession['id'],
                 'session_id' => $activeSession['session_id'],
@@ -289,8 +293,8 @@ function handleGetBalance(int $userId)
     $debugLog[] = "=== handleGetBalance START for user {$userId} ===";
     $debugLog[] = "Timestamp: " . date('Y-m-d H:i:s');
     
-    // Set a maximum execution time for this function (20 seconds)
-    $maxExecutionTime = 20;
+    // Set a maximum execution time for this function (3 seconds to prevent nginx 504)
+    $maxExecutionTime = 3;
     $startTime = time();
     
     try {
