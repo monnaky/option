@@ -191,93 +191,115 @@ class DerivAPI
         if (!$this->checkRateLimit()) {
             throw new Exception('Rate limit exceeded. Please wait before making more requests.');
         }
-        
+
         // Ensure we're authorized (unless this is an authorize request)
         if ($method !== 'authorize' && !$this->isAuthorized) {
             error_log("Not authorized, calling authorize() first");
             $this->authorize();
         }
-        
+
         // Ensure WebSocket connection
         $this->ensureConnection();
-        
+
         if (!$this->wsClient || !$this->wsClient->isConnected()) {
             throw new Exception('WebSocket is not connected');
         }
-        
+
         $requestId = $this->requestId++;
-        
-        // Build request message - Deriv API expects method name as key
-        // Format: { "method_name": params, "req_id": 123 }
-        $requestMessage = [
-            $method => $request,
-            'req_id' => $requestId,
-        ];
-        
-        // Send request
+
+        // Build request message
+        // Default format for most calls: { "method_name": params, "req_id": 123 }
+        // Special case for "buy": Deriv expects top-level fields: { "buy": "proposal_id"|1, "price": 10, ... }
+        if ($method === 'buy') {
+            // For buy, the caller passes the exact fields required by Deriv (buy, price, parameters, ...)
+            $requestMessage = $request;
+            $requestMessage['req_id'] = $requestId;
+        } else {
+            $requestMessage = [
+                $method => $request,
+                'req_id' => $requestId,
+            ];
+        }
+
         $postData = json_encode($requestMessage);
         error_log("Sending WebSocket request: {$method} (req_id: {$requestId})");
-        
-        try {
-            $this->wsClient->send($postData);
-        } catch (Exception $e) {
-            $this->isAuthorized = false;
-            throw new Exception("Failed to send WebSocket message: " . $e->getMessage());
-        }
-        
-        // Wait for response with retry logic
+
         $lastError = null;
+
+        // Full retry loop: (re)send + receive, with reconnection when needed
         for ($attempt = 1; $attempt <= self::MAX_RETRY_ATTEMPTS; $attempt++) {
             try {
+                // Ensure connection is alive for this attempt
+                if (!$this->wsClient || !$this->wsClient->isConnected()) {
+                    $this->ensureConnection();
+
+                    // Re-authorize after reconnect for non-authorize calls
+                    if ($method !== 'authorize') {
+                        $this->isAuthorized = false;
+                        $this->authorize();
+                    }
+                }
+
+                // (Re)send request for this attempt
+                try {
+                    $this->wsClient->send($postData);
+                } catch (Exception $e) {
+                    $this->isAuthorized = false;
+                    throw new Exception("Failed to send WebSocket message: " . $e->getMessage());
+                }
+
+                // Wait for response
                 $response = $this->wsClient->receive(self::HTTP_TIMEOUT);
                 $data = json_decode($response, true);
-                
+
                 if (!$data) {
                     error_log("Invalid JSON response: " . substr($response, 0, 200));
                     continue;
                 }
-                
+
                 // Check if this is the response we're waiting for
                 if (isset($data['req_id']) && $data['req_id'] == $requestId) {
-                    // Check for error
                     if (isset($data['error'])) {
                         $errorMsg = $data['error']['message'] ?? 'Deriv API error';
                         $errorCode = $data['error']['code'] ?? 'UNKNOWN';
                         throw new Exception("Deriv API error: {$errorMsg} ({$errorCode})");
                     }
-                    
-                    // Remove req_id from response
+
                     unset($data['req_id']);
                     return $data;
                 }
-                
-                // If it's an echo_req, ignore it
+
+                // If it's an echo_req, ignore it and keep waiting within timeout window
                 if (isset($data['echo_req'])) {
                     continue;
                 }
-                
-                // If no req_id match, might be a different response
+
                 // For authorize, we might get response without req_id
                 if ($method === 'authorize' && isset($data['authorize'])) {
                     return $data;
                 }
-                
+
             } catch (Exception $e) {
                 $lastError = $e;
-                error_log("WebSocket receive attempt {$attempt} failed: " . $e->getMessage());
-                
-                // If connection lost, try to reconnect
+                error_log("WebSocket request attempt {$attempt} failed: " . $e->getMessage());
+
+                // If connection lost, try to reconnect before next attempt
                 if (strpos($e->getMessage(), 'connection') !== false || strpos($e->getMessage(), 'closed') !== false) {
                     $this->isAuthorized = false;
-                    $this->ensureConnection();
+                    try {
+                        $this->ensureConnection();
+                    } catch (Exception $connectException) {
+                        $lastError = $connectException;
+                        error_log("WebSocket reconnection failed on attempt {$attempt}: " . $connectException->getMessage());
+                    }
                 }
-                
+
                 if ($attempt < self::MAX_RETRY_ATTEMPTS) {
                     sleep(self::RETRY_DELAY * $attempt);
                 }
             }
         }
-        
+
         throw new Exception(
             "Failed to get response from Deriv API after " . self::MAX_RETRY_ATTEMPTS . " attempts. " .
             "Last error: " . ($lastError ? $lastError->getMessage() : 'Unknown error')
