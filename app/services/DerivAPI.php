@@ -470,7 +470,8 @@ class DerivAPI
         $debugLog[] = "Timestamp: " . date('Y-m-d H:i:s');
         
         try {
-            // If we have cached auth data with balance, use it
+            // OPTIMIZATION: Always use cached balance if available to avoid slow WebSocket calls
+            // This prevents timeout errors on the dashboard
             $debugLog[] = "Step 1: Checking cached auth data";
             if ($this->authData && isset($this->authData['balance'])) {
                 $cachedBalance = (float)$this->authData['balance'];
@@ -481,44 +482,8 @@ class DerivAPI
             }
             $debugLog[] = "  - No cached balance available";
             
-            // Ensure connection is established before making requests
-            $debugLog[] = "Step 2: Ensuring connection";
-            $this->ensureConnection();
-            $debugLog[] = "  - Connection ensured";
-            $debugLog[] = "  - isConnected(): " . ($this->isConnected() ? 'true' : 'false');
-            $debugLog[] = "  - isAuthorized: " . ($this->isAuthorized ? 'true' : 'false');
-            
-            // Try to get balance via official balance endpoint
-            $debugLog[] = "Step 3: Calling balance endpoint";
-            try {
-                $requestParams = ['balance' => 1];
-                $debugLog[] = "  - Request params: " . json_encode($requestParams);
-                $debugLog[] = "  - Sending balance request";
-                
-                $response = $this->sendRequest('balance', $requestParams);
-                
-                $debugLog[] = "  - Response received";
-                $debugLog[] = "  - Response keys: " . implode(', ', array_keys($response));
-                $debugLog[] = "  - Full response: " . json_encode($response);
-                
-                if (isset($response['balance']['balance'])) {
-                    $balance = (float)$response['balance']['balance'];
-                    $debugLog[] = "  - Balance extracted: " . $balance;
-                    $debugLog[] = "=== DerivAPI::getBalance SUCCESS (balance endpoint) ===";
-                    @error_log("[DerivAPI::getBalance] " . implode("\n", $debugLog));
-                    return $balance;
-                } else {
-                    $debugLog[] = "  - No balance in response";
-                    $debugLog[] = "  - Response structure: " . json_encode($response);
-                }
-            } catch (Exception $e) {
-                $debugLog[] = "  - Balance endpoint FAILED: " . $e->getMessage();
-                $debugLog[] = "  - Error type: " . get_class($e);
-                $debugLog[] = "  - Error trace: " . substr($e->getTraceAsString(), 0, 500);
-            }
-            
-            // Fallback: get fresh data via authorize
-            $debugLog[] = "Step 4: Falling back to authorize()";
+            // If no cache, get fresh data via authorize (which is faster than balance endpoint)
+            $debugLog[] = "Step 2: No cache - calling authorize() to get balance";
             $authData = $this->authorize();
             $debugLog[] = "  - authorize() completed";
             $debugLog[] = "  - Auth data keys: " . implode(', ', array_keys($authData));
@@ -526,7 +491,7 @@ class DerivAPI
             
             $balance = (float)($authData['balance'] ?? 0);
             $debugLog[] = "  - Final balance: " . $balance;
-            $debugLog[] = "=== DerivAPI::getBalance SUCCESS (authorize fallback) ===";
+            $debugLog[] = "=== DerivAPI::getBalance SUCCESS (authorize) ===";
             @error_log("[DerivAPI::getBalance] " . implode("\n", $debugLog));
             
             return $balance;
