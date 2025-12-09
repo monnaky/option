@@ -351,12 +351,10 @@ class TradingBotService
         $derivApi = new DerivAPI($apiToken, null, (string)$userId);
         
         try {
-            // Get available assets
-            $assets = $derivApi->getAvailableAssets();
-            
-            if (empty($assets)) {
-                throw new Exception('No available assets for trading');
-            }
+            // OPTIMIZATION: Use predefined assets instead of API call
+            // getAvailableAssets() takes 120+ seconds and kills the WebSocket connection
+            // Use common volatile indices that are always available
+            $assets = ['R_10', 'R_25', 'R_50', 'R_75', 'R_100'];
             
             // Select random asset
             $asset = $assets[array_rand($assets)];
@@ -551,21 +549,12 @@ class TradingBotService
             try {
                 // Step 7: Get asset if not specified
                 if (!$asset) {
-                    error_log("{$logPrefix} Step 7: Fetching available assets");
-                    try {
-                        $assets = $derivApi->getAvailableAssets();
-                        if (empty($assets)) {
-                            $error = 'No available assets for trading';
-                            error_log("{$logPrefix} ERROR: {$error}");
-                            throw new Exception($error);
-                        }
-                        $asset = $assets[array_rand($assets)];
-                        error_log("{$logPrefix} Step 7: OK - Selected asset: {$asset} (from " . count($assets) . " available)");
-                    } catch (Exception $e) {
-                        $error = "Failed to get available assets: " . $e->getMessage();
-                        error_log("{$logPrefix} ERROR: {$error}");
-                        throw new Exception($error, 0, $e);
-                    }
+                    error_log("{$logPrefix} Step 7: Using predefined assets (API call too slow)");
+                    // OPTIMIZATION: Use predefined assets instead of API call
+                    // getAvailableAssets() takes 120+ seconds and kills the WebSocket connection
+                    $assets = ['R_10', 'R_25', 'R_50', 'R_75', 'R_100'];
+                    $asset = $assets[array_rand($assets)];
+                    error_log("{$logPrefix} Step 7: OK - Selected asset: {$asset}");
                 } else {
                     error_log("{$logPrefix} Step 7: SKIP - Asset specified: {$asset}");
                 }
