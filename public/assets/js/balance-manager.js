@@ -13,13 +13,13 @@
 class BalanceManager {
     constructor(options = {}) {
         this.apiBase = options.apiBase || (window.APP_CONFIG && window.APP_CONFIG.apiBase) || '/api';
-        this.maxRetries = options.maxRetries || 3; 
+        this.maxRetries = options.maxRetries || 3;
         this.retryDelay = options.retryDelay || 1000; // Increased to 1s
         this.maxRetryDelay = options.maxRetryDelay || 5000; // Increased to 5s
         this.heartbeatInterval = options.heartbeatInterval || 10000; // Check every 10 seconds
         this.domReadyTimeout = options.domReadyTimeout || 5000; // Increased to 5s
         this.initialLoadTimeout = options.initialLoadTimeout || 1000; // Increased to 1s
-        
+
         // State
         this.currentBalance = null;
         this.lastDisplayedBalance = null;
@@ -28,11 +28,11 @@ class BalanceManager {
         this.heartbeatTimer = null;
         this.retryCount = 0;
         this.domReady = false;
-        
+
         // Element cache
         this.balanceElement = null;
         this.balanceNoteElement = null;
-        
+
         // Statistics
         this.stats = {
             updatesAttempted: 0,
@@ -41,61 +41,61 @@ class BalanceManager {
             retriesUsed: 0,
             domWaitTime: 0
         };
-        
+
         // Loading state flag
         this.isLoading = false;
-        
+
         console.log('[BalanceManager] Initialized with options:', {
             apiBase: this.apiBase,
             maxRetries: this.maxRetries,
             heartbeatInterval: this.heartbeatInterval
         });
     }
-    
+
     /**
      * Initialize - optimized for fast initial load
      */
     async initialize() {
         console.log('[BalanceManager] Initializing (fast mode)...');
         const startTime = Date.now();
-        
+
         // Show loading state immediately
         this.showLoadingState();
-        
+
         // Try to find elements immediately (don't wait for full DOM ready)
         this.findElements();
-        
+
         // If elements not found, wait briefly (max 500ms)
         if (!this.balanceElement) {
             await this.waitForDOMReadyFast();
             this.findElements();
         }
-        
+
         // If still not found, wait for full DOM ready (but with shorter timeout)
         if (!this.balanceElement) {
             await this.waitForDOMReady();
             this.findElements();
         }
-        
+
         // Start heartbeat monitoring (non-blocking)
         this.startHeartbeat();
-        
+
         // Load initial balance IMMEDIATELY (don't wait for heartbeat)
         // This is the critical path - make it fast
         const loadPromise = this.loadBalance();
-        
+
         // Don't await - let it load in background while we continue
         loadPromise.catch(error => {
             console.error('[BalanceManager] Initial load error:', error);
         });
-        
+
         const initTime = Date.now() - startTime;
         console.log(`[BalanceManager] Initialization complete in ${initTime}ms (balance loading in background)`);
-        
+
         // Return immediately - balance will update when ready
         return loadPromise;
     }
-    
+
     /**
      * Fast DOM ready check (for initial load)
      */
@@ -105,7 +105,7 @@ class BalanceManager {
             this.domReady = true;
             return;
         }
-        
+
         // Wait briefly for DOMContentLoaded (max 500ms)
         return new Promise((resolve) => {
             if (document.readyState === 'loading') {
@@ -113,7 +113,7 @@ class BalanceManager {
                     this.domReady = true;
                     resolve();
                 }, this.initialLoadTimeout);
-                
+
                 document.addEventListener('DOMContentLoaded', () => {
                     clearTimeout(timeout);
                     this.domReady = true;
@@ -125,13 +125,13 @@ class BalanceManager {
             }
         });
     }
-    
+
     /**
      * Wait for DOM to be fully ready (fallback)
      */
     async waitForDOMReady() {
         const startTime = Date.now();
-        
+
         // Check if DOM is already ready
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
             this.domReady = true;
@@ -139,7 +139,7 @@ class BalanceManager {
             console.log('[BalanceManager] DOM ready immediately');
             return;
         }
-        
+
         // Wait for DOMContentLoaded
         return new Promise((resolve) => {
             if (document.readyState === 'loading') {
@@ -155,7 +155,7 @@ class BalanceManager {
                 console.log('[BalanceManager] DOM ready (already loaded)');
                 resolve();
             }
-            
+
             // Timeout fallback (reduced from 10s to 2s)
             setTimeout(() => {
                 if (!this.domReady) {
@@ -167,26 +167,26 @@ class BalanceManager {
             }, this.domReadyTimeout);
         });
     }
-    
+
     /**
      * Find balance elements with multiple strategies
      */
     findElements() {
         console.log('[BalanceManager] Finding balance elements...');
-        
+
         // Strategy 1: Direct ID
         this.balanceElement = document.getElementById('balance');
-        
+
         // Strategy 2: Query selector
         if (!this.balanceElement) {
             this.balanceElement = document.querySelector('#balance');
         }
-        
+
         // Strategy 3: Data attribute
         if (!this.balanceElement) {
             this.balanceElement = document.querySelector('[data-balance]');
         }
-        
+
         // Strategy 4: Class-based (if balance is in a specific class)
         if (!this.balanceElement) {
             const candidates = document.querySelectorAll('.balance, [class*="balance"]');
@@ -197,7 +197,7 @@ class BalanceManager {
                 }
             }
         }
-        
+
         // Strategy 5: Search by text content pattern
         if (!this.balanceElement) {
             const allElements = document.querySelectorAll('*');
@@ -208,12 +208,12 @@ class BalanceManager {
                 }
             }
         }
-        
+
         // Find balance note element
-        this.balanceNoteElement = document.getElementById('balanceNote') || 
-                                  document.querySelector('#balanceNote') ||
-                                  document.querySelector('[data-balance-note]');
-        
+        this.balanceNoteElement = document.getElementById('balanceNote') ||
+            document.querySelector('#balanceNote') ||
+            document.querySelector('[data-balance-note]');
+
         if (this.balanceElement) {
             console.log('[BalanceManager] ✅ Balance element found:', {
                 id: this.balanceElement.id,
@@ -222,7 +222,7 @@ class BalanceManager {
             });
         } else {
             console.error('[BalanceManager] ❌ Balance element NOT found!');
-            console.error('[BalanceManager] Available elements with "balance" in id:', 
+            console.error('[BalanceManager] Available elements with "balance" in id:',
                 Array.from(document.querySelectorAll('[id*="balance"]')).map(el => ({
                     id: el.id,
                     tagName: el.tagName,
@@ -230,10 +230,10 @@ class BalanceManager {
                 }))
             );
         }
-        
+
         return this.balanceElement !== null;
     }
-    
+
     /**
      * Queue an operation to prevent race conditions
      */
@@ -243,7 +243,7 @@ class BalanceManager {
             this.processQueue();
         });
     }
-    
+
     /**
      * Process queued operations one at a time
      */
@@ -251,12 +251,12 @@ class BalanceManager {
         if (this.isUpdating || this.operationQueue.length === 0) {
             return;
         }
-        
+
         this.isUpdating = true;
-        
+
         while (this.operationQueue.length > 0) {
             const { operation, resolve, reject } = this.operationQueue.shift();
-            
+
             try {
                 const result = await operation();
                 resolve(result);
@@ -264,10 +264,10 @@ class BalanceManager {
                 reject(error);
             }
         }
-        
+
         this.isUpdating = false;
     }
-    
+
     /**
      * Load balance from API with retry mechanism
      */
@@ -275,16 +275,16 @@ class BalanceManager {
         return this.queueOperation(async () => {
             console.log('[BalanceManager] Loading balance from API...');
             this.stats.updatesAttempted++;
-            
+
             let lastError = null;
-            
+
             for (let attempt = 1; attempt <= this.maxRetries; attempt++) {
                 try {
                     const response = await this.fetchBalance();
-                    
+
                     if (response && this.isValidBalance(response)) {
                         const balanceValue = this.extractBalance(response);
-                        
+
                         if (balanceValue !== null && !isNaN(balanceValue)) {
                             const hasToken = response.hasToken !== false;
                             await this.updateDisplay(balanceValue, hasToken);
@@ -295,13 +295,13 @@ class BalanceManager {
                             return balanceValue;
                         }
                     }
-                    
+
                     throw new Error('Invalid balance response');
-                    
+
                 } catch (error) {
                     lastError = error;
                     this.stats.retriesUsed++;
-                    
+
                     // Handle specific error types
                     if (error.errorType === 'no_token') {
                         // No token - don't retry, just show message
@@ -315,8 +315,18 @@ class BalanceManager {
                         await this.updateDisplay(0.00, false);
                         this.currentBalance = 0.00;
                         throw error;
+                    } else if (error.errorType === 'timeout') {
+                        // Timeout - show specific message
+                        console.error('[BalanceManager] Connection timeout - stopping retries');
+                        await this.showTimeoutError();
+                        throw error;
+                    } else if (error.errorType === 'connection_error') {
+                        // Connection error - show specific message
+                        console.error('[BalanceManager] Connection error - stopping retries');
+                        await this.showConnectionError();
+                        throw error;
                     }
-                    
+
                     // For other errors, retry with faster exponential backoff
                     if (attempt < this.maxRetries) {
                         // Faster retry: 50ms, 100ms, 200ms (instead of 100ms, 200ms, 400ms...)
@@ -329,13 +339,17 @@ class BalanceManager {
                     }
                 }
             }
-            
+
             this.stats.updatesFailed++;
             console.error('[BalanceManager] ❌ Failed to load balance after', this.maxRetries, 'attempts:', lastError);
+
+            // Show error message to user
+            await this.showLoadError(lastError);
+
             throw lastError;
         });
     }
-    
+
     /**
      * Fetch balance from API
      */
@@ -343,7 +357,7 @@ class BalanceManager {
         // Use the trading API endpoint for balance
         const url = `${this.apiBase}/trading.php?action=balance`;
         console.log('[BalanceManager] Fetching from:', url);
-        
+
         const response = await fetch(url, {
             method: 'GET',
             headers: {
@@ -351,7 +365,7 @@ class BalanceManager {
             },
             credentials: 'same-origin',
         });
-        
+
         if (!response.ok) {
             const errorText = await response.text();
             let errorData;
@@ -362,10 +376,10 @@ class BalanceManager {
             }
             throw new Error(`HTTP ${response.status}: ${errorData.error || response.statusText}`);
         }
-        
+
         const data = await response.json();
         console.log('[BalanceManager] API response:', data);
-        
+
         // Check for error in response
         if (data.error && data.errorType) {
             const error = new Error(data.errorMessage || 'Balance retrieval failed');
@@ -373,10 +387,10 @@ class BalanceManager {
             error.hasToken = data.hasToken;
             throw error;
         }
-        
+
         return data;
     }
-    
+
     /**
      * Check if balance response is valid
      */
@@ -384,7 +398,7 @@ class BalanceManager {
         if (!response || typeof response !== 'object') {
             return false;
         }
-        
+
         // Check various response structures
         return (
             response.balance !== undefined ||
@@ -392,7 +406,7 @@ class BalanceManager {
             (response.success && response.data && response.data.balance !== undefined)
         );
     }
-    
+
     /**
      * Extract balance value from response
      */
@@ -408,7 +422,7 @@ class BalanceManager {
         }
         return null;
     }
-    
+
     /**
      * Update balance display with guaranteed success
      * CRITICAL: Only update if we have a valid balance value (not null/undefined)
@@ -420,7 +434,7 @@ class BalanceManager {
                 invalidValue: balanceValue,
                 currentBalance: this.currentBalance
             });
-            
+
             // If we have a cached balance, keep it
             if (this.currentBalance !== null) {
                 balanceValue = this.currentBalance;
@@ -429,15 +443,15 @@ class BalanceManager {
                 balanceValue = hasToken ? (this.lastDisplayedBalance || 0) : 0;
             }
         }
-        
+
         console.log('[BalanceManager] Updating display to:', balanceValue);
-        
+
         // Ensure elements are found
         if (!this.balanceElement) {
             console.log('[BalanceManager] Elements not cached, finding again...');
             this.findElements();
         }
-        
+
         // Retry finding elements if still not found
         let attempts = 0;
         while (!this.balanceElement && attempts < 10) {
@@ -446,24 +460,24 @@ class BalanceManager {
             await this.sleep(100 * attempts);
             this.findElements();
         }
-        
+
         if (!this.balanceElement) {
             console.error('[BalanceManager] ❌ Cannot find balance element after 10 attempts!');
             throw new Error('Balance element not found');
         }
-        
+
         // CRITICAL: Store balance BEFORE updating display to prevent race conditions
         this.currentBalance = parseFloat(balanceValue);
         this.lastDisplayedBalance = this.currentBalance;
-        
+
         // Update the element - store balance in data attribute for recovery
         const formattedBalance = balanceValue.toFixed(2);
         this.balanceElement.textContent = formattedBalance;
         this.balanceElement.setAttribute('data-balance-value', balanceValue); // Store for recovery
-        
+
         this.balanceElement.removeAttribute('data-loading'); // Remove loading state
         this.isLoading = false;
-        
+
         // Verify the update worked
         if (this.balanceElement.textContent !== formattedBalance) {
             console.error('[BalanceManager] ❌ Balance update verification failed!');
@@ -472,7 +486,7 @@ class BalanceManager {
             this.balanceElement.textContent = formattedBalance;
             this.balanceElement._balanceManagerUpdate = false;
         }
-        
+
         // Update balance note visibility
         if (this.balanceNoteElement) {
             if (!hasToken) {
@@ -485,15 +499,15 @@ class BalanceManager {
                 this.balanceNoteElement.classList.add('d-none');
             }
         }
-        
+
         console.log('[BalanceManager] ✅ Display updated successfully to:', formattedBalance);
-        
+
         // Trigger custom event for other components
         window.dispatchEvent(new CustomEvent('balanceUpdated', {
             detail: { balance: balanceValue, hasToken }
         }));
     }
-    
+
     /**
      * Start heartbeat monitoring
      */
@@ -501,14 +515,14 @@ class BalanceManager {
         if (this.heartbeatTimer) {
             clearInterval(this.heartbeatTimer);
         }
-        
+
         this.heartbeatTimer = setInterval(() => {
             this.checkBalanceDisplay();
         }, this.heartbeatInterval);
-        
+
         console.log('[BalanceManager] Heartbeat monitoring started');
     }
-    
+
     /**
      * Stop heartbeat monitoring
      */
@@ -518,7 +532,7 @@ class BalanceManager {
             this.heartbeatTimer = null;
         }
     }
-    
+
     /**
      * Check if balance display is correct and fix if needed
      * CRITICAL: Never reset balance to 0.00 unless API explicitly returns 0.00
@@ -529,21 +543,21 @@ class BalanceManager {
             console.warn('[BalanceManager] ⚠️ Balance element lost, re-finding...');
             this.findElements();
         }
-        
+
         // If we have a current balance but display doesn't match, fix it
         if (this.currentBalance !== null && this.balanceElement) {
             const displayedValue = parseFloat(this.balanceElement.textContent);
             const storedValue = parseFloat(this.balanceElement.getAttribute('data-balance-value'));
-            
+
             // Use stored value from data attribute if available (more reliable)
             const expectedBalance = storedValue && !isNaN(storedValue) ? storedValue : this.currentBalance;
-            
+
             // CRITICAL: Only fix if display is wrong AND not 0.00 (unless our balance is actually 0.00)
             // This prevents accidental resets from other scripts
-            if (isNaN(displayedValue) || 
-                (Math.abs(displayedValue - expectedBalance) > 0.01 && 
-                 !(displayedValue === 0 && expectedBalance === 0))) {
-                
+            if (isNaN(displayedValue) ||
+                (Math.abs(displayedValue - expectedBalance) > 0.01 &&
+                    !(displayedValue === 0 && expectedBalance === 0))) {
+
                 // If display shows 0.00 but we have a valid balance, restore it immediately
                 if (displayedValue === 0 && expectedBalance > 0) {
                     console.warn('[BalanceManager] ⚠️ Balance reset to 0.00 detected! Restoring...', {
@@ -551,7 +565,7 @@ class BalanceManager {
                         displayed: displayedValue,
                         stored: storedValue
                     });
-                    
+
                     // Immediately restore from stored value or cache
                     try {
                         const restoreValue = storedValue && !isNaN(storedValue) ? storedValue : this.currentBalance;
@@ -565,14 +579,14 @@ class BalanceManager {
                         console.error('[BalanceManager] ❌ Failed to restore balance:', error);
                     }
                 }
-                
+
                 // For other mismatches, try to fix display
                 console.warn('[BalanceManager] ⚠️ Display mismatch detected!', {
                     expected: expectedBalance,
                     displayed: displayedValue,
                     stored: storedValue
                 });
-                
+
                 // Fix the display using cached/stored value (don't reload from API)
                 try {
                     this.balanceElement.textContent = expectedBalance.toFixed(2);
@@ -586,7 +600,7 @@ class BalanceManager {
             }
         }
     }
-    
+
     /**
      * Force refresh balance
      */
@@ -594,14 +608,14 @@ class BalanceManager {
         console.log('[BalanceManager] Force refresh requested');
         return this.loadBalance();
     }
-    
+
     /**
      * Get current balance
      */
     getBalance() {
         return this.currentBalance;
     }
-    
+
     /**
      * Get statistics
      */
@@ -614,7 +628,7 @@ class BalanceManager {
             elementFound: this.balanceElement !== null
         };
     }
-    
+
     /**
      * Show loading state
      */
@@ -633,14 +647,81 @@ class BalanceManager {
             }
         }
     }
-    
+
+    /**
+     * Show timeout error
+     */
+    async showTimeoutError() {
+        if (!this.balanceElement) {
+            this.findElements();
+        }
+
+        if (this.balanceElement) {
+            this.balanceElement.textContent = 'Timeout';
+            this.balanceElement.classList.add('text-danger');
+            this.balanceElement.removeAttribute('data-loading');
+            this.isLoading = false;
+        }
+
+        if (this.balanceNoteElement) {
+            this.balanceNoteElement.innerHTML =
+                '<span class="text-danger">Connection timed out. <a href="#" onclick="window.balanceManager.refresh(); return false;">Try again</a></span>';
+            this.balanceNoteElement.classList.remove('d-none');
+        }
+    }
+
+    /**
+     * Show connection error
+     */
+    async showConnectionError() {
+        if (!this.balanceElement) {
+            this.findElements();
+        }
+
+        if (this.balanceElement) {
+            this.balanceElement.textContent = 'Error';
+            this.balanceElement.classList.add('text-danger');
+            this.balanceElement.removeAttribute('data-loading');
+            this.isLoading = false;
+        }
+
+        if (this.balanceNoteElement) {
+            this.balanceNoteElement.innerHTML =
+                '<span class="text-danger">Connection error. <a href="#" onclick="window.balanceManager.refresh(); return false;">Try again</a></span>';
+            this.balanceNoteElement.classList.remove('d-none');
+        }
+    }
+
+    /**
+     * Show general load error
+     */
+    async showLoadError(error) {
+        if (!this.balanceElement) {
+            this.findElements();
+        }
+
+        if (this.balanceElement) {
+            this.balanceElement.textContent = 'Error';
+            this.balanceElement.classList.add('text-danger');
+            this.balanceElement.removeAttribute('data-loading');
+            this.isLoading = false;
+        }
+
+        if (this.balanceNoteElement) {
+            const errorMsg = error?.errorMessage || error?.message || 'Failed to load balance';
+            this.balanceNoteElement.innerHTML =
+                `<span class="text-danger">${errorMsg}. <a href="#" onclick="window.balanceManager.refresh(); return false;">Try again</a></span>`;
+            this.balanceNoteElement.classList.remove('d-none');
+        }
+    }
+
     /**
      * Sleep utility
      */
     sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
-    
+
     /**
      * Cleanup
      */

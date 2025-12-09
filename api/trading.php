@@ -289,6 +289,10 @@ function handleGetBalance(int $userId)
     $debugLog[] = "=== handleGetBalance START for user {$userId} ===";
     $debugLog[] = "Timestamp: " . date('Y-m-d H:i:s');
     
+    // Set a maximum execution time for this function (20 seconds)
+    $maxExecutionTime = 20;
+    $startTime = time();
+    
     try {
         // Check if user has API token first
         $db = Database::getInstance();
@@ -325,15 +329,34 @@ function handleGetBalance(int $userId)
             return;
         }
         
-        // Get balance from Deriv API
+        // Check if we're approaching timeout
+        if ((time() - $startTime) > ($maxExecutionTime - 5)) {
+            throw new Exception('Request timeout - please try again');
+        }
+        
+        // Get balance from Deriv API with timeout protection
         $debugLog[] = "Step 3: Calling TradingBotService->getAccountBalance({$userId})";
         $tradingBot = TradingBotService::getInstance();
         $debugLog[] = "Step 3: TradingBotService instance obtained";
         
-        $balance = $tradingBot->getAccountBalance($userId);
-        $debugLog[] = "Step 4: Balance retrieved from service: " . $balance;
-        $debugLog[] = "Step 4: Balance type: " . gettype($balance);
-        $debugLog[] = "Step 4: Balance value: " . var_export($balance, true);
+        // Wrap balance call in try-catch to handle timeouts gracefully
+        try {
+            $balance = $tradingBot->getAccountBalance($userId);
+            $debugLog[] = "Step 4: Balance retrieved from service: " . $balance;
+            $debugLog[] = "Step 4: Balance type: " . gettype($balance);
+            $debugLog[] = "Step 4: Balance value: " . var_export($balance, true);
+        } catch (Exception $balanceError) {
+            $debugLog[] = "Step 4 FAILED: " . $balanceError->getMessage();
+            
+            // Check if it's a timeout
+            if (strpos($balanceError->getMessage(), 'timeout') !== false ||
+                strpos($balanceError->getMessage(), 'timed out') !== false) {
+                throw new Exception('Connection to Deriv API timed out. Please check your internet connection and try again.');
+            }
+            
+            // Re-throw other errors
+            throw $balanceError;
+        }
         
         $response = [
             'balance' => (float)$balance,
@@ -368,12 +391,16 @@ function handleGetBalance(int $userId)
         // Determine error type for better handling
         if (strpos($errorMessage, 'token') !== false || strpos($errorMessage, 'API token') !== false) {
             $errorType = 'no_token';
+            $errorMessage = 'Please connect your Deriv API token in Profile settings';
         } elseif (strpos($errorMessage, 'connection') !== false || strpos($errorMessage, 'WebSocket') !== false) {
             $errorType = 'connection_error';
-        } elseif (strpos($errorMessage, 'timeout') !== false) {
+            $errorMessage = 'Unable to connect to Deriv API. Please check your internet connection.';
+        } elseif (strpos($errorMessage, 'timeout') !== false || strpos($errorMessage, 'timed out') !== false) {
             $errorType = 'timeout';
+            $errorMessage = 'Connection timed out. Please try again.';
         } elseif (strpos($errorMessage, 'decrypt') !== false) {
             $errorType = 'decryption_error';
+            $errorMessage = 'API token error. Please reconnect your token in Profile settings.';
         }
         
         Response::success([
@@ -385,7 +412,7 @@ function handleGetBalance(int $userId)
             'errorMessage' => $errorMessage,
             'debug' => [
                 'exception' => true,
-                'error_message' => $errorMessage,
+                'error_message' => $e->getMessage(),
                 'error_type' => get_class($e),
             ],
         ]);
