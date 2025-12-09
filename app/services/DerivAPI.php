@@ -209,9 +209,11 @@ class DerivAPI
 
         // Build request message
         // Default format for most calls: { "method_name": params, "req_id": 123 }
-        // Special case for "buy": Deriv expects top-level fields: { "buy": "proposal_id"|1, "price": 10, ... }
-        if ($method === 'buy') {
-            // For buy, the caller passes the exact fields required by Deriv (buy, price, parameters, ...)
+        // Special case for methods where the caller already builds the exact top-level payload
+        // - "buy": Deriv expects top-level fields: { "buy": "proposal_id"|1, "price": 10, ... }
+        // - "contracts_for": Deriv expects: { "contracts_for": "R_50", "currency": "USD", "product_type": "basic" }
+        if ($method === 'buy' || $method === 'contracts_for') {
+            // Caller passes the full payload including the method key; just append req_id
             $requestMessage = $request;
             $requestMessage['req_id'] = $requestId;
         } else {
