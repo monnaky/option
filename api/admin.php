@@ -73,7 +73,7 @@ try {
         
         case 'POST':
             if (empty($action)) {
-                Response::error('Action parameter is required. Valid POST actions: user-suspend, user-activate, user-delete, cron-activate', 400);
+                Response::error('Action parameter is required. Valid POST actions: user-suspend, user-activate, user-delete, cron-activate, broadcast-signal, test-signal', 400);
             } elseif ($action === 'user-suspend') {
                 handleSuspendUser();
             } elseif ($action === 'user-activate') {
@@ -84,8 +84,10 @@ try {
                 handleCronActivate();
             } elseif ($action === 'broadcast-signal') {
                 handleBroadcastSignal();
+            } elseif ($action === 'test-signal') {
+                handleTestSignal();
             } else {
-                Response::error('Invalid action. Valid POST actions: user-suspend, user-activate, user-delete, cron-activate, broadcast-signal', 400);
+                Response::error('Invalid action. Valid POST actions: user-suspend, user-activate, user-delete, cron-activate, broadcast-signal, test-signal', 400);
             }
             break;
         
@@ -524,16 +526,222 @@ function handleDeleteUser()
 function handleCronActivate()
 {
     try {
-        // Trigger trading loop
-        $tradingBot = TradingBotService::getInstance();
-        $tradingBot->processTradingLoop();
-        $tradingBot->processContractResults();
-        // Trigger signal processing (process up to 10 signals)
-        $signalService = SignalService::getInstance();
-        $signalService->processUnprocessedSignals(10);
-        Response::success(['message' => 'Cron jobs activated successfully']);
+        $results = [];
+        
+        // Step 1: Check if url_signal_watcher.php is running
+        error_log('[CronActivate] Checking if url_signal_watcher.php is running...');
+        
+        $isWindows = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
+        $watcherRunning = false;
+        
+        if ($isWindows) {
+            // Windows: Use tasklist to check for php process running url_signal_watcher.php
+            $output = shell_exec('tasklist /FI "IMAGENAME eq php.exe" /FO CSV 2>&1');
+            if ($output && stripos($output, 'php.exe') !== false) {
+                // Check if any php process has url_signal_watcher in command line
+                $processes = shell_exec('wmic process where "name=\'php.exe\'" get commandline 2>&1');
+                if ($processes && stripos($processes, 'url_signal_watcher') !== false) {
+                    $watcherRunning = true;
+                }
+            }
+        } else {
+            // Linux/Unix: Use ps to check for process
+            $output = shell_exec('ps aux | grep url_signal_watcher.php | grep -v grep 2>&1');
+            $watcherRunning = !empty(trim($output));
+        }
+        
+        error_log('[CronActivate] url_signal_watcher.php running: ' . ($watcherRunning ? 'YES' : 'NO'));
+        $results['signal_watcher'] = [
+            'running' => $watcherRunning,
+            'action' => $watcherRunning ? 'already_running' : 'starting',
+        ];
+        
+        // Step 2: Start url_signal_watcher.php if not running
+        if (!$watcherRunning) {
+            error_log('[CronActivate] Starting url_signal_watcher.php...');
+            
+            $projectRoot = dirname(__DIR__);
+            $watcherPath = $projectRoot . '/cron/url_signal_watcher.php';
+            $logPath = $projectRoot . '/logs/url_signal_watcher.log';
+            
+            if (!file_exists($watcherPath)) {
+                error_log('[CronActivate] ERROR: url_signal_watcher.php not found at: ' . $watcherPath);
+                $results['signal_watcher']['error'] = 'Watcher script not found';
+            } else {
+                // Ensure logs directory exists
+                $logsDir = dirname($logPath);
+                if (!is_dir($logsDir)) {
+                    @mkdir($logsDir, 0755, true);
+                }
+                
+                if ($isWindows) {
+                    // Windows: Start process in background using start command
+                    $command = 'start /B php "' . $watcherPath . '" >> "' . $logPath . '" 2>&1';
+                    pclose(popen($command, 'r'));
+                } else {
+                    // Linux/Unix: Start process in background with nohup
+                    $command = "nohup php '{$watcherPath}' >> '{$logPath}' 2>&1 &";
+                    exec($command);
+                }
+                
+                error_log('[CronActivate] Started url_signal_watcher.php with command: ' . $command);
+                $results['signal_watcher']['started'] = true;
+                $results['signal_watcher']['command'] = $command;
+                
+                // Wait a moment and check if it started
+                sleep(1);
+                
+                if ($isWindows) {
+                    $processes = shell_exec('wmic process where "name=\'php.exe\'" get commandline 2>&1');
+                    $started = ($processes && stripos($processes, 'url_signal_watcher') !== false);
+                } else {
+                    $output = shell_exec('ps aux | grep url_signal_watcher.php | grep -v grep 2>&1');
+                    $started = !empty(trim($output));
+                }
+                
+                $results['signal_watcher']['verified'] = $started;
+                error_log('[CronActivate] Verification: watcher is ' . ($started ? 'RUNNING' : 'NOT RUNNING'));
+            }
+        }
+        
+        // Step 3: Trigger trading loop
+        error_log('[CronActivate] Triggering trading loop...');
+        try {
+            $tradingBot = TradingBotService::getInstance();
+            $tradingBot->processTradingLoop();
+            $tradingBot->processContractResults();
+            $results['trading_loop'] = ['status' => 'executed'];
+            error_log('[CronActivate] Trading loop executed successfully');
+        } catch (Exception $e) {
+            $results['trading_loop'] = [
+                'status' => 'error',
+                'error' => $e->getMessage(),
+            ];
+            error_log('[CronActivate] Trading loop error: ' . $e->getMessage());
+        }
+        
+        // Step 4: Trigger signal processing
+        error_log('[CronActivate] Processing unprocessed signals...');
+        try {
+            $signalService = SignalService::getInstance();
+            $signalResult = $signalService->processUnprocessedSignals(10);
+            $results['signal_processing'] = [
+                'status' => 'executed',
+                'processed' => $signalResult['processed'] ?? 0,
+            ];
+            error_log('[CronActivate] Processed ' . ($signalResult['processed'] ?? 0) . ' signals');
+        } catch (Exception $e) {
+            $results['signal_processing'] = [
+                'status' => 'error',
+                'error' => $e->getMessage(),
+            ];
+            error_log('[CronActivate] Signal processing error: ' . $e->getMessage());
+        }
+        
+        error_log('[CronActivate] Complete. Results: ' . json_encode($results));
+        
+        Response::success([
+            'message' => 'Cron jobs activated successfully',
+            'details' => $results,
+        ]);
+        
     } catch (Exception $e) {
         error_log('Cron activation error: ' . $e->getMessage());
-        Response::error('Failed to activate cron jobs', 500);
+        error_log('Stack trace: ' . $e->getTraceAsString());
+        Response::error('Failed to activate cron jobs: ' . $e->getMessage(), 500);
+    }
+}
+
+/**
+ * Handle broadcast signal (manual signal for all users)
+ */
+function handleBroadcastSignal()
+{
+    try {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $type = $data['type'] ?? '';
+        $asset = $data['asset'] ?? null;
+        
+        if (empty($type)) {
+            Response::error('Signal type is required (RISE or FALL)', 400);
+        }
+        
+        $signalService = SignalService::getInstance();
+        $result = $signalService->receiveSignal([
+            'type' => $type,
+            'asset' => $asset,
+            'source' => 'admin_broadcast',
+            'rawText' => ($asset ? "{$asset},{$type}" : $type),
+        ]);
+        
+        Response::success([
+            'message' => 'Signal broadcast successfully',
+            'result' => $result,
+        ]);
+        
+    } catch (Exception $e) {
+        error_log('Broadcast signal error: ' . $e->getMessage());
+        Response::error('Failed to broadcast signal: ' . $e->getMessage(), 500);
+    }
+}
+
+/**
+ * Handle test signal (for debugging)
+ */
+function handleTestSignal()
+{
+    try {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $type = $data['type'] ?? 'RISE';
+        $asset = $data['asset'] ?? 'R_100';
+        
+        error_log("=== TEST SIGNAL START ===");
+        error_log("Type: {$type}, Asset: {$asset}");
+        
+        // Step 1: Check active users
+        $db = Database::getInstance();
+        $activeUsers = $db->query("
+            SELECT u.id, u.email, 
+                   s.is_bot_active,
+                   ts.state,
+                   CASE 
+                       WHEN u.encrypted_api_token IS NULL THEN 'NO_TOKEN'
+                       WHEN u.encrypted_api_token = '' THEN 'EMPTY_TOKEN'
+                       ELSE 'HAS_TOKEN'
+                   END as token_status
+            FROM users u
+            LEFT JOIN settings s ON u.id = s.user_id
+            LEFT JOIN trading_sessions ts ON u.id = ts.user_id AND ts.end_time IS NULL
+            WHERE u.is_active = 1
+        ");
+        
+        error_log("Found " . count($activeUsers) . " active users");
+        foreach ($activeUsers as $user) {
+            error_log("  User {$user['id']} ({$user['email']}): bot_active={$user['is_bot_active']}, session={$user['state']}, token={$user['token_status']}");
+        }
+        
+        // Step 2: Send signal
+        $signalService = SignalService::getInstance();
+        $result = $signalService->receiveSignal([
+            'type' => $type,
+            'asset' => $asset,
+            'source' => 'admin_test',
+            'rawText' => "{$asset},{$type}",
+        ]);
+        
+        error_log("Signal result: " . json_encode($result));
+        error_log("=== TEST SIGNAL END ===");
+        
+        Response::success([
+            'message' => 'Test signal sent',
+            'active_users' => count($activeUsers),
+            'users_detail' => $activeUsers,
+            'signal_result' => $result,
+        ]);
+        
+    } catch (Exception $e) {
+        error_log('Test signal error: ' . $e->getMessage());
+        error_log('Stack trace: ' . $e->getTraceAsString());
+        Response::error('Failed to send test signal: ' . $e->getMessage(), 500);
     }
 }
