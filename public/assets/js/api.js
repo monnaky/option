@@ -20,7 +20,7 @@ async function apiCall(url, options = {}) {
         credentials: 'same-origin', // Include cookies/session
     };
     
-    const mergedOptions = {
+    let mergedOptions = {
         ...defaultOptions,
         ...options,
         headers: {
@@ -28,6 +28,19 @@ async function apiCall(url, options = {}) {
             ...(options.headers || {}),
         },
     };
+
+    // If the caller passed a plain object as body, JSON-encode it so
+    // PHP json_decode(file_get_contents('php://input'), true) works.
+    if (mergedOptions.body && typeof mergedOptions.body === 'object') {
+        mergedOptions = {
+            ...mergedOptions,
+            body: JSON.stringify(mergedOptions.body),
+            headers: {
+                ...mergedOptions.headers,
+                'Content-Type': 'application/json',
+            },
+        };
+    }
     
     try {
         const response = await fetch(url, mergedOptions);
