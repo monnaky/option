@@ -583,11 +583,23 @@ class DerivAPI
                 throw new Exception($error);
             }
             
-            $contracts = $response['contracts_for'];
-            
+            // Deriv contracts_for response typically has the shape:
+            // { "contracts_for": { "available": [ { "contract_type": "CALL", ... }, ... ], ... } }
+            $contractsFor = $response['contracts_for'];
+
+            if (isset($contractsFor['available']) && is_array($contractsFor['available'])) {
+                $contracts = $contractsFor['available'];
+            } elseif (is_array($contractsFor)) {
+                // Fallback: some environments might already return the "available" array directly
+                $contracts = $contractsFor;
+            } else {
+                $contracts = [];
+            }
+
             if (empty($contracts)) {
                 $error = "No contracts available for symbol: {$symbol}";
                 error_log("{$logPrefix} ERROR: {$error}");
+                error_log("{$logPrefix} contracts_for payload: " . json_encode($contractsFor));
                 throw new Exception($error);
             }
             
