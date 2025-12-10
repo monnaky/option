@@ -31,14 +31,16 @@ header('X-Content-Type-Options: nosniff');
 // Wrap everything in try-catch to prevent any errors from leaking
 try {
 
-    // Start session
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-
-    // Get request method and action
+    // Get request method and action EARLY so we can decide about sessions
     $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
     $action = $_GET['action'] ?? $_POST['action'] ?? '';
+
+    // Only start a PHP session for endpoints that actually need it.
+    // The public signal receive endpoint (action=receive) is stateless and
+    // should not send session cookies to keep response headers small.
+    if ($action !== 'receive' && session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
     // Route requests
     switch ($method) {
