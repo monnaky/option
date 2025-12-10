@@ -652,29 +652,40 @@ class DerivAPI
             error_log("{$logPrefix} Sending proposal request");
             $response = $this->sendRequest('proposal', $payload);
             
+            // Handle top-level Deriv error first if present
+            if (isset($response['error'])) {
+                $errorMsg = $response['error']['message'] ?? 'Unknown error';
+                $errorCode = $response['error']['code'] ?? 'UNKNOWN';
+                error_log("{$logPrefix} Deriv API error: {$errorMsg} ({$errorCode})");
+                error_log("{$logPrefix} Full response with error: " . json_encode($response));
+                throw new Exception("Proposal failed: {$errorMsg} ({$errorCode})");
+            }
+
             if (!isset($response['proposal'])) {
                 $error = 'Proposal request failed - response missing proposal key';
                 error_log("{$logPrefix} ERROR: {$error}");
                 error_log("{$logPrefix} Response keys: " . implode(', ', array_keys($response)));
-                if (isset($response['error'])) {
-                    $errorMsg = $response['error']['message'] ?? 'Unknown error';
-                    $errorCode = $response['error']['code'] ?? 'UNKNOWN';
-                    error_log("{$logPrefix} Deriv API error: {$errorMsg} ({$errorCode})");
-                    throw new Exception("Proposal failed: {$errorMsg} ({$errorCode})");
-                }
+                error_log("{$logPrefix} Full response payload: " . json_encode($response));
                 throw new Exception($error);
             }
             
             $proposal = $response['proposal'];
+
+            // Deriv proposal typically includes either proposal_id or id
+            $proposalId = $proposal['proposal_id'] ?? ($proposal['id'] ?? null);
             
-            if (empty($proposal['proposal_id'])) {
-                $error = 'Proposal response missing proposal_id';
+            if (empty($proposalId)) {
+                $error = 'Proposal response missing proposal_id / id';
                 error_log("{$logPrefix} ERROR: {$error}");
                 error_log("{$logPrefix} Proposal data: " . json_encode($proposal));
+                error_log("{$logPrefix} Full response payload: " . json_encode($response));
                 throw new Exception($error);
             }
             
-            error_log("{$logPrefix} SUCCESS - Proposal ID: {$proposal['proposal_id']}");
+            // Normalise proposal_id field so callers can rely on it
+            $proposal['proposal_id'] = $proposalId;
+            
+            error_log("{$logPrefix} SUCCESS - Proposal ID: {$proposalId}");
             
             return $proposal;
             
