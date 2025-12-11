@@ -23,6 +23,8 @@ class WebSocketClient
     private int $connectionTimeout = 25; // Increased to 25 seconds
     private bool $connected = false;
     private ?string $debugLogFile = null;
+    private int $lastPingTime = 0;
+    private int $pingInterval = 120; // Send ping every 120 seconds as recommended by Deriv
     
     // WebSocket frame constants
     private const OPCODE_TEXT = 0x1;
@@ -369,6 +371,7 @@ class WebSocketClient
             $this->debugLog("[connect] WebSocket handshake completed in {$handshakeTime}ms");
             
             $this->connected = true;
+            $this->lastPingTime = time(); // Initialize ping time when connection is established
             $totalTime = round((microtime(true) - $connectionStartTime) * 1000, 2);
             $this->debugLog("WebSocket connection established successfully in {$totalTime}ms total");
             
@@ -501,13 +504,16 @@ class WebSocketClient
     }
     
     /**
-     * Send message
+     * Send message with keep-alive check
      */
     public function send(string $message): void
     {
         if (!$this->connected || !$this->socket) {
             throw new Exception("WebSocket is not connected");
         }
+        
+        // Check if we need to send a keep-alive ping
+        $this->checkKeepAlive();
         
         $frame = $this->encodeFrame($message);
         $bytesWritten = fwrite($this->socket, $frame);
@@ -717,6 +723,50 @@ class WebSocketClient
         
         $frame = chr(0x8A) . chr(0x00); // PONG frame with 0 payload
         fwrite($this->socket, $frame);
+    }
+    
+    /**
+     * Send PING frame for keep-alive
+     */
+    private function sendPing(): void
+    {
+        if (!$this->socket) {
+            return;
+        }
+        
+        $this->debugLog("Sending keep-alive ping");
+        $frame = chr(0x89) . chr(0x00); // PING frame with 0 payload
+        $bytesWritten = fwrite($this->socket, $frame);
+        
+        if ($bytesWritten === false || $bytesWritten !== strlen($frame)) {
+            $this->debugLog("Failed to send ping frame");
+        } else {
+            $this->lastPingTime = time();
+            $this->debugLog("Ping sent successfully");
+        }
+    }
+    
+    /**
+     * Check if keep-alive ping is needed and send it
+     */
+    private function checkKeepAlive(): void
+    {
+        $currentTime = time();
+        
+        // Send ping if interval has passed
+        if ($currentTime - $this->lastPingTime >= $this->pingInterval) {
+            $this->sendPing();
+        }
+    }
+    
+    /**
+     * Manual method to send keep-alive ping
+     */
+    public function sendKeepAlive(): void
+    {
+        if ($this->connected && $this->socket) {
+            $this->sendPing();
+        }
     }
     
     /**

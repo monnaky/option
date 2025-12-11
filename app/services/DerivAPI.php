@@ -24,6 +24,8 @@ class DerivAPI
     private bool $isAuthorized = false;
     private ?string $userId = null;
     private ?array $authData = null;
+    private int $lastKeepAliveTime = 0;
+    private int $keepAliveInterval = 120; // Send keep-alive every 120 seconds
     
     // Configuration constants (production-safe with higher resilience)
     // NOTE: Trading is latency-tolerant; it's better to succeed than to fail fast.
@@ -138,6 +140,8 @@ class DerivAPI
     private function ensureConnection(): void
     {
         if ($this->wsClient && $this->wsClient->isConnected()) {
+            // Check if we need to send keep-alive
+            $this->checkKeepAlive();
             return;
         }
         
@@ -173,12 +177,36 @@ class DerivAPI
             $this->wsClient->connect();
             $connectionTime = round((microtime(true) - $connectionStartTime) * 1000, 2);
             error_log("WebSocket connection established to Deriv API in {$connectionTime}ms");
+            
+            // Initialize keep-alive timer when connection is established
+            $this->lastKeepAliveTime = time();
         } catch (Exception $e) {
             error_log("[DerivAPI::ensureConnection] ERROR: WebSocket connection failed");
             error_log("[DerivAPI::ensureConnection] Exception message: " . $e->getMessage());
             error_log("[DerivAPI::ensureConnection] Exception trace: " . $e->getTraceAsString());
             error_log("WebSocket connection failed: " . $e->getMessage());
             throw new Exception("Failed to connect to Deriv API: " . $e->getMessage());
+        }
+    }
+    
+    /**
+     * Check if keep-alive ping is needed and send it
+     */
+    private function checkKeepAlive(): void
+    {
+        $currentTime = time();
+        
+        // Send keep-alive ping if interval has passed
+        if ($currentTime - $this->lastKeepAliveTime >= $this->keepAliveInterval) {
+            if ($this->wsClient && $this->wsClient->isConnected()) {
+                try {
+                    $this->wsClient->sendKeepAlive();
+                    $this->lastKeepAliveTime = $currentTime;
+                    error_log("DerivAPI: Keep-alive ping sent");
+                } catch (Exception $e) {
+                    error_log("DerivAPI: Failed to send keep-alive ping: " . $e->getMessage());
+                }
+            }
         }
     }
     
