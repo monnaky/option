@@ -43,7 +43,7 @@ try {
     
     // Test database connection
     echo "3. Testing database connection...\n";
-    $db = \App\Services\Database::getInstance();
+    $db = \App\Config\Database::getInstance();
     $db->query("SELECT 1");
     echo "✓ Database connection successful\n";
     
