@@ -58,19 +58,57 @@ try {
     echo "✓ Pending trades: " . $pendingCount . "\n";
     
     if ($pendingCount > 0) {
-        echo "\n=== Pending Trades ===\n";
+        echo "\n=== Pending Trades (First 5) ===\n";
         $trades = $db->query("
-            SELECT id, user_id, contract_id, status, asset, direction, stake, timestamp 
-            FROM trades 
-            WHERE status = 'pending' 
-            ORDER BY timestamp ASC 
+            SELECT t.id, t.user_id, t.contract_id, t.status, t.asset, t.direction, 
+                   t.stake, t.timestamp, cm.status as monitor_status,
+                   cm.last_checked_at, cm.retry_count
+            FROM trades t
+            LEFT JOIN contract_monitor cm ON t.contract_id = cm.contract_id
+            WHERE t.status = 'pending' 
+            ORDER BY t.timestamp ASC 
             LIMIT 5
         ");
         
         foreach ($trades as $trade) {
-            echo "ID:{$trade['id']} | User:{$trade['user_id']} | Contract:{$trade['contract_id']} | " .
-                 "Asset:{$trade['asset']} | Direction:{$trade['direction']} | " .
-                 "Stake:\${$trade['stake']} | Time:{$trade['timestamp']}\n";
+            echo "Trade ID: {$trade['id']} | ";
+            echo "User: {$trade['user_id']} | ";
+            echo "Contract: {$trade['contract_id']} | ";
+            echo "Asset: {$trade['asset']} | ";
+            echo "Direction: {$trade['direction']} | ";
+            echo "Stake: \${$trade['stake']} | ";
+            echo "Time: {$trade['timestamp']} | ";
+            echo "Monitor Status: " . ($trade['monitor_status'] ?? 'Not tracked') . " | ";
+            echo "Last Checked: " . ($trade['last_checked_at'] ?? 'Never') . " | ";
+            echo "Retry Count: " . ($trade['retry_count'] ?? '0') . "\n";
+        }
+    }
+    
+    // Check contract_monitor table status
+    echo "\n6. Checking contract_monitor table...\n";
+    $monitorCount = $db->queryValue("SELECT COUNT(*) FROM contract_monitor");
+    echo "✓ Total records in contract_monitor: " . $monitorCount . "\n";
+    
+    if ($monitorCount > 0) {
+        $recentMonitors = $db->query("
+            SELECT cm.id, cm.contract_id, cm.status, cm.retry_count, 
+                   cm.last_checked_at, cm.created_at, cm.updated_at,
+                   t.status as trade_status, t.timestamp as trade_timestamp
+            FROM contract_monitor cm
+            LEFT JOIN trades t ON cm.contract_id = t.contract_id
+            ORDER BY cm.updated_at DESC 
+            LIMIT 3
+        ");
+        
+        echo "\n=== Recent Monitor Entries ===\n";
+        foreach ($recentMonitors as $monitor) {
+            echo "Monitor ID: {$monitor['id']} | ";
+            echo "Contract: {$monitor['contract_id']} | ";
+            echo "Status: {$monitor['status']} | ";
+            echo "Retries: {$monitor['retry_count']} | ";
+            echo "Last Checked: " . ($monitor['last_checked_at'] ?: 'Never') . " | ";
+            echo "Trade Status: " . ($monitor['trade_status'] ?? 'N/A') . " | ";
+            echo "Trade Time: " . ($monitor['trade_timestamp'] ?? 'N/A') . "\n";
         }
     }
     
