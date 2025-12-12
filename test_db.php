@@ -1,24 +1,49 @@
 <?php
-// Enable error reporting
+// Enable all error reporting
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-echo "=== Database Connection Test ===\n\n";
+// Set a custom error handler
+set_error_handler(function($errno, $errstr, $errfile, $errline) {
+    echo "\nError [$errno] $errstr in $errfile on line $errline\n";
+    exit(1);
+});
+
+// Set a custom exception handler
+set_exception_handler(function($e) {
+    echo "\nUncaught Exception: " . $e->getMessage() . "\n";
+    echo "File: " . $e->getFile() . ":" . $e->getLine() . "\n";
+    if ($e->getPrevious()) {
+        echo "Previous: " . $e->getPrevious()->getMessage() . "\n";
+    }
+    exit(1);
+});
+
+echo "=== Starting Database Connection Test ===\n\n";
 
 try {
-    // Load configuration and bootstrap
-    require_once __DIR__ . '/config.php';
-    require_once __DIR__ . '/app/bootstrap.php';
+    // Try to load configuration
+    echo "1. Loading configuration...\n";
+    if (!@include(__DIR__ . '/config.php')) {
+        throw new Exception("Failed to load config.php. File might not exist or is not readable.");
+    }
     
-    // Get database instance
+    echo "2. Loading bootstrap...\n";
+    if (!@include(__DIR__ . '/app/bootstrap.php')) {
+        throw new Exception("Failed to load bootstrap.php. File might not exist or is not readable.");
+    }
+    
+    echo "3. Getting database instance...\n";
     $db = \App\Services\Database::getInstance();
     echo "✓ Database connection successful\n";
     
     // Test basic query
+    echo "4. Running test query...\n";
     $result = $db->queryValue("SELECT 'Database connection test successful' as message");
     echo "✓ Test query: " . $result . "\n";
     
     // Check pending trades
+    echo "5. Checking pending trades...\n";
     $pendingCount = $db->queryValue("SELECT COUNT(*) as count FROM trades WHERE status = 'pending'");
     echo "✓ Pending trades: " . $pendingCount . "\n";
     
@@ -45,11 +70,10 @@ try {
     }
     
     // Check contract_monitor table
-    echo "\n=== Contract Monitor Status ===\n";
+    echo "\n6. Checking contract_monitor table...\n";
     $monitorCount = $db->queryValue("SELECT COUNT(*) FROM contract_monitor");
     echo "Total records in contract_monitor: " . $monitorCount . "\n";
     
-    // Show recent monitor entries if any
     if ($monitorCount > 0) {
         $recentMonitors = $db->query("
             SELECT id, user_id, contract_id, status, retry_count, 
@@ -70,11 +94,11 @@ try {
         }
     }
     
-} catch (Exception $e) {
+} catch (Throwable $e) {
     echo "\nError: " . $e->getMessage() . "\n";
     echo "File: " . $e->getFile() . ":" . $e->getLine() . "\n";
-    if (strpos($e->getMessage(), 'Access denied') !== false) {
-        echo "\nCheck your database credentials in config.php\n";
+    if ($e->getPrevious()) {
+        echo "Previous: " . $e->getPrevious()->getMessage() . "\n";
     }
     exit(1);
 }
