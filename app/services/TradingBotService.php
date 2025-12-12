@@ -829,6 +829,17 @@ class TradingBotService
             
             foreach ($pendingTrades as $trade) {
                 try {
+                    // Update contract_monitor to show we're checking this contract
+                    $this->db->execute(
+                        "UPDATE contract_monitor 
+                         SET last_checked_at = NOW(),
+                             updated_at = NOW()
+                         WHERE contract_id = :contract_id",
+                        [
+                            'contract_id' => $trade['contract_id'],
+                        ]
+                    );
+                    
                     $this->processContractResult(
                         (int)$trade['user_id'],
                         (int)$trade['contract_id'],
@@ -878,6 +889,20 @@ class TradingBotService
                         'status' => $status,
                         'payout' => $contractInfo['sell_price'] ?? 0,
                         'id' => $tradeId,
+                    ]
+                );
+                
+                // Update contract_monitor table
+                $this->db->execute(
+                    "UPDATE contract_monitor 
+                     SET status = :status,
+                         last_checked_at = NOW(),
+                         updated_at = NOW(),
+                         retry_count = retry_count + 1
+                     WHERE contract_id = :contract_id",
+                    [
+                        'status' => $status,
+                        'contract_id' => $contractId,
                     ]
                 );
                 
@@ -967,6 +992,19 @@ class TradingBotService
             $this->db->execute(
                 "UPDATE trades SET status = 'cancelled' WHERE id = :id AND status = 'pending'",
                 ['id' => $tradeId]
+            );
+            
+            // Update contract_monitor with error status
+            $this->db->execute(
+                "UPDATE contract_monitor 
+                 SET status = 'error',
+                     last_checked_at = NOW(),
+                     updated_at = NOW(),
+                     retry_count = retry_count + 1
+                 WHERE contract_id = :contract_id",
+                [
+                    'contract_id' => $contractId,
+                ]
             );
         }
     }
