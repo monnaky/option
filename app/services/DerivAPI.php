@@ -814,10 +814,19 @@ class DerivAPI
             
             // Step 4: Buy contract using proposal_id
             error_log("{$logPrefix} Step 4: Buying contract with proposal_id: {$proposalId}");
+            
+            // Use 'amount' instead of 'price' as per Deriv API requirements
             $response = $this->sendRequest('buy', [
                 'buy' => $proposalId,
-                'price' => $amount,
+                'amount' => $amount,  // Changed from 'price' to 'amount'
             ]);
+            
+            // Additional validation for the response
+            if (isset($response['error'])) {
+                $errorMsg = $response['error']['message'] ?? 'Unknown error';
+                $errorCode = $response['error']['code'] ?? 'UNKNOWN';
+                throw new Exception("Buy request failed: {$errorMsg} (Code: {$errorCode})");
+            }
             
             if (!isset($response['buy'])) {
                 $error = 'Buy request failed - response missing buy key';

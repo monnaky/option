@@ -405,6 +405,9 @@ class TradingBotService
                 ['id' => $session['id']]
             );
             
+            // Verify contract was actually created
+            $this->verifyContractCreation($userId, $contract['contract_id'], $tradeRecordId);
+            
             // Schedule contract monitoring (via cron or immediate check)
             $this->scheduleContractMonitoring($userId, $contract['contract_id'], $tradeRecordId);
             
@@ -755,11 +758,50 @@ class TradingBotService
      * Schedule contract monitoring
      * In a cron-based system, we'll check contracts periodically
      */
+    private function verifyContractCreation(int $userId, int $contractId, int $tradeRecordId): void
+    {
+        $maxRetries = 3;
+        $retryDelay = 1; // seconds
+        
+        for ($attempt = 1; $attempt <= $maxRetries; $attempt++) {
+            try {
+                // Check if contract exists in database
+                $contract = $this->db->queryOne(
+                    "SELECT status FROM trades WHERE id = :id AND contract_id = :contract_id",
+                    ['id' => $tradeRecordId, 'contract_id' => $contractId]
+                );
+                
+                if ($contract && $contract['status'] !== 'pending') {
+                    return; // Contract is confirmed
+                }
+                
+                if ($attempt < $maxRetries) {
+                    sleep($retryDelay);
+                    $retryDelay *= 2; // Exponential backoff
+                }
+            } catch (Exception $e) {
+                error_log("Error verifying contract {$contractId}: " . $e->getMessage());
+                if ($attempt === $maxRetries) throw $e;
+            }
+        }
+        
+        throw new Exception("Failed to verify contract creation after {$maxRetries} attempts");
+    }
+    
     private function scheduleContractMonitoring(int $userId, int $contractId, int $tradeRecordId): void
     {
         // Store contract info for monitoring
-        // The contract monitoring cron job will pick this up
-        // For now, we'll just log it
+        $this->db->execute(
+            "INSERT INTO contract_monitor (user_id, contract_id, trade_id, status, created_at, updated_at)
+             VALUES (:user_id, :contract_id, :trade_id, 'pending', NOW(), NOW())
+             ON DUPLICATE KEY UPDATE updated_at = NOW()",
+            [
+                'user_id' => $userId,
+                'contract_id' => $contractId,
+                'trade_id' => $tradeRecordId
+            ]
+        );
+        
         error_log("Contract monitoring scheduled for user {$userId}, contract {$contractId}, trade {$tradeRecordId}");
     }
     
