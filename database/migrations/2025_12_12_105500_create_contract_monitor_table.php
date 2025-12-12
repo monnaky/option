@@ -1,6 +1,6 @@
 <?php
 
-// Use the correct database class from your application
+// Update the database class path based on your project structure
 use App\Services\Database;
 
 class CreateContractMonitorTable
@@ -9,6 +9,7 @@ class CreateContractMonitorTable
 
     public function __construct()
     {
+        // Initialize your database connection
         $this->db = new Database();
     }
 
@@ -59,9 +60,10 @@ class CreateContractMonitorTable
 
 // Run migration
 try {
-    // Include your application's bootstrap file
-    require_once __DIR__ . '/../../bootstrap/app.php'; // Adjust path as needed
+    // Include the autoloader
+    require_once __DIR__ . '/../../app/autoload.php';
     
+    // Initialize the database connection
     $migration = new CreateContractMonitorTable();
     $migration->up();
 } catch (Exception $e) {
