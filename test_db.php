@@ -1,16 +1,23 @@
 <?php
-// Enable all error reporting
+// Disable session for CLI
+if (php_sapi_name() === 'cli') {
+    define('DISABLE_SESSION', true);
+}
+
+// Start output buffering
+ob_start();
+
+// Error handling
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Set a custom error handler
 set_error_handler(function($errno, $errstr, $errfile, $errline) {
-    echo "\nError [$errno] $errstr in $errfile on line $errline\n";
-    exit(1);
+    if (error_reporting() === 0) return false;
+    throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
 });
 
-// Set a custom exception handler
 set_exception_handler(function($e) {
+    while (ob_get_level() > 0) ob_end_clean();
     echo "\nUncaught Exception: " . $e->getMessage() . "\n";
     echo "File: " . $e->getFile() . ":" . $e->getLine() . "\n";
     if ($e->getPrevious()) {
@@ -19,27 +26,30 @@ set_exception_handler(function($e) {
     exit(1);
 });
 
-echo "=== Starting Database Connection Test ===\n\n";
-
 try {
-    // Try to load configuration
+    echo "=== Starting Database Connection Test ===\n\n";
+    
+    // Load configuration
     echo "1. Loading configuration...\n";
     if (!@include(__DIR__ . '/config.php')) {
-        throw new Exception("Failed to load config.php. File might not exist or is not readable.");
+        throw new Exception("Failed to load config.php");
     }
     
+    // Load bootstrap
     echo "2. Loading bootstrap...\n";
     if (!@include(__DIR__ . '/app/bootstrap.php')) {
-        throw new Exception("Failed to load bootstrap.php. File might not exist or is not readable.");
+        throw new Exception("Failed to load bootstrap.php");
     }
     
-    echo "3. Getting database instance...\n";
+    // Test database connection
+    echo "3. Testing database connection...\n";
     $db = \App\Services\Database::getInstance();
+    $db->query("SELECT 1");
     echo "✓ Database connection successful\n";
     
-    // Test basic query
+    // Test query
     echo "4. Running test query...\n";
-    $result = $db->queryValue("SELECT 'Database connection test successful' as message");
+    $result = $db->queryValue("SELECT 'Test successful' as message");
     echo "✓ Test query: " . $result . "\n";
     
     // Check pending trades
@@ -47,60 +57,30 @@ try {
     $pendingCount = $db->queryValue("SELECT COUNT(*) as count FROM trades WHERE status = 'pending'");
     echo "✓ Pending trades: " . $pendingCount . "\n";
     
-    // If there are pending trades, show some details
     if ($pendingCount > 0) {
-        echo "\n=== Pending Trades (first 5) ===\n";
-        $pendingTrades = $db->query("
-            SELECT id, user_id, contract_id, status, timestamp, asset, direction, stake 
+        echo "\n=== Pending Trades ===\n";
+        $trades = $db->query("
+            SELECT id, user_id, contract_id, status, asset, direction, stake, timestamp 
             FROM trades 
             WHERE status = 'pending' 
             ORDER BY timestamp ASC 
             LIMIT 5
         ");
         
-        foreach ($pendingTrades as $trade) {
-            echo "ID: " . $trade['id'] . 
-                 " | User: " . $trade['user_id'] .
-                 " | Contract: " . $trade['contract_id'] .
-                 " | Asset: " . $trade['asset'] .
-                 " | Direction: " . $trade['direction'] .
-                 " | Stake: " . $trade['stake'] .
-                 " | Time: " . $trade['timestamp'] . "\n";
+        foreach ($trades as $trade) {
+            echo "ID:{$trade['id']} | User:{$trade['user_id']} | Contract:{$trade['contract_id']} | " .
+                 "Asset:{$trade['asset']} | Direction:{$trade['direction']} | " .
+                 "Stake:\${$trade['stake']} | Time:{$trade['timestamp']}\n";
         }
     }
     
-    // Check contract_monitor table
-    echo "\n6. Checking contract_monitor table...\n";
-    $monitorCount = $db->queryValue("SELECT COUNT(*) FROM contract_monitor");
-    echo "Total records in contract_monitor: " . $monitorCount . "\n";
-    
-    if ($monitorCount > 0) {
-        $recentMonitors = $db->query("
-            SELECT id, user_id, contract_id, status, retry_count, 
-                   last_checked_at, created_at, updated_at
-            FROM contract_monitor 
-            ORDER BY updated_at DESC 
-            LIMIT 3
-        ");
-        
-        echo "\nRecent monitor entries:\n";
-        foreach ($recentMonitors as $monitor) {
-            echo "ID: " . $monitor['id'] . 
-                 " | User: " . $monitor['user_id'] .
-                 " | Contract: " . $monitor['contract_id'] .
-                 " | Status: " . $monitor['status'] .
-                 " | Retries: " . $monitor['retry_count'] .
-                 " | Last Checked: " . ($monitor['last_checked_at'] ?: 'Never') . "\n";
-        }
-    }
+    echo "\n=== Test completed successfully ===\n";
     
 } catch (Throwable $e) {
-    echo "\nError: " . $e->getMessage() . "\n";
-    echo "File: " . $e->getFile() . ":" . $e->getLine() . "\n";
-    if ($e->getPrevious()) {
-        echo "Previous: " . $e->getPrevious()->getMessage() . "\n";
-    }
-    exit(1);
+    throw $e; // Let the exception handler deal with it
+} finally {
+    $output = ob_get_clean();
+    echo $output;
 }
 
-echo "\n=== Test completed successfully ===\n";
+exit(0);
