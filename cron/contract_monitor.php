@@ -4,7 +4,7 @@
  * Contract Monitor Cron Job
  * 
  * This script should be run every 10-15 seconds via cron:
- * */10 * * * * /usr/bin/php /path/to/cron/contract_monitor.php
+ * Example: *&#47;10 * * * * /usr/bin/php /path/to/cron/contract_monitor.php
  * 
  * Or for shared hosting, set up in cPanel cron jobs (minimum 1 minute)
  * 
