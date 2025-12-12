@@ -64,56 +64,91 @@ try {
     
     $apiToken = $decryptMethod->invoke($tradingBot, $trade['user_id'], $trade['encrypted_api_token']);
     echo "✓ API token decrypted successfully\n";
+    echo "  Token length: " . strlen($apiToken) . " characters\n";
     
     // Create DerivAPI instance with debug mode
-    echo "\nCreating DerivAPI instance...\n";
-    $derivApi = new DerivAPI($apiToken, null, (string)$trade['user_id']);
+    echo "\n=== Creating DerivAPI Instance ===\n";
+    echo "  Initializing with user ID: " . $trade['user_id'] . "\n";
     
-    // Try to enable debug mode if the method exists
-    if (method_exists($derivApi, 'setDebug')) {
-        $derivApi->setDebug(true);
-        echo "✓ Debug mode enabled\n";
+    // Check if DerivAPI class exists
+    if (!class_exists('DerivAPI')) {
+        throw new Exception("DerivAPI class not found. Check if the class is properly included.");
     }
     
-    echo "\nGetting contract info for contract {$trade['contract_id']}...\n";
-    
+    // Try to create the API instance
     try {
-        $contractInfo = $derivApi->getContractInfo($trade['contract_id']);
+        $derivApi = new DerivAPI($apiToken, null, (string)$trade['user_id']);
+        echo "✓ DerivAPI instance created successfully\n";
         
-        if (empty($contractInfo)) {
-            throw new Exception("Empty response from getContractInfo()");
+        // Check for debug method
+        if (method_exists($derivApi, 'setDebug')) {
+            $derivApi->setDebug(true);
+            echo "✓ Debug mode enabled\n";
         }
         
-        echo "\n=== Contract Info ===\n";
-        echo "Raw response: " . print_r($contractInfo, true) . "\n";
-        
-        if (isset($contractInfo['error'])) {
-            throw new Exception("API Error: " . print_r($contractInfo['error'], true));
+        // Test API connectivity
+        echo "\n=== Testing API Connectivity ===\n";
+        try {
+            $ping = $derivApi->ping();
+            echo "✓ API Ping successful: " . json_encode($ping) . "\n";
+        } catch (Exception $e) {
+            echo "⚠️ API Ping failed: " . $e->getMessage() . "\n";
+            echo "  This might indicate network or authentication issues.\n";
         }
         
-        echo "  Status: " . ($contractInfo['status'] ?? 'N/A') . "\n";
-        echo "  Profit: " . ($contractInfo['profit'] ?? 'N/A') . "\n";
-        echo "  Sell Price: " . ($contractInfo['sell_price'] ?? 'N/A') . "\n";
-        echo "  Buy Price: " . ($contractInfo['buy_price'] ?? 'N/A') . "\n";
-        echo "  Entry Spot: " . ($contractInfo['entry_spot'] ?? 'N/A') . "\n";
-        echo "  Exit Spot: " . ($contractInfo['exit_spot'] ?? 'N/A') . "\n";
+        // Try to get contract info
+        echo "\n=== Fetching Contract Info ===\n";
+        echo "  Contract ID: " . $trade['contract_id'] . "\n";
+        echo "  Contract ID type: " . gettype($trade['contract_id']) . "\n";
         
-        if (isset($contractInfo['profit'])) {
-            $profit = (float)$contractInfo['profit'];
-            $status = $profit > 0 ? 'won' : 'lost';
-            echo "\n✓ RESULT: This trade should be marked as '{$status}' with profit: {$profit}\n";
-        } else {
-            echo "\n⚠️ WARNING: No profit data available - this is why trades are being cancelled!\n";
+        // Ensure contract_id is treated as string
+        $contractId = (string)$trade['contract_id'];
+        
+        try {
+            $contractInfo = $derivApi->getContractInfo($contractId);
+            
+            if (empty($contractInfo)) {
+                throw new Exception("Empty response from getContractInfo()");
+            }
+            
+            echo "\n=== Contract Info ===\n";
+            echo "Raw response: " . print_r($contractInfo, true) . "\n";
+            
+            if (isset($contractInfo['error'])) {
+                throw new Exception("API Error: " . print_r($contractInfo['error'], true));
+            }
+            
+            echo "  Status: " . ($contractInfo['status'] ?? 'N/A') . "\n";
+            echo "  Profit: " . ($contractInfo['profit'] ?? 'N/A') . "\n";
+            echo "  Sell Price: " . ($contractInfo['sell_price'] ?? 'N/A') . "\n";
+            echo "  Buy Price: " . ($contractInfo['buy_price'] ?? 'N/A') . "\n";
+            echo "  Entry Spot: " . ($contractInfo['entry_spot'] ?? 'N/A') . "\n";
+            echo "  Exit Spot: " . ($contractInfo['exit_spot'] ?? 'N/A') . "\n";
+            
+            if (isset($contractInfo['profit'])) {
+                $profit = (float)$contractInfo['profit'];
+                $status = $profit > 0 ? 'won' : 'lost';
+                echo "\n✓ RESULT: This trade should be marked as '{$status}' with profit: {$profit}\n";
+            } else {
+                echo "\n⚠️ WARNING: No profit data available - this is why trades are being cancelled!\n";
+            }
+            
+        } catch (Exception $e) {
+            echo "\n❌ ERROR in getContractInfo():\n";
+            echo "  Message: " . $e->getMessage() . "\n";
+            echo "  File: " . $e->getFile() . ":" . $e->getLine() . "\n";
+            echo "  Stack trace:\n" . $e->getTraceAsString() . "\n";
         }
+        
+        $derivApi->close();
         
     } catch (Exception $e) {
-        echo "\n❌ ERROR in getContractInfo():\n";
+        echo "\n❌ ERROR creating DerivAPI instance:\n";
         echo "  Message: " . $e->getMessage() . "\n";
         echo "  File: " . $e->getFile() . ":" . $e->getLine() . "\n";
         echo "  Stack trace:\n" . $e->getTraceAsString() . "\n";
+        throw $e; // Re-throw to be caught by outer catch
     }
-    
-    $derivApi->close();
     
 } catch (Exception $e) {
     echo "\n❌ FATAL ERROR:\n";
