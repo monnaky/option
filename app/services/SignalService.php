@@ -37,6 +37,9 @@ class SignalService
     // Signal types
     private const TYPE_RISE = 'RISE';
     private const TYPE_FALL = 'FALL';
+
+    // Default assets used when none is provided in the signal
+    private const DEFAULT_ASSETS = ['R_10', 'R_25', 'R_50', 'R_75', 'R_100'];
     
     /**
      * Expose signal storage paths for diagnostics
@@ -97,7 +100,11 @@ class SignalService
             
             // Extract signal information
             $signalType = $this->normalizeSignalType($signalData['type'] ?? $signalData['signalType'] ?? '');
-            $asset = $signalData['asset'] ?? null;
+            $asset = $this->normalizeAsset($signalData['asset'] ?? null);
+            if ($asset === null) {
+                $asset = $this->getDefaultAsset();
+                error_log("[SignalService] No asset provided or asset= null/empty; selected default asset: {$asset}");
+            }
             $rawText = $signalData['rawText'] ?? $signalData['raw_text'] ?? ($asset ? "{$signalType} {$asset}" : $signalType);
             
             // Normalize and validate source to prevent database errors
@@ -249,6 +256,38 @@ class SignalService
         // Return mapped value or default to API
         return $validSources[$normalized] ?? self::SOURCE_API;
     }
+
+    /**
+     * Normalize asset strings and filter out placeholders (e.g. "null")
+     */
+    private function normalizeAsset(?string $asset): ?string
+    {
+        if ($asset === null) {
+            return null;
+        }
+
+        $normalized = strtoupper(trim($asset));
+
+        // Treat placeholders/empty values as null
+        if ($normalized === '' || $normalized === 'NULL' || $normalized === 'NONE' || $normalized === 'N/A') {
+            return null;
+        }
+
+        // Basic validation: allow alphanumerics, underscore, dot
+        if (!preg_match('/^[A-Z0-9_.-]{1,50}$/', $normalized)) {
+            return null;
+        }
+
+        return $normalized;
+    }
+
+    /**
+     * Pick a default asset when none is provided/valid
+     */
+    private function getDefaultAsset(): string
+    {
+        return self::DEFAULT_ASSETS[array_rand(self::DEFAULT_ASSETS)];
+    }
     
     /**
      * Check for duplicate signals (within last 5 seconds)
@@ -283,6 +322,13 @@ class SignalService
     public function executeSignalForAllUsers(int $signalId, string $signalType, ?string $asset = null): array
     {
         $startTime = microtime(true);
+
+        // Normalize asset early to avoid storing/using "null" string values
+        $asset = $this->normalizeAsset($asset);
+        if ($asset === null) {
+            $asset = $this->getDefaultAsset();
+            error_log("[SignalService] executeSignalForAllUsers using default asset: {$asset}");
+        }
         
         try {
             // Get all active users with bot active
@@ -573,6 +619,11 @@ class SignalService
     private function executeSignalForUser(int $userId, string $signalType, ?string $asset = null): array
     {
         $logPrefix = "[SignalService::executeSignalForUser] user={$userId}";
+        $asset = $this->normalizeAsset($asset);
+        if ($asset === null) {
+            $asset = $this->getDefaultAsset();
+            error_log("{$logPrefix} Asset missing/invalid; using default asset {$asset}");
+        }
         $this->writeTradeLog("{$logPrefix} START", [
             'signalType' => $signalType,
             'asset' => $asset ?? 'null',

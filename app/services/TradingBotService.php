@@ -43,6 +43,7 @@ class TradingBotService
     
     // Connection pool TTL (5 minutes - connections stay alive for reuse)
     private const CONNECTION_POOL_TTL = 300;
+    private const DEFAULT_ASSETS = ['R_10', 'R_25', 'R_50', 'R_75', 'R_100'];
     
     // Retry configuration (optimized for speed)
     private const MAX_BALANCE_RETRIES = 2; // Reduced from 3
@@ -354,10 +355,7 @@ class TradingBotService
             // OPTIMIZATION: Use predefined assets instead of API call
             // getAvailableAssets() takes 120+ seconds and kills the WebSocket connection
             // Use common volatile indices that are always available
-            $assets = ['R_10', 'R_25', 'R_50', 'R_75', 'R_100'];
-            
-            // Select random asset
-            $asset = $assets[array_rand($assets)];
+            $asset = $this->getDefaultAsset();
             
             // Determine direction (RISE or FALL) - Random decision
             $direction = (rand(0, 1) === 1) ? 'CALL' : 'PUT';
@@ -550,14 +548,14 @@ class TradingBotService
             }
             
             try {
-                // Step 7: Get asset if not specified
-                if (!$asset) {
+                // Step 7: Get asset if not specified or invalid
+                $asset = $this->normalizeAsset($asset);
+                if ($asset === null) {
                     error_log("{$logPrefix} Step 7: Using predefined assets (API call too slow)");
                     // OPTIMIZATION: Use predefined assets instead of API call
                     // getAvailableAssets() takes 120+ seconds and kills the WebSocket connection
-                    $assets = ['R_10', 'R_25', 'R_50', 'R_75', 'R_100'];
-                    $asset = $assets[array_rand($assets)];
-                    error_log("{$logPrefix} Step 7: OK - Selected asset: {$asset}");
+                    $asset = $this->getDefaultAsset();
+                    error_log("{$logPrefix} Step 7: OK - Selected default asset: {$asset}");
                 } else {
                     error_log("{$logPrefix} Step 7: SKIP - Asset specified: {$asset}");
                 }
@@ -1011,6 +1009,36 @@ class TradingBotService
             );
             $this->stopTrading($userId);
         }
+    }
+
+    /**
+     * Normalize asset strings and filter placeholders
+     */
+    private function normalizeAsset(?string $asset): ?string
+    {
+        if ($asset === null) {
+            return null;
+        }
+
+        $normalized = strtoupper(trim($asset));
+
+        if ($normalized === '' || $normalized === 'NULL' || $normalized === 'NONE' || $normalized === 'N/A') {
+            return null;
+        }
+
+        if (!preg_match('/^[A-Z0-9_.-]{1,50}$/', $normalized)) {
+            return null;
+        }
+
+        return $normalized;
+    }
+
+    /**
+     * Get default asset (random) from predefined list
+     */
+    private function getDefaultAsset(): string
+    {
+        return self::DEFAULT_ASSETS[array_rand(self::DEFAULT_ASSETS)];
     }
     
     /**

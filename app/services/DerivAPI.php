@@ -242,6 +242,10 @@ class DerivAPI
         // - "contracts_for": Deriv expects: { "contracts_for": "R_50", "currency": "USD", "product_type": "basic" }
         // - "proposal": Deriv expects: { "proposal": 1, "amount": 10, "contract_type": "CALL", "symbol": "R_50", ... }
         if ($method === 'buy' || $method === 'contracts_for' || $method === 'proposal') {
+            // Hard guard: Deriv rejects unknown fields (e.g. amount on buy)
+            if ($method === 'buy' && isset($request['amount'])) {
+                unset($request['amount']);
+            }
             // Caller passes the full payload including the method key; just append req_id
             $requestMessage = $request;
             $requestMessage['req_id'] = $requestId;
@@ -815,10 +819,11 @@ class DerivAPI
             // Step 4: Buy contract using proposal_id
             error_log("{$logPrefix} Step 4: Buying contract with proposal_id: {$proposalId}");
             
-            // Use 'amount' instead of 'price' as per Deriv API requirements
+            // Deriv buy contract expects the stake in `price`
+            // Using `amount` causes "Properties not allowed: amount" errors
             $response = $this->sendRequest('buy', [
                 'buy' => $proposalId,
-                'amount' => $amount,  // Changed from 'price' to 'amount'
+                'price' => $amount,
             ]);
             
             // Additional validation for the response
