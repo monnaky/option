@@ -16,9 +16,9 @@ if (typeof apiCall === 'undefined') {
 class RealtimeManager {
     constructor(options = {}) {
         this.userId = options.userId || null;
-        this.pollInterval = options.pollInterval || 3000; // 3 seconds default
+        this.pollInterval = options.pollInterval || 10000; // 10 seconds default (reduced frequency)
         this.balanceInterval = options.balanceInterval || 5000; // 5 seconds for balance
-        this.tradesInterval = options.tradesInterval || 2000; // 2 seconds for trades
+        this.tradesInterval = options.tradesInterval || 5000; // 5 seconds for trades (reduced frequency)
         this.intervals = {};
         this.lastUpdate = null;
         this.callbacks = {

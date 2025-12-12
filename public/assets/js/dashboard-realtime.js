@@ -6,9 +6,9 @@
 
 // Initialize real-time manager
 const realtime = new RealtimeManager({
-    pollInterval: 3000,      // 3 seconds for status
+    pollInterval: 10000,     // 10 seconds for status (reduced frequency)
     balanceInterval: 5000,   // 5 seconds for balance
-    tradesInterval: 2000,     // 2 seconds for trades
+    tradesInterval: 5000,     // 5 seconds for trades (reduced frequency)
 });
 
 // Track previous state for change detection
@@ -18,6 +18,7 @@ let previousState = {
     dailyProfit: null,
     dailyLoss: null,
     lastTradeId: null,
+    lastSession: null,
 };
 
 // Start polling when page loads
@@ -341,8 +342,12 @@ function updateSettings(settings) {
  * Update session info
  */
 function updateSessionInfo(session) {
-    // Update session display if needed
-    console.log('Session updated:', session);
+    // Only log if session actually changed (reduce console spam)
+    if (!previousState.lastSession || 
+        JSON.stringify(previousState.lastSession) !== JSON.stringify(session)) {
+        console.log('Session updated:', session);
+        previousState.lastSession = session;
+    }
 }
 
 /**

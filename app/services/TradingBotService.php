@@ -32,6 +32,7 @@ class TradingBotService
     private const MAX_INACTIVE_TIME = 30 * 60; // 30 minutes in seconds
     private const MAX_ACTIVE_CONTRACTS = 50;
     private const CONTRACT_MONITOR_TIMEOUT = 30; // 30 seconds
+    private const FALLBACK_CONTRACT_RESULT_DELAY = 7; // seconds to wait before inline result check
     private const API_REQUEST_TIMEOUT = 10; // 10 seconds
     private const SETTINGS_SYNC_INTERVAL = 60; // 1 minute
     private const HEALTH_CHECK_INTERVAL = 30; // 30 seconds
@@ -350,6 +351,7 @@ class TradingBotService
         
         // Create Deriv API instance
         $derivApi = new DerivAPI($apiToken, null, (string)$userId);
+        $encryptedToken = $user['encrypted_api_token'];
         
         try {
             // OPTIMIZATION: Use predefined assets instead of API call
@@ -406,8 +408,10 @@ class TradingBotService
             // Verify contract was actually created
             $this->verifyContractCreation($userId, $contract['contract_id'], $tradeRecordId);
             
-            // Schedule contract monitoring (via cron or immediate check)
+            // Schedule contract monitoring (via cron) and inline fallback
             $this->scheduleContractMonitoring($userId, $contract['contract_id'], $tradeRecordId);
+            $this->fallbackProcessContractResult($userId, (int)$contract['contract_id'], $tradeRecordId, $user['encrypted_api_token']);
+            $this->fallbackProcessContractResult($userId, (int)$contract['contract_id'], $tradeRecordId, $encryptedToken);
             
             error_log("[TradingBot] Trade placed user={$userId} contract={$contract['contract_id']} asset={$asset} dir={$directionLabel} stake={$settings['stake']}");
             
@@ -964,6 +968,20 @@ class TradingBotService
                 "UPDATE trades SET status = 'cancelled' WHERE id = :id AND status = 'pending'",
                 ['id' => $tradeId]
             );
+        }
+    }
+
+    /**
+     * Inline fallback to process a contract result when cron is not running.
+     * Sleeps briefly to allow 5-tick contracts to settle, then fetches the result.
+     */
+    private function fallbackProcessContractResult(int $userId, int $contractId, int $tradeId, string $encryptedToken): void
+    {
+        try {
+            sleep(self::FALLBACK_CONTRACT_RESULT_DELAY);
+            $this->processContractResult($userId, $contractId, $tradeId, $encryptedToken);
+        } catch (Exception $e) {
+            error_log("[TradingBotService] Fallback contract processing failed for user {$userId}, contract {$contractId}: " . $e->getMessage());
         }
     }
     
