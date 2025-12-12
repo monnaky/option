@@ -1,5 +1,6 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
+
+require_once __DIR__ . '/app/autoload.php';
 require __DIR__ . '/app/services/WebSocketClient.php';
 require __DIR__ . '/app/services/DerivAPI.php';
 
