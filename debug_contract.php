@@ -7,12 +7,16 @@
  * instead of properly resolved as 'won' or 'lost'
  */
 
+// Disable session for CLI
+if (php_sapi_name() === 'cli') {
+    define('DISABLE_SESSION', true);
+}
+
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/app/bootstrap.php';
 
 use App\Config\Database;
 use App\Services\TradingBotService;
-use App\Services\DerivAPI;
 
 echo "=== Contract Debug Tool ===\n";
 

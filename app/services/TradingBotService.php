@@ -815,15 +815,18 @@ class TradingBotService
     {
         try {
             // Get all pending trades that are older than 6 seconds (for 5-tick contracts)
+            // Exclude contracts that have exceeded max retries (5 retries)
             $pendingTrades = $this->db->query(
                 "SELECT t.*, u.encrypted_api_token, ts.id as session_id
                  FROM trades t
                  INNER JOIN users u ON t.user_id = u.id
                  LEFT JOIN trading_sessions ts ON t.session_id = ts.id
+                 LEFT JOIN contract_monitor cm ON t.contract_id = cm.contract_id
                  WHERE t.status = 'pending'
                  AND t.timestamp < DATE_SUB(NOW(), INTERVAL 6 SECOND)
                  AND u.encrypted_api_token IS NOT NULL
                  AND u.encrypted_api_token != ''
+                 AND (cm.retry_count < 5 OR cm.retry_count IS NULL)
                  LIMIT 50"
             );
             
@@ -869,8 +872,9 @@ class TradingBotService
             $derivApi = new DerivAPI($apiToken, null, (string)$userId);
             
             try {
-                // Get contract info
-                $contractInfo = $derivApi->getContractInfo($contractId);
+                // Get contract info - ensure contract_id is integer
+                $contractIdInt = is_numeric($contractId) ? (int)$contractId : $contractId;
+                $contractInfo = $derivApi->getContractInfo($contractIdInt);
                 
                 // Calculate profit
                 $profit = (float)($contractInfo['profit'] ?? 0);
@@ -988,24 +992,57 @@ class TradingBotService
         } catch (Exception $e) {
             error_log("Contract result processing error for user {$userId}, contract {$contractId}: " . $e->getMessage());
             
-            // Mark trade as cancelled if it fails repeatedly
-            $this->db->execute(
-                "UPDATE trades SET status = 'cancelled' WHERE id = :id AND status = 'pending'",
-                ['id' => $tradeId]
+            // Get current retry count from contract_monitor
+            $monitor = $this->db->queryOne(
+                "SELECT retry_count FROM contract_monitor WHERE contract_id = :contract_id",
+                ['contract_id' => $contractId]
             );
             
-            // Update contract_monitor with error status
-            $this->db->execute(
-                "UPDATE contract_monitor 
-                 SET status = 'error',
-                     last_checked_at = NOW(),
-                     updated_at = NOW(),
-                     retry_count = retry_count + 1
-                 WHERE contract_id = :contract_id",
-                [
-                    'contract_id' => $contractId,
-                ]
-            );
+            $retryCount = $monitor['retry_count'] ?? 0;
+            $maxRetries = 5; // Allow more retries before cancelling
+            
+            if ($retryCount >= $maxRetries) {
+                // Only mark as cancelled after max retries exceeded
+                error_log("Max retries ({$maxRetries}) exceeded for contract {$contractId}, marking as cancelled");
+                
+                $this->db->execute(
+                    "UPDATE trades SET status = 'cancelled' WHERE id = :id AND status = 'pending'",
+                    ['id' => $tradeId]
+                );
+                
+                // Update contract_monitor with error status
+                $this->db->execute(
+                    "UPDATE contract_monitor 
+                     SET status = 'cancelled',
+                         last_checked_at = NOW(),
+                         updated_at = NOW(),
+                         retry_count = retry_count + 1
+                     WHERE contract_id = :contract_id",
+                    [
+                        'contract_id' => $contractId,
+                    ]
+                );
+            } else {
+                // Just update retry count, keep trade as pending
+                error_log("Retry {$retryCount}/{$maxRetries} for contract {$contractId}, keeping as pending");
+                
+                // Update contract_monitor with error status but keep trade pending
+                $this->db->execute(
+                    "UPDATE contract_monitor 
+                     SET status = 'error',
+                         last_checked_at = NOW(),
+                         updated_at = NOW(),
+                         retry_count = retry_count + 1
+                     WHERE contract_id = :contract_id",
+                    [
+                        'contract_id' => $contractId,
+                    ]
+                );
+                
+                // Schedule another check sooner (exponential backoff)
+                $nextCheckDelay = min(300, pow(2, $retryCount) * 10); // Max 5 minutes
+                error_log("Scheduling next check for contract {$contractId} in {$nextCheckDelay} seconds");
+            }
         }
     }
 
