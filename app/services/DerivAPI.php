@@ -1077,4 +1077,28 @@ class DerivAPI
             'resetTime' => $this->rateLimitResetTime,
         ];
     }
+    
+    /**
+     * Wait for WebSocket message (for transaction stream monitoring)
+     */
+    public function waitForMessage(): array
+    {
+        try {
+            $message = $this->websocket->receiveMessage();
+            
+            if (empty($message)) {
+                throw new Exception('Empty message received');
+            }
+            
+            $data = json_decode($message, true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new Exception('Invalid JSON received: ' . json_last_error_msg());
+            }
+            
+            return $data;
+            
+        } catch (Exception $e) {
+            throw new Exception('Failed to receive message: ' . $e->getMessage());
+        }
+    }
 }
