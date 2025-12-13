@@ -13,7 +13,7 @@ if (php_sapi_name() === 'cli') {
 }
 
 require_once __DIR__ . '/config.php';
-require_once __DIR__ . '/app/bootstrap.php';
+require_once __DIR__ . '/app/autoload.php';
 
 use App\Config\Database;
 use App\Services\TradingBotService;
@@ -76,13 +76,13 @@ try {
     echo "  Initializing with user ID: " . $trade['user_id'] . "\n";
     
     // Check if DerivAPI class exists
-    if (!class_exists('DerivAPI')) {
+    if (!class_exists('App\Services\DerivAPI')) {
         throw new Exception("DerivAPI class not found. Check if the class is properly included.");
     }
     
     // Try to create the API instance
     try {
-        $derivApi = new DerivAPI($apiToken, null, (string)$trade['user_id']);
+        $derivApi = new App\Services\DerivAPI($apiToken, null, (string)$trade['user_id']);
         echo "✓ DerivAPI instance created successfully\n";
         
         // Check for debug method

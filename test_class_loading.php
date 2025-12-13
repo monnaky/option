@@ -9,8 +9,8 @@ require_once __DIR__ . '/app/autoload.php';
 echo "Files loaded.\n";
 
 // Check if classes exist
-echo "DerivAPI class exists: " . (class_exists('DerivAPI') ? 'YES' : 'NO') . "\n";
-echo "TradingBotService class exists: " . (class_exists('TradingBotService') ? 'YES' : 'NO') . "\n";
+echo "DerivAPI class exists: " . (class_exists('App\Services\DerivAPI') ? 'YES' : 'NO') . "\n";
+echo "TradingBotService class exists: " . (class_exists('App\Services\TradingBotService') ? 'YES' : 'NO') . "\n";
 echo "Database class exists: " . (class_exists('App\Config\Database') ? 'YES' : 'NO') . "\n";
 
 // List all loaded classes starting with 'Deriv'
