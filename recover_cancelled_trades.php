@@ -16,7 +16,7 @@ if (php_sapi_name() === 'cli') {
 }
 
 require_once __DIR__ . '/config.php';
-require_once __DIR__ . '/app/bootstrap.php';
+require_once __DIR__ . '/app/autoload.php';
 
 use App\Config\Database;
 use App\Services\TradingBotService;
@@ -70,7 +70,7 @@ foreach ($cancelledTrades as $trade) {
         $apiToken = $decryptMethod->invoke($tradingBot, $trade['user_id'], $trade['encrypted_api_token']);
         
         // Create Deriv API instance
-        $derivApi = new DerivAPI($apiToken, null, (string)$trade['user_id']);
+        $derivApi = new App\Services\DerivAPI($apiToken, null, (string)$trade['user_id']);
         
         try {
             // Get contract info
