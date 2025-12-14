@@ -1,7 +1,17 @@
 <?php
-require __DIR__ . '/bootstrap.php';
+if (php_sapi_name() === 'cli') {
+    define('DISABLE_SESSION', true);
+}
 
-use App\Services\Database;
+if (!@include(__DIR__ . '/config.php')) {
+    throw new Exception('Failed to load config.php');
+}
+
+if (!@include(__DIR__ . '/app/bootstrap.php')) {
+    throw new Exception('Failed to load app/bootstrap.php');
+}
+
+use App\Config\Database;
 
 // Change this to the contract you want to check
 $contractId = 301669547808;
