@@ -791,31 +791,47 @@ function handleUpdateTradeDuration()
 
         $updatedUsers = 0;
         $failedUsers = 0;
+        $totalUsersFound = 0;
 
         if ($applyToAll) {
             $users = $db->query("SELECT id FROM users WHERE is_active = 1");
+            if (empty($users)) {
+                $users = $db->query("SELECT id FROM users");
+            }
+
+            $totalUsersFound = count($users);
             foreach ($users as $user) {
                 try {
-                    $helper->updateUserSettings((int)$user['id'], [
+                    $ok = $helper->updateUserSettings((int)$user['id'], [
                         'trade_duration' => $duration,
                         'trade_duration_unit' => $unit,
                     ]);
-                    $updatedUsers++;
+                    if ($ok) {
+                        $updatedUsers++;
+                    } else {
+                        $failedUsers++;
+                    }
                 } catch (Exception $e) {
                     $failedUsers++;
                 }
             }
         } else {
-            $helper->updateUserSettings($userId, [
+            $ok = $helper->updateUserSettings($userId, [
                 'trade_duration' => $duration,
                 'trade_duration_unit' => $unit,
             ]);
-            $updatedUsers = 1;
+            $totalUsersFound = 1;
+            if ($ok) {
+                $updatedUsers = 1;
+            } else {
+                $failedUsers = 1;
+            }
         }
 
         Response::success([
             'trade_duration' => $duration,
             'trade_duration_unit' => $unit,
+            'total_users_found' => $totalUsersFound,
             'updated_users' => $updatedUsers,
             'failed_users' => $failedUsers,
         ], 'Trade duration updated');
