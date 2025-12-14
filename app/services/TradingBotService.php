@@ -193,7 +193,12 @@ class TradingBotService
     /**
      * Stop trading for a user
      */
-    public function stopTrading(int $userId): array
+    public function stopTrading(
+        int $userId,
+        string $stoppedBy = 'user',
+        string $stopReason = 'User stopped',
+        bool $disableBotFlag = true
+    ): array
     {
         try {
             // Get active session
@@ -204,8 +209,8 @@ class TradingBotService
                 $this->helper->updateTradingSessionState(
                     $activeSession['id'],
                     self::STATE_STOPPED,
-                    'user',
-                    'User stopped'
+                    $stoppedBy,
+                    $stopReason
                 );
                 
                 // Update end time
@@ -214,15 +219,19 @@ class TradingBotService
                     ['id' => $activeSession['id']]
                 );
             }
-            
-            // Update settings to mark bot as inactive
-            $this->helper->updateUserSettings($userId, ['is_bot_active' => false]);
-            
-            // Update database
-            $this->db->execute(
-                "UPDATE settings SET is_bot_active = 0 WHERE user_id = :user_id",
-                ['user_id' => $userId]
-            );
+
+            // Only disable the bot flag for explicit/manual stops or hard-stop conditions.
+            // For system recovery scenarios, keep is_bot_active = 1 so cron can auto-restart.
+            if ($disableBotFlag) {
+                // Update settings to mark bot as inactive
+                $this->helper->updateUserSettings($userId, ['is_bot_active' => false]);
+                
+                // Update database
+                $this->db->execute(
+                    "UPDATE settings SET is_bot_active = 0 WHERE user_id = :user_id",
+                    ['user_id' => $userId]
+                );
+            }
             
             return [
                 'success' => true,
@@ -306,7 +315,7 @@ class TradingBotService
         // Sync settings from database
         $settings = $this->helper->getUserSettings($userId);
         if (!$settings) {
-            $this->stopTrading($userId);
+            $this->stopTrading($userId, 'system', 'Settings not found', true);
             return;
         }
         
@@ -367,7 +376,24 @@ class TradingBotService
             error_log("[TradingBot] executeTrade user={$userId} session={$session['id']} direction={$directionLabel} asset={$asset} stake={$settings['stake']}");
             
             // Duration: 5 ticks for faster results
-            $duration = 5;
+            $duration = (int)($settings['trade_duration'] ?? 5);
+            $durationUnit = strtolower((string)($settings['trade_duration_unit'] ?? 't'));
+
+            // Validate duration configuration
+            if (!in_array($durationUnit, ['t', 's'], true)) {
+                $durationUnit = 't';
+            }
+
+            if ($duration < 1) {
+                $duration = 1;
+            }
+
+            // Clamp to reasonable bounds to prevent accidental extreme contracts
+            if ($durationUnit === 't') {
+                $duration = min(10, $duration);
+            } else {
+                $duration = min(300, $duration);
+            }
             
             // Place trade (proposal + buy handled by DerivAPI)
             $contract = $derivApi->buyContract(
@@ -375,7 +401,7 @@ class TradingBotService
                 $direction,
                 (float)$settings['stake'],
                 $duration,
-                't' // ticks
+                $durationUnit
             );
             
             // Generate unique trade ID
@@ -720,14 +746,14 @@ class TradingBotService
             
             // Check if target reached
             if ((float)$settings['daily_profit'] >= (float)$settings['target']) {
-                $this->stopTrading($userId);
+                $this->stopTrading($userId, 'system', 'Daily profit target reached', true);
                 error_log("Daily profit target reached for user {$userId}. Stopping trading.");
                 return true;
             }
             
             // Check if stop limit reached
             if (abs((float)$settings['daily_loss']) >= (float)$settings['stop_limit']) {
-                $this->stopTrading($userId);
+                $this->stopTrading($userId, 'system', 'Daily loss limit reached', true);
                 error_log("Daily loss limit reached for user {$userId}. Stopping trading.");
                 return true;
             }
@@ -1175,7 +1201,8 @@ class TradingBotService
                 'system',
                 'Max error count reached'
             );
-            $this->stopTrading($userId);
+            // System stop: keep is_bot_active = 1 so cron can auto-restart after transient issues
+            $this->stopTrading($userId, 'system', 'Max error count reached', false);
         }
     }
 
@@ -1518,7 +1545,8 @@ class TradingBotService
                     'system',
                     'Session timeout'
                 );
-                $this->stopTrading((int)$session['user_id']);
+                // System stop: keep is_bot_active = 1 so trading can resume automatically
+                $this->stopTrading((int)$session['user_id'], 'system', 'Session timeout', false);
             }
             
         } catch (Exception $e) {
@@ -1547,7 +1575,8 @@ class TradingBotService
                         'system',
                         'Health check failed: too many errors'
                     );
-                    $this->stopTrading((int)$session['user_id']);
+                    // System stop: keep is_bot_active = 1 so trading can resume automatically
+                    $this->stopTrading((int)$session['user_id'], 'system', 'Health check failed: too many errors', false);
                 }
             }
             

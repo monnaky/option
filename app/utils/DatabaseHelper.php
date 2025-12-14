@@ -105,6 +105,8 @@ class DatabaseHelper
                 'stake' => 1.00,
                 'target' => 100.00,
                 'stop_limit' => 50.00,
+                'trade_duration' => 5,
+                'trade_duration_unit' => 't',
                 'is_bot_active' => 0, // Use integer 0/1 for MySQL BOOLEAN
                 'daily_profit' => 0.00,
                 'daily_loss' => 0.00,
@@ -123,7 +125,7 @@ class DatabaseHelper
      */
     public function updateUserSettings(int $userId, array $settingsData): bool
     {
-        $allowedFields = ['stake', 'target', 'stop_limit', 'is_bot_active', 'last_active_at'];
+        $allowedFields = ['stake', 'target', 'stop_limit', 'trade_duration', 'trade_duration_unit', 'is_bot_active', 'last_active_at'];
         $data = array_intersect_key($settingsData, array_flip($allowedFields));
         
         if (empty($data)) {

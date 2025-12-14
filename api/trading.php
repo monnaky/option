@@ -136,6 +136,8 @@ function handleGetStats(int $userId)
                 'stake' => (float)$settings['stake'],
                 'target' => (float)$settings['target'],
                 'stop_limit' => (float)$settings['stop_limit'],
+                'trade_duration' => (int)($settings['trade_duration'] ?? 5),
+                'trade_duration_unit' => (string)($settings['trade_duration_unit'] ?? 't'),
                 'is_bot_active' => (bool)$settings['is_bot_active'],
                 'daily_profit' => (float)$settings['daily_profit'],
                 'daily_loss' => (float)$settings['daily_loss'],
@@ -466,6 +468,8 @@ function handleUpdateSettings(int $userId)
         $stake = $data['stake'] ?? null;
         $target = $data['target'] ?? null;
         $stopLimit = $data['stopLimit'] ?? null;
+        $tradeDuration = $data['tradeDuration'] ?? null;
+        $tradeDurationUnit = $data['tradeDurationUnit'] ?? null;
         
         // Validate
         if ($stake !== null && !Validator::numeric($stake, 0.01)) {
@@ -479,12 +483,27 @@ function handleUpdateSettings(int $userId)
         if ($stopLimit !== null && !Validator::numeric($stopLimit, 0)) {
             Response::error('Stop limit must be a number greater than or equal to 0', 400);
         }
+
+        if ($tradeDuration !== null) {
+            if (!Validator::numeric($tradeDuration, 1)) {
+                Response::error('Trade duration must be a number greater than or equal to 1', 400);
+            }
+        }
+
+        if ($tradeDurationUnit !== null) {
+            $unit = strtolower((string)$tradeDurationUnit);
+            if (!in_array($unit, ['t', 's'], true)) {
+                Response::error("Trade duration unit must be 't' (ticks) or 's' (seconds)", 400);
+            }
+        }
         
         // Build update data
         $updateData = [];
         if ($stake !== null) $updateData['stake'] = (float)$stake;
         if ($target !== null) $updateData['target'] = (float)$target;
         if ($stopLimit !== null) $updateData['stop_limit'] = (float)$stopLimit;
+        if ($tradeDuration !== null) $updateData['trade_duration'] = (int)$tradeDuration;
+        if ($tradeDurationUnit !== null) $updateData['trade_duration_unit'] = strtolower((string)$tradeDurationUnit);
         
         if (empty($updateData)) {
             Response::error('No settings to update', 400);

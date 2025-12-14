@@ -224,42 +224,30 @@ function handleNotification(notification) {
         const startStopBtn = document.getElementById('startStopBtn');
         const startStopText = document.getElementById('startStopText');
 
-        if (data.activeSession && (data.activeSession.state === 'active' || data.activeSession.state === 'initializing')) {
-            const isInitializing = data.activeSession.state === 'initializing';
-
-            statusBadge.className = isInitializing ? 'badge bg-warning text-dark' : 'badge bg-success';
-            statusBadge.textContent = isInitializing ? '⏳ Starting...' : '🟢 Running';
-
-            botRunning.classList.remove('d-none');
-            botRunning.className = isInitializing ? 'alert alert-warning mt-3' : 'alert alert-success mt-3';
-            botRunning.textContent = isInitializing ? 'Bot is starting up...' : 'Bot is actively trading. Monitoring for trade opportunities...';
-
-            botError.classList.add('d-none');
-
-            // Update button state
-            startStopBtn.className = 'btn btn-danger btn-lg w-100 mb-3';
-            startStopText.textContent = '🛑 STOP TRADING';
-            startStopBtn.disabled = isInitializing; // Disable stop while initializing
-
-            // Update global settings
-            if (typeof settings !== 'undefined') {
-                settings.isBotActive = true;
-            }
-        } else {
+        // Notification payload does not include session/state data.
+        // Treat target/limit notifications as a stop signal and update UI safely.
+        if (statusBadge) {
             statusBadge.className = 'badge bg-secondary';
             statusBadge.textContent = '⚫ Stopped';
+        }
 
+        if (botRunning) {
             botRunning.classList.add('d-none');
+        }
 
-            // Update button state
+        if (botError) {
+            botError.classList.add('d-none');
+        }
+
+        if (startStopBtn && startStopText) {
             startStopBtn.className = 'btn btn-success btn-lg w-100 mb-3';
             startStopText.textContent = '▶️ START TRADING';
             startStopBtn.disabled = false;
+        }
 
-            // Update global settings
-            if (typeof settings !== 'undefined') {
-                settings.isBotActive = false;
-            }
+        // Update global settings
+        if (typeof settings !== 'undefined') {
+            settings.isBotActive = false;
         }
     }
 }
