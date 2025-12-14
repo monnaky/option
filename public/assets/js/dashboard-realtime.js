@@ -19,6 +19,8 @@ let previousState = {
     dailyLoss: null,
     lastTradeId: null,
     lastSession: null,
+    liveTradesSignature: null,
+    tradeHistorySignature: null,
 };
 
 // Start polling when page loads
@@ -383,6 +385,21 @@ function updateLiveTrades(trades) {
 
     if (!container) return;
 
+    const signature = Array.isArray(trades)
+        ? trades.map(t => `${t.trade_id}:${t.status}:${t.profit}`).join('|')
+        : '';
+
+    if (signature === previousState.liveTradesSignature) {
+        return;
+    }
+
+    previousState.liveTradesSignature = signature;
+
+    const prevScrollTop = container.scrollTop;
+    const prevScrollHeight = container.scrollHeight;
+    const prevClientHeight = container.clientHeight;
+    const wasPinnedToBottom = (prevScrollTop + prevClientHeight) >= (prevScrollHeight - 4);
+
     if (count) {
         count.textContent = `${trades.length} Active`;
         if (trades.length > 0) {
@@ -434,6 +451,13 @@ function updateLiveTrades(trades) {
     `).join('');
 
     container.innerHTML = html;
+
+    // Preserve scroll position to prevent UI jumping
+    if (wasPinnedToBottom) {
+        container.scrollTop = container.scrollHeight;
+    } else {
+        container.scrollTop = prevScrollTop;
+    }
 }
 
 /**
@@ -444,6 +468,21 @@ function updateTradeHistory(trades) {
     const count = document.getElementById('tradeHistoryCount');
 
     if (!container) return;
+
+    const signature = Array.isArray(trades)
+        ? trades.map(t => `${t.trade_id || t.id}:${t.status}:${t.profit}`).join('|')
+        : '';
+
+    if (signature === previousState.tradeHistorySignature) {
+        return;
+    }
+
+    previousState.tradeHistorySignature = signature;
+
+    const prevScrollTop = container.scrollTop;
+    const prevScrollHeight = container.scrollHeight;
+    const prevClientHeight = container.clientHeight;
+    const wasPinnedToBottom = (prevScrollTop + prevClientHeight) >= (prevScrollHeight - 4);
 
     if (count) {
         count.textContent = trades.length;
@@ -504,6 +543,12 @@ function updateTradeHistory(trades) {
     `;
 
     container.innerHTML = table;
+
+    if (wasPinnedToBottom) {
+        container.scrollTop = container.scrollHeight;
+    } else {
+        container.scrollTop = prevScrollTop;
+    }
 }
 
 /**
