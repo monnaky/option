@@ -18,14 +18,42 @@ $contractId = 301669547808;
 
 $db = Database::getInstance();
 
-$row = $db->queryOne(
+$tradeRow = $db->queryOne(
+    "SELECT id, user_id, status, trade_id, contract_id, timestamp, closed_at, profit, payout FROM trades WHERE contract_id = :cid",
+    ['cid' => $contractId]
+);
+
+$monitorRow = $db->queryOne(
     "SELECT * FROM contract_monitor WHERE contract_id = :cid",
     ['cid' => $contractId]
 );
 
-if ($row) {
+$tradeCount = $db->queryValue(
+    "SELECT COUNT(*) FROM trades WHERE contract_id = :cid",
+    ['cid' => $contractId]
+);
+
+$monitorCount = $db->queryValue(
+    "SELECT COUNT(*) FROM contract_monitor WHERE contract_id = :cid",
+    ['cid' => $contractId]
+);
+
+echo "Contract ID: {$contractId}\n";
+echo "Trades rows found: {$tradeCount}\n";
+echo "Monitor rows found: {$monitorCount}\n\n";
+
+if ($tradeRow) {
+    echo "Trade row:\n";
+    print_r($tradeRow);
+} else {
+    echo "No trades row for contract_id = {$contractId}\n";
+}
+
+echo "\n";
+
+if ($monitorRow) {
     echo "Found contract_monitor row:\n";
-    print_r($row);
+    print_r($monitorRow);
 } else {
     echo "No contract_monitor row for contract_id = {$contractId}\n";
 }
