@@ -123,7 +123,12 @@ foreach ($cancelledTrades as $trade) {
             }
             
         } catch (Exception $e) {
-            echo "❌ Error checking contract: " . $e->getMessage() . "\n";
+            $message = $e->getMessage();
+            if (stripos($message, 'Input validation failed') !== false || stripos($message, 'InputValidationFailed') !== false) {
+                echo "🚫 Contract not recoverable on Deriv (InputValidationFailed)\n";
+            } else {
+                echo "❌ Error checking contract: " . $message . "\n";
+            }
             $errors++;
         }
         
