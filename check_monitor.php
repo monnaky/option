@@ -14,7 +14,7 @@ if (!@include(__DIR__ . '/app/bootstrap.php')) {
 use App\Config\Database;
 
 // Change this to the contract you want to check
-$contractId = 301669547808;
+$contractId = 301670261928;
 
 $db = Database::getInstance();
 
