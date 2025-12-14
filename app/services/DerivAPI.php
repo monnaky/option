@@ -859,7 +859,7 @@ class DerivAPI
             error_log("{$logPrefix} SUCCESS - Trade placed: contract_id={$buyData['contract_id']} buy_price={$buyData['buy_price']}");
             
             return [
-                'contract_id' => (int)($buyData['contract_id'] ?? 0),
+                'contract_id' => (string)($buyData['contract_id'] ?? ''),
                 'buy_price' => (float)($buyData['buy_price'] ?? 0),
                 'sell_price' => (float)($buyData['sell_price'] ?? 0),
                 'currency' => $buyData['currency'] ?? ($proposal['currency'] ?? 'USD'),
@@ -887,7 +887,7 @@ class DerivAPI
     /**
      * Sell a contract
      */
-    public function sellContract(int $contractId): array
+    public function sellContract(string $contractId): array
     {
         try {
             $response = $this->sendRequest('sell', [
@@ -903,7 +903,7 @@ class DerivAPI
             $profit = (float)($sellData['profit'] ?? 0);
             
             return [
-                'contract_id' => (int)($sellData['contract_id'] ?? 0),
+                'contract_id' => (string)($sellData['contract_id'] ?? ''),
                 'buy_price' => (float)($sellData['buy_price'] ?? 0),
                 'sell_price' => (float)($sellData['sell_price'] ?? 0),
                 'currency' => $sellData['currency'] ?? 'USD',
@@ -932,14 +932,14 @@ class DerivAPI
     /**
      * Get contract information
      */
-    public function getContractInfo(int $contractId): array
+    public function getContractInfo(string $contractId): array
     {
         try {
             // Deriv no longer supports a top-level "contract" call.
             // The correct way to query a specific contract is proposal_open_contract.
             $response = $this->sendRequest('proposal_open_contract', [
                 'proposal_open_contract' => 1,
-                'contract_id' => (string)$contractId,
+                'contract_id' => $contractId,
             ]);
 
             if (!isset($response['proposal_open_contract']) || !is_array($response['proposal_open_contract'])) {
@@ -949,7 +949,7 @@ class DerivAPI
             $contract = $response['proposal_open_contract'];
 
             return [
-                'contract_id' => (int)($contract['contract_id'] ?? 0),
+                'contract_id' => (string)($contract['contract_id'] ?? ''),
                 'buy_price' => (float)($contract['buy_price'] ?? 0),
                 'sell_price' => (float)($contract['sell_price'] ?? 0),
                 'currency' => $contract['currency'] ?? 'USD',

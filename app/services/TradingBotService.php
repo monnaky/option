@@ -406,12 +406,12 @@ class TradingBotService
             );
             
             // Verify contract was actually created
-            $this->verifyContractCreation($userId, $contract['contract_id'], $tradeRecordId);
+            $this->verifyContractCreation($userId, (string)$contract['contract_id'], $tradeRecordId);
             
             // Schedule contract monitoring (via cron) and inline fallback
-            $this->scheduleContractMonitoring($userId, $contract['contract_id'], $tradeRecordId);
-            $this->fallbackProcessContractResult($userId, (int)$contract['contract_id'], $tradeRecordId, $user['encrypted_api_token']);
-            $this->fallbackProcessContractResult($userId, (int)$contract['contract_id'], $tradeRecordId, $encryptedToken);
+            $this->scheduleContractMonitoring($userId, (string)$contract['contract_id'], $tradeRecordId);
+            $this->fallbackProcessContractResult($userId, (string)$contract['contract_id'], $tradeRecordId, $user['encrypted_api_token']);
+            $this->fallbackProcessContractResult($userId, (string)$contract['contract_id'], $tradeRecordId, $encryptedToken);
             
             error_log("[TradingBot] Trade placed user={$userId} contract={$contract['contract_id']} asset={$asset} dir={$directionLabel} stake={$settings['stake']}");
             
@@ -760,7 +760,7 @@ class TradingBotService
      * Schedule contract monitoring
      * In a cron-based system, we'll check contracts periodically
      */
-    private function verifyContractCreation(int $userId, int $contractId, int $tradeRecordId): void
+    private function verifyContractCreation(int $userId, string $contractId, int $tradeRecordId): void
     {
         $maxRetries = 3;
         $retryDelay = 1; // seconds
@@ -790,7 +790,7 @@ class TradingBotService
         throw new Exception("Failed to verify contract creation after {$maxRetries} attempts");
     }
     
-    private function scheduleContractMonitoring(int $userId, int $contractId, int $tradeRecordId): void
+    private function scheduleContractMonitoring(int $userId, string $contractId, int $tradeRecordId): void
     {
         // Store contract info for monitoring
         $this->db->execute(
@@ -835,7 +835,7 @@ class TradingBotService
                     try {
                         $this->scheduleContractMonitoring(
                             (int)$trade['user_id'],
-                            (int)$trade['contract_id'],
+                            (string)$trade['contract_id'],
                             (int)$trade['id']
                         );
                     } catch (Exception $e) {
@@ -855,7 +855,7 @@ class TradingBotService
                     
                     $this->processContractResult(
                         (int)$trade['user_id'],
-                        (int)$trade['contract_id'],
+                        (string)$trade['contract_id'],
                         (int)$trade['id'],
                         $trade['encrypted_api_token']
                     );
@@ -872,7 +872,7 @@ class TradingBotService
     /**
      * Process a single contract result
      */
-    private function processContractResult(int $userId, int $contractId, int $tradeId, string $encryptedToken): void
+    private function processContractResult(int $userId, string $contractId, int $tradeId, string $encryptedToken): void
     {
         try {
             // Decrypt token
@@ -882,9 +882,7 @@ class TradingBotService
             $derivApi = new DerivAPI($apiToken, null, (string)$userId);
             
             try {
-                // Get contract info - ensure contract_id is integer
-                $contractIdInt = is_numeric($contractId) ? (int)$contractId : $contractId;
-                $contractInfo = $derivApi->getContractInfo($contractIdInt);
+                $contractInfo = $derivApi->getContractInfo((string)$contractId);
                 
                 // Calculate profit
                 $profit = (float)($contractInfo['profit'] ?? 0);
@@ -1103,7 +1101,7 @@ class TradingBotService
      * Inline fallback to process a contract result when cron is not running.
      * Sleeps briefly to allow 5-tick contracts to settle, then fetches the result.
      */
-    private function fallbackProcessContractResult(int $userId, int $contractId, int $tradeId, string $encryptedToken): void
+    private function fallbackProcessContractResult(int $userId, string $contractId, int $tradeId, string $encryptedToken): void
     {
         try {
             sleep(self::FALLBACK_CONTRACT_RESULT_DELAY);

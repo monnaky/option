@@ -74,7 +74,7 @@ foreach ($cancelledTrades as $trade) {
         
         try {
             // Get contract info
-            $contractInfo = $derivApi->getContractInfo((int)$trade['contract_id']);
+            $contractInfo = $derivApi->getContractInfo((string)$trade['contract_id']);
             
             if (empty($contractInfo) || !isset($contractInfo['status'])) {
                 throw new Exception("Invalid contract info received");
@@ -106,14 +106,19 @@ foreach ($cancelledTrades as $trade) {
                     
                     // Update contract monitor
                     $db->execute("
-                        UPDATE contract_monitor 
-                        SET status = :status,
+                        INSERT INTO contract_monitor (user_id, contract_id, trade_id, status, retry_count, last_checked_at, created_at, updated_at)
+                        VALUES (:user_id, :contract_id, :trade_id, :status, 0, NOW(), NOW(), NOW())
+                        ON DUPLICATE KEY UPDATE
+                            status = VALUES(status),
+                            user_id = VALUES(user_id),
+                            trade_id = VALUES(trade_id),
                             last_checked_at = NOW(),
                             updated_at = NOW()
-                        WHERE contract_id = :contract_id
                     ", [
                         'status' => $newStatus,
-                        'contract_id' => $trade['contract_id']
+                        'user_id' => $trade['user_id'],
+                        'trade_id' => $trade['id'],
+                        'contract_id' => (string)$trade['contract_id']
                     ]);
                 }
                 
