@@ -935,16 +935,19 @@ class DerivAPI
     public function getContractInfo(int $contractId): array
     {
         try {
-            $response = $this->sendRequest('contract', [
-                'contract_id' => $contractId,
+            // Deriv no longer supports a top-level "contract" call.
+            // The correct way to query a specific contract is proposal_open_contract.
+            $response = $this->sendRequest('proposal_open_contract', [
+                'proposal_open_contract' => 1,
+                'contract_id' => (string)$contractId,
             ]);
-            
-            if (!isset($response['contract'])) {
-                throw new Exception('Contract not found');
+
+            if (!isset($response['proposal_open_contract']) || !is_array($response['proposal_open_contract'])) {
+                throw new Exception('Contract not found or invalid response from Deriv');
             }
-            
-            $contract = $response['contract'];
-            
+
+            $contract = $response['proposal_open_contract'];
+
             return [
                 'contract_id' => (int)($contract['contract_id'] ?? 0),
                 'buy_price' => (float)($contract['buy_price'] ?? 0),

@@ -1,0 +1,7 @@
+[12-Dec-2025 17:03:44 UTC] PHP Fatal error:  Uncaught Exception: Database connection failed: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it in C:\Users\USER\Desktop\option-main\option-main\app\config\Database.php:88
+Stack trace:
+#0 C:\Users\USER\Desktop\option-main\option-main\app\config\Database.php(59): App\Config\Database->connect()
+#1 C:\Users\USER\Desktop\option-main\option-main\app\config\Database.php(120): App\Config\Database->getConnection()
+#2 C:\Users\USER\Desktop\option-main\option-main\check_token.php(10): App\Config\Database->queryOne('SELECT id, emai...')
+#3 {main}
+  thrown in C:\Users\USER\Desktop\option-main\option-main\app\config\Database.php on line 88
