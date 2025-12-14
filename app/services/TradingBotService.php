@@ -884,11 +884,36 @@ class TradingBotService
             try {
                 $contractInfo = $derivApi->getContractInfo((string)$contractId);
                 
-                // Calculate profit
+                $derivStatus = strtolower((string)($contractInfo['status'] ?? ''));
+                $isTerminal = in_array($derivStatus, ['won', 'lost', 'sold'], true);
+                $isSettleable = !empty($contractInfo['is_settleable']);
+
+                // If the contract is still open/not settleable, keep trade pending and just update monitor retry count
+                if (!$isTerminal && !$isSettleable) {
+                    $this->db->execute(
+                        "INSERT INTO contract_monitor (user_id, contract_id, trade_id, status, retry_count, last_checked_at, created_at, updated_at)
+                         VALUES (:user_id, :contract_id, :trade_id, 'pending', 1, NOW(), NOW(), NOW())
+                         ON DUPLICATE KEY UPDATE
+                             status = 'pending',
+                             user_id = VALUES(user_id),
+                             trade_id = VALUES(trade_id),
+                             last_checked_at = NOW(),
+                             updated_at = NOW(),
+                             retry_count = retry_count + 1",
+                        [
+                            'user_id' => $userId,
+                            'contract_id' => $contractId,
+                            'trade_id' => $tradeId,
+                        ]
+                    );
+
+                    return;
+                }
+
+                // Terminal / settleable contract: finalize the trade
                 $profit = (float)($contractInfo['profit'] ?? 0);
                 $status = $profit > 0 ? 'won' : 'lost';
-                
-                // Update trade record
+
                 $this->db->execute(
                     "UPDATE trades 
                      SET profit = :profit,
@@ -903,8 +928,7 @@ class TradingBotService
                         'id' => $tradeId,
                     ]
                 );
-                
-                // Update contract_monitor table
+
                 $this->db->execute(
                     "INSERT INTO contract_monitor (user_id, contract_id, trade_id, status, retry_count, last_checked_at, created_at, updated_at)
                      VALUES (:user_id, :contract_id, :trade_id, :status, 1, NOW(), NOW(), NOW())

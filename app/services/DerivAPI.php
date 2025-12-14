@@ -236,25 +236,29 @@ class DerivAPI
         $requestId = $this->requestId++;
 
         // Build request message
-        // Default format for most calls: { "method_name": params, "req_id": 123 }
-        // Special case for methods where the caller already builds the exact top-level payload
-        // - "buy": Deriv expects top-level fields: { "buy": "proposal_id"|1, "price": 10, ... }
-        // - "contracts_for": Deriv expects: { "contracts_for": "R_50", "currency": "USD", "product_type": "basic" }
-        // - "proposal": Deriv expects: { "proposal": 1, "amount": 10, "contract_type": "CALL", "symbol": "R_50", ... }
-        if ($method === 'buy' || $method === 'contracts_for' || $method === 'proposal') {
-            // Hard guard: Deriv rejects unknown fields (e.g. amount on buy)
-            if ($method === 'buy' && isset($request['amount'])) {
-                unset($request['amount']);
-            }
-            // Caller passes the full payload including the method key; just append req_id
+        // Some call sites pass a full Deriv payload already containing the top-level method key
+        // (e.g. ['proposal_open_contract' => 1, 'contract_id' => ...]).
+        // Others might pass only the params.
+        // To be resilient, detect the shape and avoid double-nesting.
+        if (array_key_exists($method, $request)) {
             $requestMessage = $request;
-            $requestMessage['req_id'] = $requestId;
         } else {
             $requestMessage = [
                 $method => $request,
-                'req_id' => $requestId,
             ];
         }
+
+        // Hard guard: Deriv rejects unknown fields (e.g. amount on buy)
+        if ($method === 'buy') {
+            if (isset($requestMessage['amount'])) {
+                unset($requestMessage['amount']);
+            }
+            if (isset($requestMessage['buy']) && is_array($requestMessage['buy']) && isset($requestMessage['buy']['amount'])) {
+                unset($requestMessage['buy']['amount']);
+            }
+        }
+
+        $requestMessage['req_id'] = $requestId;
 
         $postData = json_encode($requestMessage);
         error_log("Sending WebSocket request: {$method} (req_id: {$requestId})");
