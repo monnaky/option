@@ -669,7 +669,7 @@ class TradingBotService
                 // Step 12: Schedule contract monitoring
                 error_log("{$logPrefix} Step 12: Scheduling contract monitoring");
                 try {
-                    $this->scheduleContractMonitoring($userId, $contract['contract_id'], $tradeRecordId);
+                    $this->scheduleContractMonitoring($userId, (string)$contract['contract_id'], $tradeRecordId);
                     error_log("{$logPrefix} Step 12: OK - Contract monitoring scheduled");
                 } catch (Exception $e) {
                     error_log("{$logPrefix} WARN: Failed to schedule monitoring: " . $e->getMessage());
