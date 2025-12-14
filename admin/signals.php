@@ -65,6 +65,43 @@ try {
     </div>
 </div>
 
+<div class="card card-dark mb-4">
+    <div class="card-header bg-dark border-dark-custom">
+        <h5 class="mb-0"><i class="bi bi-sliders"></i> Trade Duration Control</h5>
+    </div>
+    <div class="card-body">
+        <form onsubmit="updateTradeDuration(event)">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label text-muted">Duration</label>
+                    <input type="number" class="form-control bg-dark text-light border-secondary" id="tradeDuration" min="1" value="5" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label text-muted">Unit</label>
+                    <select class="form-select bg-dark text-light border-secondary" id="tradeDurationUnit" required>
+                        <option value="t">Ticks</option>
+                        <option value="s">Seconds</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label text-muted">User ID (optional)</label>
+                    <input type="number" class="form-control bg-dark text-light border-secondary" id="tradeDurationUserId" min="1" placeholder="Apply to one user">
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="tradeDurationApplyAll" checked>
+                        <label class="form-check-label text-muted" for="tradeDurationApplyAll">Apply to all users</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        Save
+                    </button>
+                </div>
+            </div>
+            <div class="form-text text-muted mt-2">Safety limits: ticks max 10, seconds max 300.</div>
+        </form>
+    </div>
+</div>
+
 <?php if ($message): ?>
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <i class="bi bi-check-circle me-2"></i> <?= htmlspecialchars($message) ?>
@@ -154,6 +191,43 @@ try {
 
 <script>
 let signalsInterval;
+
+async function updateTradeDuration(e) {
+    e.preventDefault();
+
+    const duration = parseInt(document.getElementById('tradeDuration').value, 10);
+    const unit = document.getElementById('tradeDurationUnit').value;
+    const applyToAll = document.getElementById('tradeDurationApplyAll').checked;
+    const userIdRaw = document.getElementById('tradeDurationUserId').value;
+    const userId = userIdRaw ? parseInt(userIdRaw, 10) : null;
+
+    if (!applyToAll && (!userId || userId <= 0)) {
+        alert('Provide a User ID or enable Apply to all users');
+        return;
+    }
+
+    try {
+        const apiBase = (window.APP_CONFIG && window.APP_CONFIG.apiBase) || '/api';
+        const body = {
+            tradeDuration: duration,
+            tradeDurationUnit: unit,
+            apply_to_all: applyToAll,
+        };
+
+        if (!applyToAll) {
+            body.user_id = userId;
+        }
+
+        const res = await apiCall(`${apiBase}/admin.php?action=update-trade-duration`, {
+            method: 'POST',
+            body,
+        });
+
+        alert(`Trade duration updated: ${res.trade_duration} ${res.trade_duration_unit} (updated_users=${res.updated_users})`);
+    } catch (error) {
+        alert('Failed to update trade duration: ' + (error.message || error));
+    }
+}
 
 async function loadSignals() {
     try {
