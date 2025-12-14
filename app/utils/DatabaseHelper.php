@@ -348,6 +348,14 @@ class DatabaseHelper
             'processed' => 0, // Use integer 0 instead of boolean false for MySQL TINYINT(1)
             'timestamp' => date('Y-m-d H:i:s'),
         ];
+
+        if (array_key_exists('duration', $signalData)) {
+            $data['duration'] = $signalData['duration'];
+        }
+
+        if (array_key_exists('duration_unit', $signalData)) {
+            $data['duration_unit'] = $signalData['duration_unit'];
+        }
         
         return $this->db->insert('signals', $data);
     }

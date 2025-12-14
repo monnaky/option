@@ -16,16 +16,27 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'send_signal') {
     $type = $_POST['type'] ?? '';
     $asset = $_POST['asset'] ?? '';
+    $signalDuration = $_POST['signal_duration'] ?? '';
+    $signalDurationUnit = $_POST['signal_duration_unit'] ?? '';
     
     if ($type && $asset) {
         try {
             // Create signal
-            $result = $signalService->receiveSignal([
+            $payload = [
                 'type' => $type,
                 'asset' => $asset,
                 'source' => 'admin_manual',
                 'skip_execution' => true,
-            ]);
+            ];
+
+            if ($signalDuration !== '' && is_numeric($signalDuration) && (int)$signalDuration > 0) {
+                $payload['duration'] = (int)$signalDuration;
+                if (in_array($signalDurationUnit, ['t', 's'], true)) {
+                    $payload['duration_unit'] = $signalDurationUnit;
+                }
+            }
+
+            $result = $signalService->receiveSignal($payload);
             
             if ($result['success']) {
                 // Push to queue
@@ -97,7 +108,7 @@ try {
                     </button>
                 </div>
             </div>
-            <div class="form-text text-muted mt-2">Safety limits: ticks max 10, seconds max 300.</div>
+            <div class="form-text text-muted mt-2">Safety limits: ticks max 10, seconds max 3600.</div>
         </form>
     </div>
 </div>
@@ -144,6 +155,19 @@ try {
                         <label class="form-label text-muted">Asset Symbol</label>
                         <input type="text" name="asset" class="form-control bg-dark text-light border-secondary" placeholder="e.g. R_100" required>
                         <div class="form-text text-muted">Enter the exact symbol name (e.g. R_100, EURUSD)</div>
+                    </div>
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <label class="form-label text-muted">Duration (optional)</label>
+                            <input type="number" name="signal_duration" class="form-control bg-dark text-light border-secondary" min="1" placeholder="e.g. 10">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label text-muted">Unit</label>
+                            <select name="signal_duration_unit" class="form-select bg-dark text-light border-secondary">
+                                <option value="t">Ticks</option>
+                                <option value="s">Seconds</option>
+                            </select>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary w-100">
                         <i class="bi bi-lightning-charge"></i> Queue Signal

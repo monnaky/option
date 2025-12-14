@@ -470,7 +470,13 @@ class TradingBotService
     /**
      * Execute a trade with a specific signal (for signal service)
      */
-    public function executeSignalTrade(int $userId, string $direction, ?string $asset = null): array
+    public function executeSignalTrade(
+        int $userId,
+        string $direction,
+        ?string $asset = null,
+        ?int $durationOverride = null,
+        ?string $durationUnitOverride = null
+    ): array
     {
         $logPrefix = "[TradingBot::executeSignalTrade] user={$userId}";
         error_log("{$logPrefix} START - direction={$direction} asset=" . ($asset ?? 'auto'));
@@ -595,8 +601,24 @@ class TradingBotService
                 error_log("{$logPrefix} Step 8: Contract type: {$contractType} (from direction: {$direction})");
                 
                 // Step 9: Place trade
-                $duration = 5;
-                error_log("{$logPrefix} Step 9: Placing trade - asset={$asset} type={$contractType} stake={$settings['stake']} duration={$duration}");
+                $durationUnit = strtolower((string)($durationUnitOverride ?? ($settings['trade_duration_unit'] ?? 't')));
+                $duration = (int)($durationOverride ?? ($settings['trade_duration'] ?? 5));
+
+                if (!in_array($durationUnit, ['t', 's'], true)) {
+                    $durationUnit = 't';
+                }
+
+                if ($duration < 1) {
+                    $duration = 1;
+                }
+
+                if ($durationUnit === 't') {
+                    $duration = min(10, $duration);
+                } else {
+                    $duration = min(300, $duration);
+                }
+
+                error_log("{$logPrefix} Step 9: Placing trade - asset={$asset} type={$contractType} stake={$settings['stake']} duration={$duration}{$durationUnit}");
                 
                 try {
                     $contract = $derivApi->buyContract(
@@ -604,7 +626,7 @@ class TradingBotService
                         $contractType,
                         (float)$settings['stake'],
                         $duration,
-                        't'
+                        $durationUnit
                     );
                     
                     if (empty($contract) || empty($contract['contract_id'])) {

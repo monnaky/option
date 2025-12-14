@@ -112,6 +112,9 @@ class SignalService
             $source = $this->normalizeSource($rawSource);
             
             $sourceIp = $signalData['sourceIp'] ?? $signalData['source_ip'] ?? ($_SERVER['REMOTE_ADDR'] ?? 'unknown');
+
+            $durationOverride = $signalData['duration'] ?? null;
+            $durationUnitOverride = $signalData['duration_unit'] ?? $signalData['durationUnit'] ?? null;
             
             // Check for duplicate signals (within last 5 seconds)
             $duplicate = $this->checkDuplicateSignal($signalType, $asset, $rawText);
@@ -131,6 +134,8 @@ class SignalService
                 'raw_text' => $rawText,
                 'source' => $source,
                 'source_ip' => $sourceIp,
+                'duration' => $durationOverride,
+                'duration_unit' => $durationUnitOverride,
             ]);
             
             // Check if we should skip immediate execution (e.g. if using queue)
@@ -323,6 +328,13 @@ class SignalService
     {
         $startTime = microtime(true);
 
+        $signalRow = $this->db->queryOne(
+            "SELECT duration, duration_unit FROM signals WHERE id = :id",
+            ['id' => $signalId]
+        );
+        $signalDuration = isset($signalRow['duration']) ? (int)$signalRow['duration'] : null;
+        $signalDurationUnit = isset($signalRow['duration_unit']) ? (string)$signalRow['duration_unit'] : null;
+
         // Normalize asset early to avoid storing/using "null" string values
         $asset = $this->normalizeAsset($asset);
         if ($asset === null) {
@@ -452,7 +464,9 @@ class SignalService
                         $result = $this->executeSignalForUser(
                             $userId,
                             $signalType,
-                            $asset
+                            $asset,
+                            $signalDuration,
+                            $signalDurationUnit
                         );
                         
                         $executionResults[] = $result;
@@ -616,7 +630,13 @@ class SignalService
      * @param string|null $asset Optional asset symbol
      * @return array Execution result
      */
-    private function executeSignalForUser(int $userId, string $signalType, ?string $asset = null): array
+    private function executeSignalForUser(
+        int $userId,
+        string $signalType,
+        ?string $asset = null,
+        ?int $durationOverride = null,
+        ?string $durationUnitOverride = null
+    ): array
     {
         $logPrefix = "[SignalService::executeSignalForUser] user={$userId}";
         $asset = $this->normalizeAsset($asset);
@@ -659,7 +679,13 @@ class SignalService
             
             try {
                 $startTime = microtime(true);
-                $result = $this->tradingBot->executeSignalTrade($userId, $signalType, $asset);
+                $result = $this->tradingBot->executeSignalTrade(
+                    $userId,
+                    $signalType,
+                    $asset,
+                    $durationOverride,
+                    $durationUnitOverride
+                );
                 $executionTime = round((microtime(true) - $startTime) * 1000, 2);
                 
                 $this->writeTradeLog("{$logPrefix} TradingBotService returned", [
