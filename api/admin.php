@@ -73,7 +73,7 @@ try {
         
         case 'POST':
             if (empty($action)) {
-                Response::error('Action parameter is required. Valid POST actions: user-suspend, user-activate, user-delete, cron-activate, broadcast-signal, test-signal', 400);
+                Response::error('Action parameter is required. Valid POST actions: user-suspend, user-activate, user-delete, cron-activate, broadcast-signal, test-signal, update-trade-duration', 400);
             } elseif ($action === 'user-suspend') {
                 handleSuspendUser();
             } elseif ($action === 'user-activate') {
@@ -86,8 +86,10 @@ try {
                 handleBroadcastSignal();
             } elseif ($action === 'test-signal') {
                 handleTestSignal();
+            } elseif ($action === 'update-trade-duration') {
+                handleUpdateTradeDuration();
             } else {
-                Response::error('Invalid action. Valid POST actions: user-suspend, user-activate, user-delete, cron-activate, broadcast-signal, test-signal', 400);
+                Response::error('Invalid action. Valid POST actions: user-suspend, user-activate, user-delete, cron-activate, broadcast-signal, test-signal, update-trade-duration', 400);
             }
             break;
         
@@ -743,5 +745,82 @@ function handleTestSignal()
         error_log('Test signal error: ' . $e->getMessage());
         error_log('Stack trace: ' . $e->getTraceAsString());
         Response::error('Failed to send test signal: ' . $e->getMessage(), 500);
+    }
+}
+
+function handleUpdateTradeDuration()
+{
+    try {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (!$data) {
+            Response::error('Invalid request data', 400);
+        }
+
+        $tradeDuration = $data['tradeDuration'] ?? null;
+        $tradeDurationUnit = $data['tradeDurationUnit'] ?? null;
+        $userId = isset($data['user_id']) ? (int)$data['user_id'] : 0;
+        $applyToAll = !empty($data['apply_to_all']);
+
+        if ($tradeDuration === null || $tradeDurationUnit === null) {
+            Response::error('tradeDuration and tradeDurationUnit are required', 400);
+        }
+
+        if (!is_numeric($tradeDuration) || (int)$tradeDuration < 1) {
+            Response::error('Trade duration must be an integer >= 1', 400);
+        }
+
+        $unit = strtolower((string)$tradeDurationUnit);
+        if (!in_array($unit, ['t', 's'], true)) {
+            Response::error("Trade duration unit must be 't' (ticks) or 's' (seconds)", 400);
+        }
+
+        $duration = (int)$tradeDuration;
+        if ($unit === 't') {
+            $duration = min(10, $duration);
+        } else {
+            $duration = min(300, $duration);
+        }
+
+        if (!$applyToAll && $userId <= 0) {
+            Response::error('Provide a valid user_id or set apply_to_all=true', 400);
+        }
+
+        $db = Database::getInstance();
+        $helper = new DatabaseHelper();
+
+        $updatedUsers = 0;
+        $failedUsers = 0;
+
+        if ($applyToAll) {
+            $users = $db->query("SELECT id FROM users WHERE is_active = 1");
+            foreach ($users as $user) {
+                try {
+                    $helper->updateUserSettings((int)$user['id'], [
+                        'trade_duration' => $duration,
+                        'trade_duration_unit' => $unit,
+                    ]);
+                    $updatedUsers++;
+                } catch (Exception $e) {
+                    $failedUsers++;
+                }
+            }
+        } else {
+            $helper->updateUserSettings($userId, [
+                'trade_duration' => $duration,
+                'trade_duration_unit' => $unit,
+            ]);
+            $updatedUsers = 1;
+        }
+
+        Response::success([
+            'trade_duration' => $duration,
+            'trade_duration_unit' => $unit,
+            'updated_users' => $updatedUsers,
+            'failed_users' => $failedUsers,
+        ], 'Trade duration updated');
+    } catch (Exception $e) {
+        error_log('Update trade duration error: ' . $e->getMessage());
+        Response::error('Failed to update trade duration', 500);
     }
 }
