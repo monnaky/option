@@ -832,6 +832,16 @@ class TradingBotService
             
             foreach ($pendingTrades as $trade) {
                 try {
+                    try {
+                        $this->scheduleContractMonitoring(
+                            (int)$trade['user_id'],
+                            (int)$trade['contract_id'],
+                            (int)$trade['id']
+                        );
+                    } catch (Exception $e) {
+                        error_log("Failed to ensure contract_monitor row for trade {$trade['id']} (contract {$trade['contract_id']}): " . $e->getMessage());
+                    }
+
                     // Update contract_monitor to show we're checking this contract
                     $this->db->execute(
                         "UPDATE contract_monitor 
@@ -898,15 +908,20 @@ class TradingBotService
                 
                 // Update contract_monitor table
                 $this->db->execute(
-                    "UPDATE contract_monitor 
-                     SET status = :status,
+                    "INSERT INTO contract_monitor (user_id, contract_id, trade_id, status, retry_count, last_checked_at, created_at, updated_at)
+                     VALUES (:user_id, :contract_id, :trade_id, :status, 1, NOW(), NOW(), NOW())
+                     ON DUPLICATE KEY UPDATE
+                         status = VALUES(status),
+                         user_id = VALUES(user_id),
+                         trade_id = VALUES(trade_id),
                          last_checked_at = NOW(),
                          updated_at = NOW(),
-                         retry_count = retry_count + 1
-                     WHERE contract_id = :contract_id",
+                         retry_count = retry_count + 1",
                     [
+                        'user_id' => $userId,
                         'status' => $status,
                         'contract_id' => $contractId,
+                        'trade_id' => $tradeId,
                     ]
                 );
                 
@@ -992,6 +1007,34 @@ class TradingBotService
         } catch (Exception $e) {
             error_log("Contract result processing error for user {$userId}, contract {$contractId}: " . $e->getMessage());
             
+            $message = $e->getMessage();
+            // If Deriv says input validation failed for proposal_open_contract,
+            // the contract_id is not valid/accessible for this token. Retrying won't help,
+            // so cancel the trade immediately instead of looping retries.
+            if (stripos($message, 'Input validation failed') !== false || stripos($message, 'InputValidationFailed') !== false) {
+                error_log("InputValidationFailed for contract {$contractId} - marking trade as cancelled without further retries");
+                $this->db->execute(
+                    "UPDATE trades SET status = 'cancelled' WHERE id = :id AND status = 'pending'",
+                    ['id' => $tradeId]
+                );
+                $this->db->execute(
+                    "INSERT INTO contract_monitor (user_id, contract_id, trade_id, status, retry_count, last_checked_at, created_at, updated_at)
+                     VALUES (:user_id, :contract_id, :trade_id, 'cancelled', 1, NOW(), NOW(), NOW())
+                     ON DUPLICATE KEY UPDATE
+                         status = 'cancelled',
+                         user_id = VALUES(user_id),
+                         trade_id = VALUES(trade_id),
+                         last_checked_at = NOW(),
+                         updated_at = NOW()",
+                    [
+                        'user_id' => $userId,
+                        'contract_id' => $contractId,
+                        'trade_id' => $tradeId,
+                    ]
+                );
+                return;
+            }
+
             // Get current retry count from contract_monitor
             $monitor = $this->db->queryOne(
                 "SELECT retry_count FROM contract_monitor WHERE contract_id = :contract_id",
@@ -1012,14 +1055,19 @@ class TradingBotService
                 
                 // Update contract_monitor with error status
                 $this->db->execute(
-                    "UPDATE contract_monitor 
-                     SET status = 'cancelled',
+                    "INSERT INTO contract_monitor (user_id, contract_id, trade_id, status, retry_count, last_checked_at, created_at, updated_at)
+                     VALUES (:user_id, :contract_id, :trade_id, 'cancelled', 1, NOW(), NOW(), NOW())
+                     ON DUPLICATE KEY UPDATE
+                         status = 'cancelled',
+                         user_id = VALUES(user_id),
+                         trade_id = VALUES(trade_id),
                          last_checked_at = NOW(),
                          updated_at = NOW(),
-                         retry_count = retry_count + 1
-                     WHERE contract_id = :contract_id",
+                         retry_count = retry_count + 1",
                     [
                         'contract_id' => $contractId,
+                        'user_id' => $userId,
+                        'trade_id' => $tradeId,
                     ]
                 );
             } else {
@@ -1028,14 +1076,19 @@ class TradingBotService
                 
                 // Update contract_monitor with error status but keep trade pending
                 $this->db->execute(
-                    "UPDATE contract_monitor 
-                     SET status = 'error',
+                    "INSERT INTO contract_monitor (user_id, contract_id, trade_id, status, retry_count, last_checked_at, created_at, updated_at)
+                     VALUES (:user_id, :contract_id, :trade_id, 'error', 1, NOW(), NOW(), NOW())
+                     ON DUPLICATE KEY UPDATE
+                         status = 'error',
+                         user_id = VALUES(user_id),
+                         trade_id = VALUES(trade_id),
                          last_checked_at = NOW(),
                          updated_at = NOW(),
-                         retry_count = retry_count + 1
-                     WHERE contract_id = :contract_id",
+                         retry_count = retry_count + 1",
                     [
                         'contract_id' => $contractId,
+                        'user_id' => $userId,
+                        'trade_id' => $tradeId,
                     ]
                 );
                 
