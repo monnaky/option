@@ -16,7 +16,7 @@ $appRoot = dirname($scriptDir);
 $LOG_DIR = $appRoot . '/logs';
 $LOG_FILE = $LOG_DIR . '/url_signal_watcher.log';
 $ERROR_LOG_FILE = $LOG_DIR . '/url_signal_watcher_error.log';
-$REMOTE_SIGNAL_URL = getenv('REMOTE_SIGNAL_URL') ?: 'https://vtmoption.com/getSignal.txt';
+$REMOTE_SIGNAL_URL = getenv('REMOTE_SIGNAL_URL') ?: ''; // Disabled
 $REMOTE_CLEAR_URL = getenv('REMOTE_SIGNAL_CLEAR_URL') ?: 'https://vtmoption.com/signals.php?action=clear';
 $POLL_INTERVAL = (int)(getenv('REMOTE_SIGNAL_POLL_INTERVAL') ?: 2);
 $HTTP_TIMEOUT = (int)(getenv('REMOTE_SIGNAL_HTTP_TIMEOUT') ?: 10);
@@ -104,6 +104,12 @@ if (function_exists('pcntl_signal')) {
 }
 
 logMessage('INFO', "URL watcher online. Source={$REMOTE_SIGNAL_URL}, clear={$REMOTE_CLEAR_URL}, interval={$POLL_INTERVAL}s");
+
+// Exit if remote signal URL is disabled
+if (empty($REMOTE_SIGNAL_URL)) {
+    logMessage('INFO', 'Remote signal URL is disabled - exiting');
+    exit(0);
+}
 
 while (!$shutdown) {
     if (function_exists('pcntl_signal_dispatch')) {
