@@ -15,6 +15,42 @@ use Exception;
 class Authentication
 {
     /**
+     * Get session configuration
+     */
+    private static function getSessionConfig(): array
+    {
+        static $config = null;
+        
+        if ($config === null) {
+            $configFile = __DIR__ . '/../config/session.php';
+            $config = file_exists($configFile) ? require $configFile : [
+                'name' => 'VTMOPTION_SESSION',
+                'lifetime' => 3600 * 8, // 8 hours
+                'paths' => [
+                    __DIR__ . '/../../storage/sessions',
+                    sys_get_temp_dir() . '/vtmoption_sessions',
+                    session_save_path()
+                ],
+                'cookie' => [
+                    'lifetime' => 3600 * 8, // 8 hours
+                    'path' => '/',
+                    'domain' => '',
+                    'secure' => ($_ENV['APP_ENV'] ?? 'development') === 'production',
+                    'httponly' => true,
+                    'samesite' => 'Lax'
+                ],
+                'security' => [
+                    'regenerate_id' => 1800, // 30 minutes
+                    'use_strict_mode' => true,
+                    'use_trans_sid' => false
+                ]
+            ];
+        }
+        
+        return $config;
+    }
+    
+    /**
      * Start secure session with fallback for XAMPP permission issues
      */
     public static function startSession(): void
@@ -23,52 +59,61 @@ class Authentication
             return;
         }
         
-        // Configure session security
-        ini_set('session.cookie_httponly', '1');
-        ini_set('session.cookie_secure', ($_ENV['APP_ENV'] ?? 'development') === 'production' ? '1' : '0');
-        ini_set('session.use_strict_mode', '1');
-        ini_set('session.cookie_samesite', 'Strict');
+        $config = self::getSessionConfig();
         
-        // Set session name
-        session_name('VTMOPTION_SESSION');
+        // Configure session
+        session_name($config['name'] ?? 'VTMOPTION_SESSION');
         
-        // Handle XAMPP session path permission issues
-        $defaultSessionPath = session_save_path();
-        $fallbackPaths = [
-            __DIR__ . '/../../storage/sessions', // Custom storage directory
-            sys_get_temp_dir() . '/vtmoption_sessions', // System temp with prefix
-            $defaultSessionPath // Default path as last resort
+        // Set cookie parameters
+        session_set_cookie_params([
+            'lifetime' => $config['cookie']['lifetime'] ?? 0,
+            'path' => $config['cookie']['path'] ?? '/',
+            'domain' => $config['cookie']['domain'] ?? '',
+            'secure' => $config['cookie']['secure'] ?? false,
+            'httponly' => $config['cookie']['httponly'] ?? true,
+            'samesite' => $config['cookie']['samesite'] ?? 'Lax'
+        ]);
+        
+        // Handle session path with fallbacks
+        $paths = $config['paths'] ?? [
+            __DIR__ . '/../../storage/sessions',
+            sys_get_temp_dir() . '/vtmoption_sessions',
+            session_save_path()
         ];
         
-        // Try to set session path with fallbacks
-        foreach ($fallbackPaths as $path) {
-            // Create directory if it doesn't exist
+        foreach ($paths as $path) {
             if (!is_dir($path)) {
                 @mkdir($path, 0755, true);
             }
             
-            // Check if directory is writable
             if (is_dir($path) && is_writable($path)) {
                 @session_save_path($path);
                 break;
             }
         }
         
-        // Start session with error suppression and fallback
+        // Set security options
+        ini_set('session.use_strict_mode', '1');
+        ini_set('session.use_trans_sid', '0');
+        
+        // Start session
         try {
             @session_start();
         } catch (Exception $e) {
-            // If session start fails, try with default path
             error_log('Session start failed: ' . $e->getMessage());
-            @session_save_path($defaultSessionPath);
+            @session_save_path(session_save_path()); // Reset to default
             @session_start();
         }
         
-        // Regenerate session ID periodically to prevent fixation attacks
+        // Initialize session if new
         if (!isset($_SESSION['created'])) {
             $_SESSION['created'] = time();
-        } elseif (time() - $_SESSION['created'] > 1800) {
-            // Regenerate every 30 minutes
+            $_SESSION['last_activity'] = time();
+        }
+        
+        // Regenerate session ID periodically
+        $regenerateTime = $config['security']['regenerate_id'] ?? 1800;
+        if (time() - $_SESSION['created'] > $regenerateTime) {
             session_regenerate_id(true);
             $_SESSION['created'] = time();
         }
@@ -103,7 +148,7 @@ class Authentication
     public static function logout(): void
     {
         if (session_status() === PHP_SESSION_NONE) {
-            session_start();
+            self::startSession();
         }
         
         // Clear all session data
@@ -133,16 +178,19 @@ class Authentication
     public static function isLoggedIn(): bool
     {
         if (session_status() === PHP_SESSION_NONE) {
-            session_start();
+            self::startSession();
         }
         
         if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
             return false;
         }
         
-        // Check session timeout (24 hours)
+        // Check session timeout using config
+        $config = self::getSessionConfig();
+        $lifetime = $config['lifetime'] ?? 86400; // Default 24 hours
+        
         if (isset($_SESSION['last_activity']) && 
-            (time() - $_SESSION['last_activity']) > 86400) {
+            (time() - $_SESSION['last_activity']) > $lifetime) {
             self::logout();
             return false;
         }
@@ -151,6 +199,49 @@ class Authentication
         $_SESSION['last_activity'] = time();
         
         return true;
+    }
+    
+    /**
+     * Check authentication for API requests
+     */
+    public static function apiAuthenticate(): ?array
+    {
+        if (!self::isLoggedIn()) {
+            return null;
+        }
+        
+        return [
+            'id' => self::getUserId(),
+            'email' => self::getUserEmail(),
+            'login_time' => $_SESSION['login_time'] ?? null,
+            'last_activity' => $_SESSION['last_activity'] ?? null
+        ];
+    }
+    
+    /**
+     * Require authentication for API with enhanced JSON response
+     */
+    public static function requireApiAuth(): array
+    {
+        $user = self::apiAuthenticate();
+        
+        if (!$user) {
+            http_response_code(401);
+            header('Content-Type: application/json');
+            
+            // Enhanced response for frontend handling
+            echo json_encode([
+                'error' => 'Authentication required',
+                'message' => 'Your session has expired. Please login again.',
+                'code' => 'SESSION_EXPIRED',
+                'redirect' => '/login.php',
+                'timestamp' => time(),
+                'requires_login' => true
+            ]);
+            exit;
+        }
+        
+        return $user;
     }
     
     /**
@@ -190,7 +281,17 @@ class Authentication
             'id' => $_SESSION['user_id'] ?? null,
             'email' => $_SESSION['user_email'] ?? null,
             'login_time' => $_SESSION['login_time'] ?? null,
+            'last_activity' => $_SESSION['last_activity'] ?? null
         ];
+    }
+    
+    /**
+     * Extend session timeout
+     */
+    public static function extendSession(): void
+    {
+        self::startSession();
+        $_SESSION['last_activity'] = time();
     }
     
     /**
@@ -312,4 +413,3 @@ class Authentication
         }
     }
 }
-
