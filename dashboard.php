@@ -151,12 +151,12 @@ include __DIR__ . '/views/includes/header.php';
                                 required
                             >
                             <div class="invalid-feedback" id="stakeError"></div>
-                            <small class="text-secondary-custom">Amount per trade (minimum $1.00)</small>
+                            <!--<small class="text-secondary-custom">Amount per trade (minimum $1.00)</small>-->
                         </div>
 
                         <div class="mb-4">
                             <label for="target" class="form-label fw-semibold text-uppercase small">
-                                TARGET (Daily Profit Target)
+                                TARGET
                             </label>
                             <input 
                                 type="number" 
@@ -169,12 +169,12 @@ include __DIR__ . '/views/includes/header.php';
                                 required
                             >
                             <div class="invalid-feedback" id="targetError"></div>
-                            <small class="text-secondary-custom">Daily profit goal (bot stops when reached)</small>
+                            <!--<small class="text-secondary-custom">Daily profit goal (bot stops when reached)</small>-->
                         </div>
 
                         <div class="mb-4">
                             <label for="stopLimit" class="form-label fw-semibold text-uppercase small">
-                                STOP LIMIT (Daily Loss Limit)
+                                STOP LIMIT 
                             </label>
                             <input 
                                 type="number" 
@@ -187,7 +187,7 @@ include __DIR__ . '/views/includes/header.php';
                                 required
                             >
                             <div class="invalid-feedback" id="stopLimitError"></div>
-                            <small class="text-secondary-custom">Maximum daily loss (bot stops when reached)</small>
+                            <!--<small class="text-secondary-custom">Maximum daily loss (bot stops when reached)</small>-->
                         </div>
 
                         <button 
