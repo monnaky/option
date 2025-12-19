@@ -206,33 +206,32 @@ include __DIR__ . '/views/includes/header.php';
         </div>
     </div>
 
-    <!-- Bottom Section - Live Results and Trade History -->
+    <!-- Trade History Section -->
     <div class="row g-4 mt-2">
-        <div class="col-lg-6">
+        <div class="col-12">
             <div class="card card-dark border-dark-custom">
                 <div class="card-body">
-                    <h5 class="card-title mb-4">
-                        <i class="bi bi-graph-up"></i> Live Trade Results
-                        <span id="liveTradesCount" class="badge bg-primary ms-2 d-none">0</span>
-                    </h5>
-                    <div id="liveTradesContainer" class="overflow-auto" style="max-height: 400px;">
-                        <div class="text-center py-5 text-secondary-custom">
-                            <i class="bi bi-graph-up-arrow fs-1 d-block mb-3"></i>
-                            <p>No active trades</p>
-                            <small>Trades will appear here when bot is active</small>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-clock-history"></i> Trade History
+                            <span id="tradeHistoryCount" class="badge bg-secondary ms-2">0</span>
+                        </h5>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-light" onclick="loadTradeHistory()">
+                                <i class="bi bi-arrow-clockwise"></i> Refresh
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="exportTradeHistory()">
+                                <i class="bi bi-download"></i> Export
+                            </button>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="card card-dark border-dark-custom">
-                <div class="card-body">
-                    <h5 class="card-title mb-4">
-                        <i class="bi bi-clock-history"></i> Trade History
-                        <span id="tradeHistoryCount" class="badge bg-secondary ms-2">0</span>
-                    </h5>
+                    
+                    <!-- Trade History Chart Skeleton -->
+                    <div id="tradeHistoryChartContainer" class="mb-4">
+                        <canvas id="tradeHistoryChart" style="max-height: 300px;"></canvas>
+                    </div>
+                    
+                    <!-- Trade History Table -->
                     <div id="tradeHistoryContainer" class="overflow-auto" style="max-height: 400px;">
                         <div class="text-center py-5 text-secondary-custom">
                             <i class="bi bi-graph-up fs-1 d-block mb-3"></i>
@@ -271,6 +270,8 @@ if (!function_exists('asset')) {
     require_once __DIR__ . '/app/helpers.php';
 }
 ?>
+<!-- Chart.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="<?php echo asset('js/api.js'); ?>"></script>
 <script src="<?php echo asset('js/balance-manager.js'); ?>"></script>
 <script src="<?php echo asset('js/realtime.js'); ?>"></script>
@@ -294,6 +295,9 @@ let balance = 0.00;
 let trades = [];
 let liveTrades = [];
 let notifications = [];
+
+// Trade history chart
+let tradeHistoryChart = null;
 
 // Initialize BalanceManager as single source of truth for balance
 let balanceManager = null;
@@ -322,6 +326,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }).catch(error => {
         console.error('[Dashboard] BalanceManager initialization failed:', error);
     });
+    
+    // Initialize trade history chart
+    initializeTradeHistoryChart();
     
     loadProfile();
     loadTradeHistory();
@@ -364,6 +371,92 @@ async function loadProfile() {
         console.error('Error loading profile:', error);
         showToast('Failed to load profile', 'error');
     }
+}
+
+// Initialize trade history chart
+function initializeTradeHistoryChart() {
+    const ctx = document.getElementById('tradeHistoryChart').getContext('2d');
+    
+    tradeHistoryChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Cumulative Profit',
+                data: [],
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                tension: 0.1,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        color: '#fff'
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `Profit: $${context.parsed.y.toFixed(2)}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    },
+                    ticks: {
+                        color: '#fff'
+                    }
+                },
+                y: {
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    },
+                    ticks: {
+                        color: '#fff',
+                        callback: function(value) {
+                            return '$' + value.toFixed(0);
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Export trade history
+function exportTradeHistory() {
+    if (trades.length === 0) {
+        showToast('No trades to export', 'warning');
+        return;
+    }
+    
+    let csv = 'Timestamp,Asset,Direction,Stake,Result,Profit\n';
+    
+    trades.forEach(trade => {
+        csv += `"${trade.timestamp}",${trade.asset},${trade.direction},$${trade.stake},${trade.status},$${trade.profit}\n`;
+    });
+    
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `trade-history-${new Date().toISOString().split('T')[0]}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+    
+    showToast('Trade history exported successfully', 'success');
 }
 
 // Load trade history
@@ -544,6 +637,9 @@ function updateTradeHistory(tradeList) {
     
     count.textContent = trades.length;
     
+    // Update chart with trade data
+    updateTradeHistoryChart(trades);
+    
     if (trades.length === 0) {
         container.innerHTML = `
             <div class="text-center py-5 text-secondary-custom">
@@ -601,6 +697,42 @@ function updateTradeHistory(tradeList) {
     `;
     
     container.innerHTML = table;
+}
+
+// Update trade history chart with cumulative profit data
+function updateTradeHistoryChart(tradeList) {
+    if (!tradeHistoryChart || tradeList.length === 0) {
+        if (tradeHistoryChart) {
+            tradeHistoryChart.data.labels = [];
+            tradeHistoryChart.data.datasets[0].data = [];
+            tradeHistoryChart.update();
+        }
+        return;
+    }
+    
+    // Sort trades by timestamp
+    const sortedTrades = [...tradeList].sort((a, b) => 
+        new Date(a.timestamp) - new Date(b.timestamp)
+    );
+    
+    // Calculate cumulative profit
+    let cumulativeProfit = 0;
+    const labels = [];
+    const data = [];
+    
+    sortedTrades.forEach((trade, index) => {
+        cumulativeProfit += parseFloat(trade.profit) || 0;
+        labels.push(new Date(trade.timestamp).toLocaleTimeString([], { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        }));
+        data.push(cumulativeProfit);
+    });
+    
+    // Update chart
+    tradeHistoryChart.data.labels = labels;
+    tradeHistoryChart.data.datasets[0].data = data;
+    tradeHistoryChart.update();
 }
 
 // Update live trades display
