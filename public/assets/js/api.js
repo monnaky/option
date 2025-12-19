@@ -47,6 +47,13 @@ async function apiCall(url, options = {}) {
         
         // Check if response is OK
         if (!response.ok) {
+            // Handle 401 Unauthorized - redirect to login
+            if (response.status === 401) {
+                console.warn('Authentication expired - redirecting to login');
+                window.location.href = '/login.php';
+                return;
+            }
+            
             const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
             throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
         }

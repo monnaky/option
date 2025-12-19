@@ -24,10 +24,10 @@ class SignalService
     
     // Configuration constants
     private const MAX_RETRY_ATTEMPTS = 3;
-    private const RETRY_DELAY_SECONDS = 5;
+    private const RETRY_DELAY_SECONDS = 2;
     private const MAX_SIGNAL_AGE_SECONDS = 300; // 5 minutes
     private const BATCH_SIZE = 50; // Process 50 users at a time
-    private const EXECUTION_TIMEOUT = 30; // 30 seconds per user
+    private const EXECUTION_TIMEOUT = 10; // 10 seconds per user
     
     // Signal sources
     private const SOURCE_API = 'api';

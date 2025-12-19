@@ -367,6 +367,13 @@ class BalanceManager {
         });
 
         if (!response.ok) {
+            // Handle 401 Unauthorized - redirect to login
+            if (response.status === 401) {
+                console.warn('[BalanceManager] Authentication expired - redirecting to login');
+                window.location.href = '/login.php';
+                return;
+            }
+            
             const errorText = await response.text();
             let errorData;
             try {

@@ -32,15 +32,15 @@ class TradingBotService
     private const MAX_INACTIVE_TIME = 30 * 60; // 30 minutes in seconds
     private const MAX_ACTIVE_CONTRACTS = 50;
     private const CONTRACT_MONITOR_TIMEOUT = 30; // 30 seconds
-    private const FALLBACK_CONTRACT_RESULT_DELAY = 7; // seconds to wait before inline result check
+    private const FALLBACK_CONTRACT_RESULT_DELAY = 3; // seconds to wait before inline result check
     private const API_REQUEST_TIMEOUT = 10; // 10 seconds
     private const SETTINGS_SYNC_INTERVAL = 60; // 1 minute
     private const HEALTH_CHECK_INTERVAL = 30; // 30 seconds
     private const MIN_TRADE_INTERVAL = 30; // Minimum 30 seconds between trades
     private const MAX_TRADE_INTERVAL = 120; // Maximum 120 seconds between trades
     
-    // Balance cache TTL (5 seconds - optimized for fast updates)
-    private const BALANCE_CACHE_TTL = 5;
+    // Balance cache TTL (2 seconds - optimized for faster updates)
+    private const BALANCE_CACHE_TTL = 2;
     
     // Connection pool TTL (5 minutes - connections stay alive for reuse)
     private const CONNECTION_POOL_TTL = 300;
@@ -443,7 +443,6 @@ class TradingBotService
             
             // Schedule contract monitoring (via cron) and inline fallback
             $this->scheduleContractMonitoring($userId, (string)$contract['contract_id'], $tradeRecordId);
-            $this->fallbackProcessContractResult($userId, (string)$contract['contract_id'], $tradeRecordId, $user['encrypted_api_token']);
             $this->fallbackProcessContractResult($userId, (string)$contract['contract_id'], $tradeRecordId, $encryptedToken);
             
             error_log("[TradingBot] Trade placed user={$userId} contract={$contract['contract_id']} asset={$asset} dir={$directionLabel} stake={$settings['stake']}");

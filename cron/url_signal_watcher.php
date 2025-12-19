@@ -18,7 +18,7 @@ $LOG_FILE = $LOG_DIR . '/url_signal_watcher.log';
 $ERROR_LOG_FILE = $LOG_DIR . '/url_signal_watcher_error.log';
 $REMOTE_SIGNAL_URL = getenv('REMOTE_SIGNAL_URL') ?: ''; // Disabled
 $REMOTE_CLEAR_URL = getenv('REMOTE_SIGNAL_CLEAR_URL') ?: 'https://vtmoption.com/signals.php?action=clear';
-$POLL_INTERVAL = (int)(getenv('REMOTE_SIGNAL_POLL_INTERVAL') ?: 2);
+$POLL_INTERVAL = (int)(getenv('REMOTE_SIGNAL_POLL_INTERVAL') ?: 1);
 $HTTP_TIMEOUT = (int)(getenv('REMOTE_SIGNAL_HTTP_TIMEOUT') ?: 10);
 
 // Clamp poll interval between 1 and 5 seconds
