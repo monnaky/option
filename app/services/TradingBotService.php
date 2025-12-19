@@ -280,9 +280,16 @@ class TradingBotService
     
     /**
      * Process trading for a single user
+     * 
+     * NOTE: Automated trading disabled to prevent phantom trades
+     * Only signal-based trading is allowed via executeSignalTrade()
      */
     private function processUserTrading(int $userId): void
     {
+        // DISABLED: Prevent automated random trades
+        // Only allow signal-based trading via executeSignalTrade()
+        return;
+        
         // Get active session
         $activeSession = $this->helper->getActiveTradingSession($userId);
         
