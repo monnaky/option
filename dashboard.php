@@ -13,7 +13,10 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Require authentication
-$user = App\Middleware\AuthMiddleware::requireAuth();
+App\Middleware\Authentication::requireAuth();
+
+// Get user data for display
+$user = App\Middleware\Authentication::getCurrentUser();
 
 $pageTitle = 'Dashboard - VTM Option';
 include __DIR__ . '/views/includes/header.php';
