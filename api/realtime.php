@@ -413,20 +413,21 @@ function handleGetNotifications(int $userId)
         // Check for target/stop limit reached
         $settings = (new DatabaseHelper())->getUserSettings($userId);
         if ($settings) {
+            // Calculate net profit (daily profit - daily loss)
             $netProfit = (float)$settings['daily_profit'] - (float)$settings['daily_loss'];
             
-            if ($settings['is_bot_active'] && (float)$settings['daily_profit'] >= (float)$settings['target']) {
+            if ($settings['is_bot_active'] && $netProfit >= (float)$settings['target']) {
                 $notifications[] = [
                     'type' => 'success',
-                    'message' => "Daily profit target of $" . number_format($settings['target'], 2) . " reached!",
+                    'message' => "Net profit target of $" . number_format($settings['target'], 2) . " reached! Current net profit: $" . number_format($netProfit, 2),
                     'timestamp' => date('c'),
                 ];
             }
             
-            if ($settings['is_bot_active'] && (float)$settings['daily_loss'] >= (float)$settings['stop_limit']) {
+            if ($settings['is_bot_active'] && abs($netProfit) >= (float)$settings['stop_limit'] && $netProfit < 0) {
                 $notifications[] = [
                     'type' => 'warning',
-                    'message' => "Daily loss limit of $" . number_format($settings['stop_limit'], 2) . " reached!",
+                    'message' => "Net loss limit of $" . number_format($settings['stop_limit'], 2) . " reached! Current net loss: $" . number_format(abs($netProfit), 2),
                     'timestamp' => date('c'),
                 ];
             }

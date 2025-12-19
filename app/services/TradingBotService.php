@@ -766,17 +766,20 @@ class TradingBotService
                 $settings = $this->helper->getUserSettings($userId);
             }
             
-            // Check if target reached
-            if ((float)$settings['daily_profit'] >= (float)$settings['target']) {
-                $this->stopTrading($userId, 'system', 'Daily profit target reached', true);
-                error_log("Daily profit target reached for user {$userId}. Stopping trading.");
+            // Calculate net profit (daily profit - daily loss)
+            $netProfit = (float)$settings['daily_profit'] - (float)$settings['daily_loss'];
+            
+            // Check if target reached using NET PROFIT
+            if ($netProfit >= (float)$settings['target']) {
+                $this->stopTrading($userId, 'system', 'Net profit target reached', true);
+                error_log("Net profit target reached for user {$userId}. Net profit: $" . number_format($netProfit, 2) . ". Stopping trading.");
                 return true;
             }
             
-            // Check if stop limit reached
-            if (abs((float)$settings['daily_loss']) >= (float)$settings['stop_limit']) {
-                $this->stopTrading($userId, 'system', 'Daily loss limit reached', true);
-                error_log("Daily loss limit reached for user {$userId}. Stopping trading.");
+            // Check if stop limit reached using NET LOSS
+            if (abs($netProfit) >= (float)$settings['stop_limit'] && $netProfit < 0) {
+                $this->stopTrading($userId, 'system', 'Net loss limit reached', true);
+                error_log("Net loss limit reached for user {$userId}. Net loss: $" . number_format(abs($netProfit), 2) . ". Stopping trading.");
                 return true;
             }
             
