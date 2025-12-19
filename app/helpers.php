@@ -39,7 +39,7 @@ function getBasePath() {
     }
     
     // If we are at root ('/' or ''), return empty string
-    if ($scriptDir === '/' || $scriptDir === '.') {
+    if ($scriptDir === '/' || $scriptDir === '.' || $scriptDir === '/.') {
         return '';
     }
     

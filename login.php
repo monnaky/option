@@ -163,7 +163,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             
             // Redirect to dashboard
             setTimeout(() => {
-                window.location.href = '<?php echo url("dashboard.php"); ?>';
+                window.location.href = '/dashboard.php';
             }, 1000);
         } else {
             throw new Error(result.error || 'Login failed');
