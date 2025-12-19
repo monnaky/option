@@ -3,67 +3,31 @@
 /**
  * Authentication Middleware
  * 
- * Handles session-based authentication for API endpoints
+ * Wrapper for Authentication class - used by API endpoints
+ * This ensures consistency between web and API authentication
  */
 
 namespace App\Middleware;
 
-use App\Config\Database;
-use App\Utils\DatabaseHelper;
+use App\Middleware\Authentication;
 
 class AuthMiddleware
 {
     /**
-     * Authenticate user request
-     * 
-     * @return array|null Returns user data if authenticated, null otherwise
+     * Authenticate user request (compatible with old code)
      */
     public static function authenticate(): ?array
     {
-        // Start session if not already started
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        
-        // Check if user is logged in
-        if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_email'])) {
-            return null;
-        }
-        
-        // Verify user still exists and is active
-        $db = Database::getInstance();
-        $user = $db->queryOne(
-            "SELECT id, email, is_active FROM users WHERE id = :id AND is_active = 1",
-            ['id' => $_SESSION['user_id']]
-        );
-        
-        if (!$user) {
-            // Clear invalid session
-            session_destroy();
-            return null;
-        }
-        
-        return [
-            'id' => $user['id'],
-            'email' => $user['email'],
-        ];
+        return Authentication::apiAuthenticate();
     }
     
     /**
      * Require authentication - send error if not authenticated
+     * Compatible with existing API calls
      */
     public static function requireAuth(): array
     {
-        $user = self::authenticate();
-        
-        if (!$user) {
-            http_response_code(401);
-            header('Content-Type: application/json');
-            echo json_encode(['error' => 'Authentication required']);
-            exit;
-        }
-        
-        return $user;
+        return Authentication::requireApiAuth();
     }
     
     /**
@@ -71,8 +35,7 @@ class AuthMiddleware
      */
     public static function getUserId(): ?int
     {
-        $user = self::authenticate();
-        return $user ? (int)$user['id'] : null;
+        return Authentication::getUserId();
     }
     
     /**
@@ -80,7 +43,40 @@ class AuthMiddleware
      */
     public static function isAuthenticated(): bool
     {
-        return self::authenticate() !== null;
+        return Authentication::isLoggedIn();
+    }
+    
+    /**
+     * NEW: Handle API auth with custom response
+     * Useful for endpoints that need specific behavior
+     */
+    public static function requireAuthWithResponse(callable $onFailure = null): array
+    {
+        $user = self::authenticate();
+        
+        if (!$user) {
+            if ($onFailure) {
+                return $onFailure();
+            }
+            
+            // Default failure response
+            return Authentication::requireApiAuth();
+        }
+        
+        return $user;
+    }
+    
+    /**
+     * NEW: Check auth without exiting (for conditional logic)
+     */
+    public static function checkAuth(): array
+    {
+        $user = self::authenticate();
+        
+        if (!$user) {
+            throw new \Exception('Authentication required', 401);
+        }
+        
+        return $user;
     }
 }
-
