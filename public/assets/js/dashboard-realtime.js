@@ -377,88 +377,14 @@ function updateLiveTradeStatus(trade) {
 }
 
 /**
- * Update live trades display
+ * Update live trades display - DISABLED (live trading chart removed)
  */
 function updateLiveTrades(trades) {
-    const container = document.getElementById('liveTradesContainer');
-    const count = document.getElementById('liveTradesCount');
-
-    if (!container) return;
-
-    const signature = Array.isArray(trades)
-        ? trades.map(t => `${t.trade_id}:${t.status}:${t.profit}`).join('|')
-        : '';
-
-    if (signature === previousState.liveTradesSignature) {
-        return;
-    }
-
-    previousState.liveTradesSignature = signature;
-
-    const prevScrollTop = container.scrollTop;
-    const prevScrollHeight = container.scrollHeight;
-    const prevClientHeight = container.clientHeight;
-    const wasPinnedToBottom = (prevScrollTop + prevClientHeight) >= (prevScrollHeight - 4);
-
-    if (count) {
-        count.textContent = `${trades.length} Active`;
-        if (trades.length > 0) {
-            count.classList.remove('d-none');
-        } else {
-            count.classList.add('d-none');
-        }
-    }
-
-    if (trades.length === 0) {
-        container.innerHTML = `
-            <div class="text-center py-5 text-muted">
-                <i class="bi bi-graph-up-arrow fs-1 d-block mb-3"></i>
-                <p>No active trades</p>
-                <small>Trades will appear here when bot is active</small>
-            </div>
-        `;
-        return;
-    }
-
-    const html = trades.map(trade => `
-        <div class="card bg-dark mb-2 border-dark-custom" data-trade-id="${trade.trade_id}">
-            <div class="card-body p-3">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                    <div>
-                        <span class="fw-bold">${trade.asset}</span>
-                        <span class="badge ${trade.direction === 'RISE' ? 'bg-success' : 'bg-danger'} ms-2">
-                            ${trade.direction}
-                        </span>
-                    </div>
-                    <span class="badge ${trade.status === 'won' ? 'bg-success' :
-            trade.status === 'lost' ? 'bg-danger' :
-                'bg-warning'
-        }">
-                        ${trade.status === 'pending' ? '⏳ Pending...' : trade.status.toUpperCase()}
-                    </span>
-                </div>
-                <div class="d-flex justify-content-between align-items-center pt-2 border-top border-dark-custom">
-                    <small class="text-muted">Stake: <span class="text-white">$${parseFloat(trade.stake).toFixed(2)}</span></small>
-                    <span class="fw-bold profit ${trade.profit > 0 ? 'text-success' :
-            trade.profit < 0 ? 'text-danger' :
-                'text-muted'
-        }">
-                        ${trade.profit > 0 ? '+' : ''}$${parseFloat(trade.profit).toFixed(2)}
-                    </span>
-                </div>
-            </div>
-        </div>
-    `).join('');
-
-    container.innerHTML = html;
-
-    // Preserve scroll position to prevent UI jumping
-    if (wasPinnedToBottom) {
-        container.scrollTop = container.scrollHeight;
-    } else {
-        container.scrollTop = prevScrollTop;
-    }
+    // No-op since live trading chart was removed from dashboard
+    console.log('[Dashboard] updateLiveTrades called but live trading chart was removed');
 }
+
+
 
 /**
  * Update trade history display
