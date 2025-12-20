@@ -847,19 +847,24 @@ class TradingBotService
     
     private function scheduleContractMonitoring(int $userId, string $contractId, int $tradeRecordId): void
     {
-        // Store contract info for monitoring
-        $this->db->execute(
-            "INSERT INTO contract_monitor (user_id, contract_id, trade_id, status, created_at, updated_at)
-             VALUES (:user_id, :contract_id, :trade_id, 'pending', NOW(), NOW())
-             ON DUPLICATE KEY UPDATE updated_at = NOW()",
-            [
-                'user_id' => $userId,
-                'contract_id' => $contractId,
-                'trade_id' => $tradeRecordId
-            ]
-        );
-        
-        error_log("Contract monitoring scheduled for user {$userId}, contract {$contractId}, trade {$tradeRecordId}");
+        try {
+            // Store contract info for monitoring
+            $this->db->execute(
+                "INSERT INTO contract_monitor (user_id, contract_id, trade_id, status, created_at, updated_at)
+                 VALUES (:user_id, :contract_id, :trade_id, 'pending', NOW(), NOW())
+                 ON DUPLICATE KEY UPDATE updated_at = NOW()",
+                [
+                    'user_id' => $userId,
+                    'contract_id' => $contractId,
+                    'trade_id' => $tradeRecordId
+                ]
+            );
+            
+            error_log("Contract monitoring scheduled for user {$userId}, contract {$contractId}, trade {$tradeRecordId}");
+        } catch (Exception $e) {
+            // Table may not exist in older installations - log but don't fail
+            error_log("Contract monitor table may not exist, skipping monitoring schedule: " . $e->getMessage());
+        }
     }
     
     /**
@@ -871,19 +876,37 @@ class TradingBotService
         try {
             // Get all pending trades that are older than 6 seconds (for 5-tick contracts)
             // Exclude contracts that have exceeded max retries (5 retries)
-            $pendingTrades = $this->db->query(
-                "SELECT t.*, u.encrypted_api_token, ts.id as session_id
-                 FROM trades t
-                 INNER JOIN users u ON t.user_id = u.id
-                 LEFT JOIN trading_sessions ts ON t.session_id = ts.id
-                 LEFT JOIN contract_monitor cm ON t.contract_id = cm.contract_id
-                 WHERE t.status = 'pending'
-                 AND t.timestamp < DATE_SUB(NOW(), INTERVAL 6 SECOND)
-                 AND u.encrypted_api_token IS NOT NULL
-                 AND u.encrypted_api_token != ''
-                 AND (cm.retry_count < 5 OR cm.retry_count IS NULL)
-                 LIMIT 50"
-            );
+            // Note: contract_monitor table may not exist in older installations
+            try {
+                $pendingTrades = $this->db->query(
+                    "SELECT t.*, u.encrypted_api_token, ts.id as session_id,
+                            COALESCE(cm.retry_count, 0) as retry_count
+                     FROM trades t
+                     INNER JOIN users u ON t.user_id = u.id
+                     LEFT JOIN trading_sessions ts ON t.session_id = ts.id
+                     LEFT JOIN contract_monitor cm ON t.contract_id = cm.contract_id
+                     WHERE t.status = 'pending'
+                     AND t.timestamp < DATE_SUB(NOW(), INTERVAL 6 SECOND)
+                     AND u.encrypted_api_token IS NOT NULL
+                     AND u.encrypted_api_token != ''
+                     AND (COALESCE(cm.retry_count, 0) < 5)
+                     LIMIT 50"
+                );
+            } catch (Exception $e) {
+                // Fallback if contract_monitor table doesn't exist
+                error_log("Contract monitor table may not exist, using fallback query: " . $e->getMessage());
+                $pendingTrades = $this->db->query(
+                    "SELECT t.*, u.encrypted_api_token, ts.id as session_id
+                     FROM trades t
+                     INNER JOIN users u ON t.user_id = u.id
+                     LEFT JOIN trading_sessions ts ON t.session_id = ts.id
+                     WHERE t.status = 'pending'
+                     AND t.timestamp < DATE_SUB(NOW(), INTERVAL 6 SECOND)
+                     AND u.encrypted_api_token IS NOT NULL
+                     AND u.encrypted_api_token != ''
+                     LIMIT 50"
+                );
+            }
             
             foreach ($pendingTrades as $trade) {
                 try {
@@ -893,20 +916,25 @@ class TradingBotService
                             (string)$trade['contract_id'],
                             (int)$trade['id']
                         );
+                        
+                        // Update contract_monitor to show we're checking this contract
+                        try {
+                            $this->db->execute(
+                                "UPDATE contract_monitor 
+                                 SET last_checked_at = NOW(),
+                                     updated_at = NOW()
+                                 WHERE contract_id = :contract_id",
+                                [
+                                    'contract_id' => $trade['contract_id'],
+                                ]
+                            );
+                        } catch (Exception $e) {
+                            // Table may not exist, ignore
+                            error_log("Contract monitor update failed (table may not exist): " . $e->getMessage());
+                        }
                     } catch (Exception $e) {
                         error_log("Failed to ensure contract_monitor row for trade {$trade['id']} (contract {$trade['contract_id']}): " . $e->getMessage());
                     }
-
-                    // Update contract_monitor to show we're checking this contract
-                    $this->db->execute(
-                        "UPDATE contract_monitor 
-                         SET last_checked_at = NOW(),
-                             updated_at = NOW()
-                         WHERE contract_id = :contract_id",
-                        [
-                            'contract_id' => $trade['contract_id'],
-                        ]
-                    );
                     
                     $this->processContractResult(
                         (int)$trade['user_id'],
