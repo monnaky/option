@@ -210,6 +210,8 @@ function handleLogin()
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_email'] = $user['email'];
         $_SESSION['is_admin'] = !empty($user['is_admin']) ? (bool)$user['is_admin'] : false;
+        $_SESSION['logged_in'] = true;
+        $_SESSION['login_time'] = time();
         
         // Return response
         Response::success([
