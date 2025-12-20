@@ -194,6 +194,49 @@ class Authentication
     }
     
     /**
+     * Get current user (alias for getUserData for compatibility)
+     */
+    public static function getCurrentUser(): ?array
+    {
+        if (!self::isLoggedIn()) {
+            return null;
+        }
+        
+        try {
+            $db = Database::getInstance();
+            $userId = self::getUserId();
+            
+            if (!$userId) {
+                return null;
+            }
+            
+            // Get full user data from database
+            $user = $db->queryOne(
+                "SELECT id, email, is_active, created_at FROM users WHERE id = :id",
+                ['id' => $userId]
+            );
+            
+            if (!$user) {
+                return null;
+            }
+            
+            return [
+                'id' => (int)$user['id'],
+                'email' => $user['email'],
+                'is_active' => (bool)$user['is_active'],
+                'created_at' => $user['created_at'],
+            ];
+        } catch (Exception $e) {
+            error_log('Get current user error: ' . $e->getMessage());
+            // Fallback to session data if database query fails
+            return [
+                'id' => $_SESSION['user_id'] ?? null,
+                'email' => $_SESSION['user_email'] ?? null,
+            ];
+        }
+    }
+    
+    /**
      * Verify user credentials
      */
     public static function verifyCredentials(string $email, string $password): ?array
