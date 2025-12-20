@@ -342,8 +342,10 @@ document.addEventListener('DOMContentLoaded', function() {
 // Load user profile and settings
 async function loadProfile() {
     try {
+        console.log('Loading profile data...');
         const data = await apiCall(`${apiBase}/trading.php?action=stats`);
-        
+        console.log('Profile data received:', data);
+
         if (data.settings) {
             settings = {
                 stake: parseFloat(data.settings.stake) || 1.00,
@@ -355,20 +357,24 @@ async function loadProfile() {
                 dailyProfit: parseFloat(data.settings.daily_profit) || 0.00,
                 dailyLoss: parseFloat(data.settings.daily_loss) || 0.00
             };
-            
+            console.log('Settings loaded:', settings);
+
             // Update form fields
             document.getElementById('stake').value = settings.stake;
             document.getElementById('target').value = settings.target;
             document.getElementById('stopLimit').value = settings.stopLimit;
-            
+
             // Update UI
             updateUI();
+        } else {
+            console.warn('No settings in API response');
         }
-        
+
         if (data.stats) {
             // Update stats display if needed
+            console.log('Stats loaded:', data.stats);
         }
-        
+
     } catch (error) {
         console.error('Error loading profile:', error);
         showToast('Failed to load profile', 'error');
@@ -609,13 +615,22 @@ function updateUI() {
     }
     
     // Update daily stats
-    document.getElementById('dailyProfit').textContent = `+$${settings.dailyProfit.toFixed(2)}`;
-    document.getElementById('dailyLoss').textContent = `-$${settings.dailyLoss.toFixed(2)}`;
-    
-    const netProfit = settings.dailyProfit - settings.dailyLoss;
+    const dailyProfitEl = document.getElementById('dailyProfit');
+    const dailyLossEl = document.getElementById('dailyLoss');
     const netProfitEl = document.getElementById('netProfit');
-    netProfitEl.textContent = `${netProfit >= 0 ? '+' : ''}$${netProfit.toFixed(2)}`;
-    netProfitEl.className = `fs-4 fw-bold ${netProfit >= 0 ? 'text-success' : 'text-danger'}`;
+
+    if (dailyProfitEl) {
+        dailyProfitEl.textContent = `+$${settings.dailyProfit.toFixed(2)}`;
+    }
+    if (dailyLossEl) {
+        dailyLossEl.textContent = `-$${settings.dailyLoss.toFixed(2)}`;
+    }
+
+    if (netProfitEl) {
+        const netProfit = settings.dailyProfit - settings.dailyLoss;
+        netProfitEl.textContent = `${netProfit >= 0 ? '+' : ''}$${netProfit.toFixed(2)}`;
+        netProfitEl.className = `fs-4 fw-bold ${netProfit >= 0 ? 'text-success' : 'text-danger'}`;
+    }
     
     // Update settings form disabled state
     const inputs = ['stake', 'stopLimit'];

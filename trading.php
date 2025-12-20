@@ -274,8 +274,10 @@ document.addEventListener('DOMContentLoaded', function() {
 // Load trading data
 async function loadTradingData() {
     try {
+        console.log('Loading trading data...');
         const data = await apiCall(`${apiBase}/trading.php?action=stats`);
-        
+        console.log('Trading data received:', data);
+
         if (data.settings) {
             tradingData.isBotActive = data.settings.is_bot_active || false;
             tradingData.stake = parseFloat(data.settings.stake) || 1.00;
@@ -283,8 +285,11 @@ async function loadTradingData() {
             tradingData.stopLimit = parseFloat(data.settings.stop_limit) || 50.00;
             tradingData.dailyProfit = parseFloat(data.settings.daily_profit) || 0.00;
             tradingData.dailyLoss = parseFloat(data.settings.daily_loss) || 0.00;
+            console.log('Settings loaded:', tradingData);
+        } else {
+            console.warn('No settings in API response');
         }
-        
+
         if (data.stats) {
             tradingData.stats = {
                 totalTrades: parseInt(data.stats.total_trades) || 0,
@@ -292,10 +297,14 @@ async function loadTradingData() {
                 lostTrades: parseInt(data.stats.lost_trades) || 0,
                 winRate: parseFloat(data.stats.win_rate) || 0
             };
+            console.log('Stats loaded:', tradingData.stats);
+        } else {
+            console.warn('No stats in API response');
         }
-        
+
         updateTradingUI();
-        
+        console.log('Trading UI updated');
+
     } catch (error) {
         console.error('Error loading trading data:', error);
         showToast('Failed to load trading data', 'error');
