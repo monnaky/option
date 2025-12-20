@@ -115,11 +115,6 @@ function updateBalance(data) {
 function updateTrades(data) {
     if (!data) return;
 
-    // Update live trades
-    if (data.liveTrades) {
-        updateLiveTrades(data.liveTrades);
-    }
-
     // Update trade history
     if (data.trades) {
         updateTradeHistory(data.trades);
@@ -147,10 +142,6 @@ function updateDashboard(data) {
     // Update trades
     if (data.recentTrades) {
         updateTradeHistory(data.recentTrades);
-    }
-
-    if (data.liveTrades) {
-        updateLiveTrades(data.liveTrades);
     }
 
     // Handle new trades
@@ -376,13 +367,6 @@ function updateLiveTradeStatus(trade) {
     }
 }
 
-/**
- * Update live trades display - DISABLED (live trading chart removed)
- */
-function updateLiveTrades(trades) {
-    // No-op since live trading chart was removed from dashboard
-    console.log('[Dashboard] updateLiveTrades called but live trading chart was removed');
-}
 
 
 

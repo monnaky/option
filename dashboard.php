@@ -296,7 +296,6 @@ let settings = {
 let hasApiToken = false;
 let balance = 0.00;
 let trades = [];
-let liveTrades = [];
 let notifications = [];
 
 // Trade history chart
@@ -738,65 +737,7 @@ function updateTradeHistoryChart(tradeList) {
     tradeHistoryChart.update();
 }
 
-// Update live trades display
-function updateLiveTrades(tradeList) {
-    liveTrades = tradeList;
-    const container = document.getElementById('liveTradesContainer');
-    const count = document.getElementById('liveTradesCount');
-    
-    if (liveTrades.length > 0) {
-        count.textContent = liveTrades.length;
-        count.classList.remove('d-none');
-    } else {
-        count.classList.add('d-none');
-    }
-    
-    if (liveTrades.length === 0) {
-        container.innerHTML = `
-            <div class="text-center py-5 text-secondary-custom">
-                <i class="bi bi-graph-up-arrow fs-1 d-block mb-3"></i>
-                <p>No active trades</p>
-                <small>Trades will appear here when bot is active</small>
-            </div>
-        `;
-        return;
-    }
-    
-    const html = liveTrades.map(trade => `
-        <div class="card bg-dark mb-2 border-dark-custom">
-            <div class="card-body p-3">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                    <div>
-                        <span class="fw-bold">${trade.asset}</span>
-                        <span class="badge ${trade.direction === 'RISE' ? 'bg-success' : 'bg-danger'} ms-2">
-                            ${trade.direction}
-                        </span>
-                    </div>
-                    <span class="badge ${
-                        trade.status === 'won' ? 'bg-success' : 
-                        trade.status === 'lost' ? 'bg-danger' : 
-                        'bg-warning'
-                    }">
-                        ${trade.status === 'pending' ? '⏳ Pending...' : trade.status.toUpperCase()}
-                    </span>
-                </div>
-                <div class="d-flex justify-content-between align-items-center pt-2 border-top border-dark-custom">
-                    <small class="text-secondary-custom">Stake: <span>$${parseFloat(trade.stake).toFixed(2)}</span></small>
-                    <span class="fw-bold ${
-                        trade.profit > 0 ? 'text-success' : 
-                        trade.profit < 0 ? 'text-danger' : 
-                        'text-secondary-custom'
-                    }">
-                        ${trade.profit > 0 ? '+' : ''}$${parseFloat(trade.profit).toFixed(2)}
-                    </span>
-                </div>
-            </div>
-        </div>
-    `).join('');
-    
-    container.innerHTML = html;
-}
-
+// Live trades feature removed - no corresponding HTML elements
 // Add notification
 function addNotification(type, message) {
     notifications.unshift({
